@@ -1,0 +1,112 @@
+a:link, a:visited, a:active {
+    text-decoration:none;
+    color:black;
+}
+
+#body-general{
+    background-color: #e2e9f1;
+}
+
+#body-inicio {
+    background: rgb(15,55,107);
+    background: linear-gradient(180deg, rgba(15,55,107,1) 4%, rgba(41,127,186,1) 94%);
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.container-gen {
+    padding-right:0;
+    padding-left:0;
+    margin-right:0;
+    margin-left:0;
+}
+
+.navbar-custom {
+    background-color:#297fba;
+    padding-top: 0.125em;
+    padding-bottom: 0.125em;
+}
+
+.navbar{
+    padding-left: 0.625em;
+    padding-right: 0.625em;
+}
+
+#resumen-perfil{
+    background-color: #ffffff;
+}
+
+#contenido-perfil{
+    background-color: #ffffff; 
+}
+
+#cegamex-titulo{
+    font-family: 'Poppins', sans-serif;
+}
+
+.container{
+    width: 100%;
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.titulo{
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 1.875em;
+}
+
+.titulo-medio{
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 1.56em;
+}
+
+.texto-normal {
+    font-family: 'Lato', sans-serif;
+    font-size:1.125em;
+}
+
+.texto-normal-mediano{
+    font-family: 'Lato', sans-serif;
+    font-size:0.95em;
+}
+
+.texto-normal-mediano-login{
+    font-family: 'Lato', sans-serif;
+    font-size:0.85em;
+}
+
+.texto-normal-pequeno{
+    font-family: 'Lato', sans-serif;
+    font-size:0.75em;
+}
+@media (min-width: 1000px) {
+    .collapse.dont-collapse-sm {
+        display: block;
+        height: auto !important;
+        visibility: visible;
+    }
+}
+#trofeo {
+    width: 3.125em; 
+    height: 4.375em;
+}
+
+.perfil-amigo {
+    width: 3.125em; 
+    height: 3.125em;
+}
+
+.menu-sidebar{
+    text-align:center
+}
+
+@media (min-width: 375px) {  
+    #cegamex-titulo {font-size: 1.25em;} 
+}
+@media (min-width: 1200px) {  
+    #cegamex-titulo {font-size: 1.875em;} 
+}
