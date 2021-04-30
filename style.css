@@ -110,3 +110,8 @@ a:link, a:visited, a:active {
 @media (min-width: 1200px) {  
     #cegamex-titulo {font-size: 1.875em;} 
 }
+
+#btn-inicio-sesion {
+    color: #ffffff; 
+    background-color:#297fba;
+}
