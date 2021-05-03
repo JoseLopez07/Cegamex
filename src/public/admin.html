@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@700&family=Lato&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link href="style.css" rel="stylesheet">
+
+</head>
+
+<body id="body-general">
+    <div class="container-fluid container-gen" style="overflow-x:hidden;">
+        <!-- Barra de navegacion -->    
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+            <a class="navbar-brand px-0 mx-0" href="#" id="cegamex-titulo">CEGAMEX</a>
+            <div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-3">
+                    <li class="nav-item active texto-normal">
+                        <a class="nav-link" href="#">mi perfil</a>
+                    </li>
+                    <li class="nav-item texto-normal">
+                        <a class="nav-link" href="#">juegos</a>
+                    </li>
+                    <li class="nav-item texto-normal">
+                        <a class="nav-link" href="#">admin</a> 
+                    </li>     
+                </ul> 
+            </div>
+            <div class="navbar-expand">
+                <ul class="navbar-nav" style="list-style-type: none;">
+                    <li class="nav-item"> 
+                        <a class="nav-link href="#><img src="imagenes\campana.png" style="width: 1.5em; height: 1.75em;"></a>
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link mr-0 pr-0 href="#"><img src="imagenes\perfil.png" style="width: 1.9em; height: 1.9em;"></a>
+                    </li>
+                </ul>
+            </div>           
+        </nav>
+            <!-- Contenido -->
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-6 mb-4">
+                <!-- Seccion principal-->
+                <div class="card shadow mb-4">
+                    <div class="card-body p-4">                                              
+                        <div class="mb-2 titulo">Resumen para administrador</div>
+                        <div class="card shadow mt-3 mx-auto" id="kpi-1">
+                            <div class="card-body p-4">
+                                <div class="mb-1 titulo-medio">KPI 1</div>
+                                <div class="texto-normal mb-1">Nombre del KPI</div>
+                                <div class="row justify-content-center mt-4  align-items-end">
+                                    <div class="col-3"><img src="imagenes\grafica-2.png" class="img-fluid"><div class="text-center texto-normal-pequeno mt-1">Titulo de la grafica</div></div>
+                                    <div class="col-3"><img src="imagenes\grafica-circulo.png" class="img-fluid"><div class="text-center texto-normal-pequeno mt-1">Titulo de la grafica</div></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card shadow mt-3 mx-auto" id="kpi-2">
+                            <div class="card-body p-4">
+                                <div class="mb-1 titulo-medio">KPI 2</div>
+                                <div class="texto-normal mb-1">Nombre del KPI</div>
+                                <div class="row justify-content-center mt-4  align-items-end">
+                                    <div class="col-3"><img src="imagenes\grafica-2.png" class="img-fluid"><div class="text-center texto-normal-pequeno mt-1">Titulo de la grafica</div></div>
+                                    <div class="col-3"><img src="imagenes\grafica-circulo.png" class="img-fluid"><div class="text-center texto-normal-pequeno mt-1">Titulo de la grafica</div></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card shadow mt-3 mx-auto" id="jugadores-mejor-puntuacion">
+                            <div class="card-body p-4">
+                                <div class="mb-3 titulo-medio">Jugadores con la mejor puntuación</div>
+                                <div>
+                                    <ul class="list-group">
+                                        <li style="list-style-type: none;" class="my-2">
+                                            <img src="imagenes\foto_perfil.png" class="perfil-amigo"> <span class="mx-2 texto-normal">Nombre y apellidos</span>
+                                        </li>
+                                        <li style="list-style-type: none;" class="my-2">
+                                            <img src="imagenes\foto_perfil.png" class="perfil-amigo"> <span class="mx-2 texto-normal">Nombre y apellidos</span>
+                                        </li>
+                                        <li style="list-style-type: none;" class="my-2">
+                                            <img src="imagenes\foto_perfil.png" class="perfil-amigo"> <span class="mx-2 texto-normal">Nombre y apellidos</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                 </div>                    
+            </div>
+            <!-- Opciones -->
+            <div class="col-lg-2 mb-4 collapse dont-collapse-sm">
+                <div class="card shadow mb-4">
+                    <div class="card-body py-1">
+                        <ul class="list-group list-group-flush" id="menu-derecha">
+                            <li class="list-group-item texto-normal-pequeno px-0 py-3 menu-sidebar"> <a href="#kpi-1">KPI 1</a></li>
+                            <li class="list-group-item texto-normal-pequeno px-0 py-3 menu-sidebar" > <a href="#kpi-2">KPI 2</a></li>
+                            <li class="list-group-item texto-normal-pequeno px-0 py-3 menu-sidebar" ><a href="#jugadores-mejor-puntuacion">JUGADORES</a></li>
+                            <li class="list-group-item texto-normal-pequeno px-0 py-3 menu-sidebar" ><a href="#otros">OTROS</a></li>
+                        </ul>
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+    
+    <script src="perfil.js"></script>
+</body>
