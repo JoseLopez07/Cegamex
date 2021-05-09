@@ -1,40 +1,21 @@
-const express = require("express");
+const express = require('express');
 const app = express();
+const errorHandler = require('./middleware/errorHandler');
+
+// import env vars
+require('dotenv').config();
+
 const port = process.env.PORT || 3000;
-const sql = require("mssql");
-const config = require("./config");
 
-app.use("/", express.static("public"));
-app.use(express.json());
+// serve static content
+app.use('/', express.static('./public'));
 
-app.post("/login", (req, res) => {
-    const conn = sql.connect(config, (err) => {
-      if (err) console.log(err);
-      const request = new sql.Request();
-      let query =
-        "select * from Usuario where correo='" + req.body.correo + "'";
-      console.log(query);
-      request.query(query, (err, { recordset }) => {
-        if (err) console.log(err);
-        console.log(recordset);
-        let login = false;
-        if (recordset.length > 0) {
-          if (
-            recordset[0].correo === req.body.correo &&
-            recordset[0].pass === req.body.pass
-          ) {
-            login = true;
-          }
-        }
-        res.json({
-          login: login,
-        });
-      });
-    });
-    console.log("Post LOGIN");
-    console.log(req.body);
-  });
-  
-  app.listen(port, () => {
+// use api routes
+app.use('/api/v1/', require('./routes/api'));
+
+// catch all other unexpected internal errors
+app.use(require('./middleware/errorHandler'));
+
+app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
-  });
+});
