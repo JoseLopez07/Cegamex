@@ -12,3 +12,5 @@ router.use(verifyJson);
 
 // use routes
 router.use('/auth', authRoutes);
+
+module.exports = router;

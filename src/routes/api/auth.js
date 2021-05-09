@@ -1,14 +1,20 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const jwt = require('express-jwt');
+const jwt = require('jsonwebtoken');
 const jwtMiddleware = require('express-jwt');
 const sql = require('mssql');
 const cookieParser = require('cookie-parser');
 const verifyToken = require('../../middleware/verifyToken');
 
-const TOKEN_SECRET = process.env.TOKEN_SECRET;
+// import env vars
+require('dotenv').config();
+
+// optional env
 const ACCESS_EXPIRATON = parseInt(process.env.ACCESS_EXPIRATON) || 1800;
 const REFRESH_EXPIRATION = parseInt(process.env.REFRESH_EXPIRATION) || 259200;
+
+// required env
+const TOKEN_SECRET = process.env.TOKEN_SECRET;
 
 const router = express.Router();
 
@@ -19,9 +25,9 @@ router.get(
     (_, res) => res.status(204).send()
 );
 
-router.get('/login', async (req, res, next) => {
+router.post('/login', async (req, res, next) => {
     try {
-        const data = req.body.body;
+        const data = req.body;
         const email = data.email || '';
         const password = data.password || '';
         if (!email || !password) {
@@ -30,7 +36,7 @@ router.get('/login', async (req, res, next) => {
             });
         }
 
-        const hash = await queryPasswordHash(email, req.app.locals);
+        const hash = await queryUserPass(email, req.app.locals);
         if (hash == undefined) {
             // invalid email
             return res.status(403).send({
@@ -47,20 +53,24 @@ router.get('/login', async (req, res, next) => {
                     error: 'Invalid login credentials',
                 });
             } else {
-                const id = (await queryUserId(email, req.app.locals)) || '';
-                if (!id) {
-                    return next(
-                        new Error(`User with email ${email} has no id`)
-                    );
-                }
+                try {
+                    const id = (await queryUserId(email, req.app.locals)) || '';
+                    if (!id) {
+                        return next(
+                            new Error(`User with email ${email} has no id`)
+                        );
+                    }
 
-                const tokens = generateTokens(id);
-                return res
-                    .cookie('refresh_token', tokens.refresh, {
-                        maxAge: REFRESH_EXPIRATION * 1000,
-                        httpOnly: true,
-                    })
-                    .send({ access_token: tokens.access });
+                    const tokens = generateTokens(id);
+                    return res
+                        .cookie('refresh_token', tokens.refresh, {
+                            maxAge: REFRESH_EXPIRATION * 1000,
+                            httpOnly: true,
+                        })
+                        .send({ access_token: tokens.access });
+                } catch (err) {
+                    return next(err);
+                }
             }
         });
     } catch (err) {
@@ -85,13 +95,17 @@ router.get('/refresh', cookieParser(), async (req, res, next) => {
                     return next(err);
                 }
             } else {
-                const tokens = generateTokens(decoded.id);
-                return res
-                    .cookie('refresh_token', tokens.refresh, {
-                        maxAge: REFRESH_EXPIRATION * 1000,
-                        httpOnly: true,
-                    })
-                    .send({ access_token: tokens.access });
+                try {
+                    const tokens = generateTokens(decoded.id);
+                    return res
+                        .cookie('refresh_token', tokens.refresh, {
+                            maxAge: REFRESH_EXPIRATION * 1000,
+                            httpOnly: true,
+                        })
+                        .send({ access_token: tokens.access });
+                } catch (err) {
+                    return next(err);
+                }
             }
         });
     } catch (err) {
@@ -103,23 +117,22 @@ router.get('/logout', (req, res) => {
     return res.clearCookie('refresh_token').status(204).send();
 });
 
-// TODO: change the query for a procedure?
-async function queryPasswordHash(email, locals) {
+async function queryUserPass(email, locals) {
     await locals.dbPoolConnect;
     const result = await locals.dbPool
         .request()
-        .input('email', sql.VarChar, email)
-        .query('SELECT pass FROM Usuario WHERE correo = @email');
+        .input('email', sql.VarChar(255), email)
+        .execute('getPasswordFromEmail');
 
-    return result.recordset[0] && result.recordset[0].pwHash;
+    return result.recordset[0] && result.recordset[0].pass;
 }
 
 async function queryUserId(email, locals) {
     await locals.dbPoolConnect;
     const result = await locals.dbPool
         .request()
-        .input('email', sql.VarChar, email)
-        .query('SELECT idUser FROM Usuario WHERE correo = @email');
+        .input('email', sql.VarChar(255), email)
+        .execute('getIdFromEmail');
 
     return result.recordset[0] && result.recordset[0].idUser;
 }
