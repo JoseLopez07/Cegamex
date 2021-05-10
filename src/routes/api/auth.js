@@ -28,42 +28,25 @@ router.post(
             const email = req.body.email;
             const password = req.body.password;
 
-            const hash = await queryUserPass(email, req.app.locals);
-            if (hash == undefined) {
-                // invalid email
+            const hash = (await queryUserPass(email, req.app.locals)) || '';
+            if (!hash || !(await bcrypt.compare(password, hash))) {
                 return res.status(403).send({
                     error: 'Invalid login credentials',
                 });
             }
 
-            return bcrypt.compare(password, hash, async (err, match) => {
-                if (err) {
-                    return next(err);
-                } else if (!match) {
-                    // invalid password
-                    return res.status(403).send({
-                        error: 'Invalid login credentials',
-                    });
-                } else {
-                    try {
-                        const id =
-                            (await queryUserId(email, req.app.locals)) || '';
-                        if (!id) {
-                            throw `User with email ${email} has no id`;
-                        }
+            const id = (await queryUserId(email, req.app.locals)) || '';
+            if (!id) {
+                throw `User with email ${email} has no id`;
+            }
 
-                        const tokens = generateTokens(id);
-                        return res
-                            .cookie('refresh_token', tokens.refresh, {
-                                maxAge: REFRESH_EXPIRATION * 1000,
-                                httpOnly: true,
-                            })
-                            .send({ access_token: tokens.access });
-                    } catch (err) {
-                        return next(err);
-                    }
-                }
-            });
+            const tokens = generateTokens(id);
+            return res
+                .cookie('refresh_token', tokens.refresh, {
+                    maxAge: REFRESH_EXPIRATION * 1000,
+                    httpOnly: true,
+                })
+                .send({ access_token: tokens.access });
         } catch (err) {
             return next(err);
         }
@@ -77,31 +60,21 @@ router.get('/refresh', cookieParser(), async (req, res, next) => {
             return res.status(400).send({ error: 'No refresh token provided' });
         }
 
-        return jwt.verify(token, TOKEN_SECRET, (err, decoded) => {
-            if (err) {
-                if (err instanceof jwt.TokenExpiredError) {
-                    return res
-                        .status(410)
-                        .send({ error: 'Expired refresh token' });
-                } else {
-                    return next(err);
-                }
-            } else {
-                try {
-                    const tokens = generateTokens(decoded.id);
-                    return res
-                        .cookie('refresh_token', tokens.refresh, {
-                            maxAge: REFRESH_EXPIRATION * 1000,
-                            httpOnly: true,
-                        })
-                        .send({ access_token: tokens.access });
-                } catch (err) {
-                    return next(err);
-                }
-            }
-        });
+        const decoded = await jwt.verify(token, TOKEN_SECRET);
+
+        const tokens = generateTokens(decoded.id);
+        return res
+            .cookie('refresh_token', tokens.refresh, {
+                maxAge: REFRESH_EXPIRATION * 1000,
+                httpOnly: true,
+            })
+            .send({ access_token: tokens.access });
     } catch (err) {
-        next(err);
+        if (err instanceof jwt.TokenExpiredError) {
+            return res.status(410).send({ error: 'Expired refresh token' });
+        } else {
+            return next(err);
+        }
     }
 });
 
