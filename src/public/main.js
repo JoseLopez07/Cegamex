@@ -1,26 +1,25 @@
-const boton = document.getElementById("btn-inicio-sesion");
+import api from '/modules/api.mjs';
 
-boton.addEventListener("click", async (event) => {
-  event.preventDefault();
-  const correo = document.getElementById("exampleInputEmail");
-  const pass = document.getElementById("exampleInputPassword");
-  console.log(correo);
-  console.log(pass);
-  const data = { correo: correo.value, pass: pass.value };
-  const opciones = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  };
-  const respuesta = await fetch("/login", opciones);
-  const datos = await respuesta.json();
-  
-  if (datos.login) {
-    window.location = "pagina-inicio.html";
-    //alert(datos.login);
-  } else {
-    alert("Datos incorrectos");
-    correo.value = "";
-    pass.value = "";
-  }
+const boton = document.getElementById('btn-inicio-sesion');
+
+const apiClient = new api.ApiClient();
+
+boton.addEventListener('click', async (event) => {
+    event.preventDefault();
+
+    // TODO: validate that entries are not empty
+    const correo = document.getElementById('exampleInputEmail') || '';
+    const pass = document.getElementById('exampleInputPassword') || '';
+
+    try {
+        await apiClient.logIn(correo.value, pass.value);
+        location.href = '/pagina-inicio.html';
+    } catch (err) {
+        console.error(err);
+        alert(
+            err instanceof api.ApiRequestError && err.status == 403
+                ? 'Datos incorrectos'
+                : 'Error inesperado'
+        );
+    }
 });
