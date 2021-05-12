@@ -1,8 +1,8 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const sql = require('mssql');
 const cookieParser = require('cookie-parser');
+const db = require('../../db');
 const verifyToken = require('../../middleware/verifyToken');
 const verifyParams = require('../../middleware/verifyParams');
 
@@ -28,14 +28,15 @@ router.post(
             const email = req.body.email;
             const password = req.body.password;
 
-            const hash = (await queryUserPass(email, req.app.locals)) || '';
+            const hash =
+                (await db.getPasswordFromEmail(req.app.locals, email)) || '';
             if (!hash || !(await bcrypt.compare(password, hash))) {
                 return res.status(403).send({
                     error: 'Invalid login credentials',
                 });
             }
 
-            const id = (await queryUserId(email, req.app.locals)) || '';
+            const id = (await db.getIdFromEmail(req.app.locals, email)) || '';
             if (!id) {
                 throw `User with email ${email} has no id`;
             }
@@ -81,26 +82,6 @@ router.get('/refresh', cookieParser(), async (req, res, next) => {
 router.get('/logout', (req, res) => {
     return res.clearCookie('refresh_token').status(204).send();
 });
-
-async function queryUserPass(email, locals) {
-    await locals.dbPoolConnect;
-    const result = await locals.dbPool
-        .request()
-        .input('email', sql.VarChar(255), email)
-        .execute('getPasswordFromEmail');
-
-    return result.recordset[0] && result.recordset[0].pass;
-}
-
-async function queryUserId(email, locals) {
-    await locals.dbPoolConnect;
-    const result = await locals.dbPool
-        .request()
-        .input('email', sql.VarChar(255), email)
-        .execute('getIdFromEmail');
-
-    return result.recordset[0] && result.recordset[0].idUser;
-}
 
 function generateTokens(id) {
     return {
