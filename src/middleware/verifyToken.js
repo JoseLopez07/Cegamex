@@ -12,9 +12,8 @@ function checkToken(err, req, res, next) {
         return res.status(401).send({
             error: 'Invalid or expired access token',
         });
-    } else {
-        return next(err);
     }
+    return next(err);
 }
 
 module.exports = [
