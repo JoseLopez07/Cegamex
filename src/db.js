@@ -92,20 +92,6 @@ async function setUserAdmin(id, adm) {
         .execute('setUserAdmin');
 }
 
-async function makeAdmin(id) {
-    const query = (await connect())
-        .input('id', sql.Int, id)
-        .execute('makeAdmin');
-    await query;
-}
-
-async function unmakeAdmin(id) {
-    const query = (await connect())
-        .input('id', sql.Int, id)
-        .execute('unmakeAdmin');
-    await query;
-}
-
 async function modifyUser(
     id,
     {
