@@ -40,7 +40,7 @@ router.post(
                 throw `User with email ${email} has no id`;
             }
 
-            const tokens = generateTokens(id);
+            const tokens = await generateTokens(id);
             return res
                 .cookie('refresh_token', tokens.refresh, {
                     maxAge: REFRESH_EXPIRATION * 1000,
@@ -63,7 +63,7 @@ router.get('/refresh', cookieParser(), async (req, res, next) => {
 
         const decoded = jwt.verify(token, TOKEN_SECRET);
 
-        const tokens = generateTokens(decoded.id);
+        const tokens = await generateTokens(decoded.id);
         return res
             .cookie('refresh_token', tokens.refresh, {
                 maxAge: REFRESH_EXPIRATION * 1000,
@@ -71,8 +71,13 @@ router.get('/refresh', cookieParser(), async (req, res, next) => {
             })
             .send({ access_token: tokens.access });
     } catch (err) {
-        if (err instanceof jwt.TokenExpiredError) {
-            return res.status(410).send({ error: 'Expired refresh token' });
+        if (
+            err instanceof jwt.TokenExpiredError ||
+            err instanceof jwt.JsonWebTokenError
+        ) {
+            return res
+                .status(410)
+                .send({ error: 'Invalid or expired refresh token' });
         }
         return next(err);
     }
@@ -82,7 +87,7 @@ router.get('/logout', (req, res) => {
     return res.clearCookie('refresh_token').status(204).send();
 });
 
-await function generateTokens(id) {
+async function generateTokens(id) {
     const adm = await db.isUserAdmin(id);
     return {
         access: jwt.sign({ id, adm }, TOKEN_SECRET, {
@@ -92,6 +97,6 @@ await function generateTokens(id) {
             expiresIn: REFRESH_EXPIRATION,
         }),
     };
-};
+}
 
 module.exports = router;

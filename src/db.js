@@ -85,6 +85,13 @@ async function createUser({ firstName, lastName, userName, email, passHash }) {
     await query;
 }
 
+async function setUserAdmin(id, adm) {
+    const query = (await connect())
+        .input('id', sql.Int, id)
+        .input('adm', sql.Int, adm)
+        .execute('setUserAdmin');
+}
+
 async function makeAdmin(id) {
     const query = (await connect())
         .input('id', sql.Int, id)
@@ -128,7 +135,6 @@ async function removeUser(id) {
 }
 
 async function isUserAdmin(id) {
-    console.log(id);
     const query = (await connect())
         .input('id', sql.Int, id)
         .execute('isUserAdmin');
@@ -140,9 +146,9 @@ async function isUserAdmin(id) {
 module.exports = {
     getPasswordFromEmail,
     getIdFromEmail,
+    getIdFromUserName,
     createUser,
-    makeAdmin,
-    unmakeAdmin,
+    setUserAdmin,
     modifyUser,
     removeUser,
     isUserAdmin,
