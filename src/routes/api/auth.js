@@ -28,15 +28,14 @@ router.post(
             const email = req.body.email;
             const password = req.body.password;
 
-            const hash =
-                (await db.getPasswordFromEmail(req.app.locals, email)) || '';
+            const hash = (await db.getPasswordFromEmail(email)) || '';
             if (!hash || !(await bcrypt.compare(password, hash))) {
                 return res.status(403).send({
                     error: 'Invalid login credentials',
                 });
             }
 
-            const id = (await db.getIdFromEmail(req.app.locals, email)) || '';
+            const id = (await db.getIdFromEmail(email)) || '';
             if (!id) {
                 throw `User with email ${email} has no id`;
             }
@@ -47,6 +46,7 @@ router.post(
                     maxAge: REFRESH_EXPIRATION * 1000,
                     httpOnly: true,
                 })
+                .status(201)
                 .send({ access_token: tokens.access });
         } catch (err) {
             return next(err);
@@ -61,7 +61,7 @@ router.get('/refresh', cookieParser(), async (req, res, next) => {
             return res.status(400).send({ error: 'No refresh token provided' });
         }
 
-        const decoded = await jwt.verify(token, TOKEN_SECRET);
+        const decoded = jwt.verify(token, TOKEN_SECRET);
 
         const tokens = generateTokens(decoded.id);
         return res
@@ -73,9 +73,8 @@ router.get('/refresh', cookieParser(), async (req, res, next) => {
     } catch (err) {
         if (err instanceof jwt.TokenExpiredError) {
             return res.status(410).send({ error: 'Expired refresh token' });
-        } else {
-            return next(err);
         }
+        return next(err);
     }
 });
 
@@ -83,15 +82,16 @@ router.get('/logout', (req, res) => {
     return res.clearCookie('refresh_token').status(204).send();
 });
 
-function generateTokens(id) {
+await function generateTokens(id) {
+    const adm = await db.isUserAdmin(id);
     return {
-        access: jwt.sign({ id: id }, TOKEN_SECRET, {
+        access: jwt.sign({ id, adm }, TOKEN_SECRET, {
             expiresIn: ACCESS_EXPIRATON,
         }),
-        refresh: jwt.sign({ id: id }, TOKEN_SECRET, {
+        refresh: jwt.sign({ id, adm }, TOKEN_SECRET, {
             expiresIn: REFRESH_EXPIRATION,
         }),
     };
-}
+};
 
 module.exports = router;
