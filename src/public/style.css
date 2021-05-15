@@ -90,6 +90,7 @@ a:link, a:visited, a:active {
         visibility: visible;
     }
 }
+
 #trofeo {
     width: 3.125em; 
     height: 4.375em;
@@ -104,14 +105,50 @@ a:link, a:visited, a:active {
     text-align:center
 }
 
-@media (min-width: 375px) {  
-    #cegamex-titulo {font-size: 1.25em;} 
-}
-@media (min-width: 1200px) {  
-    #cegamex-titulo {font-size: 1.875em;} 
-}
-
 #btn-inicio-sesion {
     color: #ffffff; 
     background-color:#297fba;
+}
+
+/*  En versión móvil se reordenan estos elementos de la barra de navegación y cambian algunas propiedades 
+    De esta manera, el ícono de notificaciones permanece en su lugar y su contenedor se hace más ancho para que el espacio
+    respecto al cual se centra el botón de tres líneas, sea el adecuado*/
+@media (max-width: 1000px) {
+    .navbar {
+       display: flex;
+       flex-direction: row;
+       }
+       #navbarNav { order: 2; }
+       #notificaciones-perfil { 
+           order: 1;
+           width: 3.7em;;
+        }
+        #ul-not-perfil {
+            display: flex;
+            float: right;
+            padding: 0;
+        }
+        #campana {
+            padding: 0%;
+        }
+   }
+   
+.sidebar-divider{
+    margin: 0;
+    border-top: 1px solid #8bc4eb;
+}
+
+.dropdown-menu {
+    right: 0 !important;
+    left: auto !important;
+}
+
+.numero-alertas {
+    width: 1em;
+    height: 1em; 
+    background-color: #ea3c41;
+    border-radius: 50%;
+    position: absolute;
+    top: 5%;
+    right: 40%;
 }
