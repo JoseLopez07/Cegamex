@@ -46,79 +46,65 @@ router.post(
     }
 );
 
-// method to change OWN user info
-router.put('/', verifyToken, async (req, res, next) => {
+async function changeUserInfo(req, res, next) {
     try {
         let passHash;
         if (req.body.password) {
             passHash = await bcrypt.hash(req.body.password, SALT_ROUNDS);
         }
 
-        await db.modifyUser(req.user.id, { ...req.body, passHash });
+        await db.modifyUser(req.userId, { ...req.body, passHash });
         return res.status(204).send();
     } catch (err) {
         return next(err);
     }
-});
+}
+
+// method to change OWN user info
+router.put('/', verifyToken, useTokenId, changeUserInfo);
 
 // method to change ANY user info (only accesible to admins)
-router.put('/:userId', verifyAdminToken, async (req, res, next) => {
+router.put('/:userId', verifyAdminToken, parseUserId, changeUserInfo);
+
+async function deleteUser(req, res, next) {
     try {
-        const parsedId = parseInt(req.params.userId);
-        if (isNaN(parsedId) || parsedId === 0) {
-            return res.status(400).send({ error: 'Invalid user id' });
-        }
-
-        let passHash;
-        if (req.body.password) {
-            passHash = await bcrypt.hash(req.body.password, SALT_ROUNDS);
-        }
-
-        await db.modifyUser(parsedId, { ...req.body, passHash });
+        await db.removeUser(req.userId);
         return res.status(204).send();
     } catch (err) {
         return next(err);
     }
-});
+}
 
 // method to delete OWN account
-router.delete('/', verifyToken, async (req, res, next) => {
-    try {
-        await db.removeUser(req.user.id);
-        return res.status(204).send();
-    } catch (err) {
-        return next(err);
-    }
-});
+router.delete('/', verifyToken, useTokenId, deleteUser);
 
 // method to delete ANY account (only accessible to admins)
-router.delete('/:userId', verifyAdminToken, async (req, res, next) => {
-    try {
-        const parsedId = parseInt(req.params.userId);
-        if (isNaN(parsedId) || parsedId === 0) {
-            return res.status(400).send({ error: 'Invalid user id' });
-        }
+router.delete('/:userId', verifyAdminToken, parseUserId, deleteUser);
 
-        await db.removeUser(parsedId);
-        return res.status(204).send();
+async function getUserAdmin(req, res, next) {
+    try {
+        const adm = await db.isUserAdmin(req.userId);
+        return res.send({ adm });
     } catch (err) {
         return next(err);
     }
-});
+}
+
+// method to check if OWN user is an admin (returned as {adm: <int>})
+router.get('/admins', verifyToken, useTokenId, getUserAdmin);
+
+// method to check if ANY user is an admin (returned as {adm: <int>}, only for admins)
+router.get('/admins/:userId', verifyAdminToken, parseUserId, getUserAdmin);
 
 // method to make/remove an admin (only accesible to other admins)
 router.put(
     '/admins/:userId',
     verifyAdminToken,
     verifyParams('adm'),
+    parseUserId,
     async (req, res, next) => {
         try {
-            const parsedId = parseInt(req.params.userId);
-            if (isNaN(parsedId) || parsedId === 0) {
-                return res.status(400).send({ error: 'Invalid user id' });
-            }
-
-            await db.setUserAdmin(parsedId, req.body.adm);
+            await db.setUserAdmin(req.userId, req.body.adm);
 
             return res.status(204).send();
         } catch (err) {
@@ -126,5 +112,21 @@ router.put(
         }
     }
 );
+
+// middlware for parsing a URL user id
+function parseUserId(req, res, next) {
+    const parsedId = parseInt(req.params.userId);
+    if (isNaN(parsedId) || parsedId === 0) {
+        return res.status(400).send({ error: 'Invalid user id' });
+    }
+
+    req.userId = parsedId;
+    return next();
+}
+
+function useTokenId(req, _, next) {
+    req.userId = req.user.id;
+    return next();
+}
 
 module.exports = router;
