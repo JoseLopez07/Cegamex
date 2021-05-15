@@ -23,8 +23,6 @@ class ApiClient {
         data = null,
         { tryRefreshingTokens = true, retries = 3, credentials = 'omit' } = {}
     ) {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
         const response = await fetch(uri, {
             method: method,
             // mode: 'cors',
@@ -90,6 +88,18 @@ class ApiClient {
         window.localStorage.setItem('access_token', newToken);
     }
 
+    async checkLoggedIn() {
+        return this.apiRequest('/api/v1/auth', 'GET');
+    }
+
+    async logIn(email, password) {
+        const response = await this.apiRequest('/api/v1/auth/login', 'POST', {
+            email: email,
+            password: password,
+        });
+        this.token = (await response.json()).access_token;
+    }
+
     async refreshTokens() {
         const response = await this.apiRequest(
             '/api/v1/auth/refresh',
@@ -103,21 +113,41 @@ class ApiClient {
         this.token = (await response.json()).access_token;
     }
 
-    async logIn(email, password) {
-        const response = await this.apiRequest('/api/v1/auth/login', 'POST', {
-            email: email,
-            password: password,
-        });
-        this.token = (await response.json()).access_token;
-    }
-
     async logOut() {
         this.token = '';
         return this.apiRequest('/api/v1/auth/logout', 'GET');
     }
 
-    async checkLoggedIn() {
-        return this.apiRequest('/api/v1/auth', 'GET');
+    async register(userData) {
+        return this.apiRequest('/api/v1/users', 'POST', userData);
+    }
+
+    // must be an admin to specify user id
+    async changeUserInfo(userId = null, userData) {
+        return this.apiRequest(
+            `/api/v1/users/${userId || ''}`,
+            'PUT',
+            userData
+        );
+    }
+
+    // must be an admin to specify user id
+    async deleteUser(userId = null) {
+        return this.apiRequest(`/api/v1/users/${userId || ''}`, 'DELETE');
+    }
+
+    // must be an admin to specify user id
+    async getUserAdmin(userId) {
+        return this.apiRequest(`/api/v1/users/admins/${userId}`, 'GET');
+    }
+
+    // must be an admin to send request
+    async setUserAdmin(userId, admData) {
+        return this.apiRequest(
+            `/api/v1/users/admins/${userId}`,
+            'PUT',
+            admData
+        );
     }
 }
 
