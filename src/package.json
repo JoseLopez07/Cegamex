@@ -1,5 +1,5 @@
 {
-  "name": "ciclo1pagina",
+  "name": "pagina-cegamex",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.5",
+    "cookieparser": "^0.1.0",
+    "dotenv": "^9.0.0",
     "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
+    "jsonwebtoken": "^8.5.1",
     "mssql": "^6.3.1"
   }
 }
