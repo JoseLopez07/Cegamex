@@ -153,6 +153,11 @@ a:link, a:visited, a:active {
     right: 40%;
 }
 
+#btn-registrar {
+    color: #ffffff; 
+    background-color:#297fba;
+}
+
 #ir-registrar {
     color: blue;
 }
