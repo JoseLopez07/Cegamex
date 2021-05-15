@@ -152,3 +152,7 @@ a:link, a:visited, a:active {
     top: 5%;
     right: 40%;
 }
+
+#ir-registrar {
+    color: blue;
+}
