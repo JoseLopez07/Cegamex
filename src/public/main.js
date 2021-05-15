@@ -16,7 +16,7 @@ boton.addEventListener("click", async (event) => {
   const datos = await respuesta.json();
   
   if (datos.login) {
-    window.location = "inicio.html";
+    window.location = "pagina-inicio.html";
     //alert(datos.login);
   } else {
     alert("Datos incorrectos");

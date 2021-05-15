@@ -12,7 +12,7 @@ app.post("/login", (req, res) => {
       if (err) console.log(err);
       const request = new sql.Request();
       let query =
-        "select * from Usuarios where correo='" + req.body.correo + "'";
+        "select * from Usuario where correo='" + req.body.correo + "'";
       console.log(query);
       request.query(query, (err, { recordset }) => {
         if (err) console.log(err);
@@ -21,7 +21,7 @@ app.post("/login", (req, res) => {
         if (recordset.length > 0) {
           if (
             recordset[0].correo === req.body.correo &&
-            recordset[0].contrasena === req.body.pass
+            recordset[0].pass === req.body.pass
           ) {
             login = true;
           }
