@@ -161,3 +161,83 @@ a:link, a:visited, a:active {
 #ir-registrar {
     color: blue;
 }
+
+/* JUMPBOTRON 1 */
+
+.jumbotron .container{
+  border-radius: 15px;
+  background: url("imagenes/background.png") #2980ba
+  no-repeat right ;
+  width: 1300px; 
+  height: 500px;
+  
+}
+
+.jumbotron .container h1 {
+  color: rgb(255,255,255);
+  padding: 40px 0px 0px 30px;
+  background-color: #2980ba;
+  width: 550px;
+
+  color: #011c5d;
+  font-family:'Bebas Neue', serif;
+  font-size: 150px;
+  line-height: 130px;
+  letter-spacing: 14.9px;
+}
+
+#pJB1 {
+  background-color:#2980ba;
+  width: 625px;
+  color: rgb(255,255,255) ;
+  padding: 20px 0px 0px 30px;
+}
+
+.jumbotron .container a {
+  background: rgb(242,242,242);
+  color: #2c5499;
+  margin: 40px 0px 0px 30px;
+}
+
+/* LISTA DE JUEGOS */
+
+.container .card {
+  background: rgb(226,233,241);
+  margin-right: 10px;
+}
+
+.container .card img{
+  width: auto;
+  height: auto;
+}
+
+/* JUMPBOTRON 2 */
+#JB2 {
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-top: 40px;
+}
+
+section .jumbotron .container{
+  border-radius: 15px;
+  background: url("imagenes/background2.png") 
+  #2c5499 no-repeat right ;
+  width: 1300px; 
+  height: 500px;
+  margin-top: 60px;
+}
+
+section .jumbotron .container h2{ 
+  font-size: 60px;
+  width: 700px;
+  color: rgb(255,255,255);
+  padding: 100px 0px 0px 30px;
+  background-color:#2c5499;
+}
+
+section .jumbotron .container p{
+  padding: 60px 0px 0px 30px;
+  color: rgb(255,255,255);
+  width: 625px;
+  background-color:#2c5499;
+}
