@@ -21,7 +21,7 @@ class ApiClient {
         uri,
         method,
         data = null,
-        { tryRefreshingTokens = true, retries = 3, credentials = 'omit' } = {}
+        { tryRefreshingTokens = true, credentials = 'omit' } = {}
     ) {
         const response = await fetch(uri, {
             method: method,
@@ -39,37 +39,12 @@ class ApiClient {
             return this.refreshTokens().then(() =>
                 this.apiRequest(uri, method, data, {
                     tryRefreshingTokens: false,
-                    retries: retries,
                 })
             );
         }
 
         // something wrong
         if (!response.ok) {
-            // client error, no use in retrying
-            if (response.status >= 400 && response.status < 500) {
-                throw new ApiRequestError(
-                    response.status,
-                    (await response.json()).error
-                );
-            }
-
-            // other errors worth retrying
-            console.warn(
-                `Failed API request with status code ${response.status} (${retries} retries remaining)`
-            );
-            if (retries > 0) {
-                return setTimeout(
-                    () =>
-                        this.apiRequest(uri, method, data, {
-                            tryRefreshingTokens: tryRefreshingTokens,
-                            retries: retries - 1,
-                        }),
-                    RETRY_DELAY
-                );
-            }
-
-            // all retries used up
             throw new ApiRequestError(
                 response.status,
                 (await response.json()).error
@@ -97,6 +72,7 @@ class ApiClient {
             email: email,
             password: password,
         });
+        console.log(response.json);
         this.token = (await response.json()).access_token;
     }
 
@@ -137,7 +113,7 @@ class ApiClient {
     }
 
     // must be an admin to specify user id
-    async getUserAdmin(userId) {
+    async getUserAdmin(userId = null) {
         return this.apiRequest(`/api/v1/users/admins/${userId}`, 'GET');
     }
 
