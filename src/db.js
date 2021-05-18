@@ -27,7 +27,7 @@ const DB_CONFIG = {
     },
     options: {
         encrypt: true,
-        trustServerCertificate: false, // change to true for local dev / self-signed certs
+        trustServerCertificate: true, // change to true for local dev / self-signed certs
     },
 };
 
