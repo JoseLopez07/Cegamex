@@ -1,18 +1,35 @@
 import api from '/modules/api.mjs';
 
-const boton = document.getElementById('btn-inicio-sesion');
+const button = document.getElementById('login-button');
 
 const apiClient = new api.ApiClient();
 
-boton.addEventListener('click', async (event) => {
-    event.preventDefault();
+const email = document.getElementById('email-input');
+const pass = document.getElementById('password-input');
+const form = [email, pass];
+const rememberMe = document.getElementById('remember-check');
 
-    // TODO: validate that entries are not empty
-    const correo = document.getElementById('exampleInputEmail') || '';
-    const pass = document.getElementById('exampleInputPassword') || '';
+// listen for button press or enter key on inputs to log in
+button.addEventListener('click', async (event) => {
+    event.preventDefault();
+    logIn();
+});
+form.forEach((input) => {
+    input.addEventListener('keyup', async ({ key }) => {
+        if (key === 'Enter') {
+            logIn();
+        }
+    });
+});
+
+async function logIn() {
+    // don't continue on empty fields
+    if (!validate()) {
+        return;
+    }
 
     try {
-        await apiClient.logIn(correo.value, pass.value);
+        await apiClient.logIn(email.value, pass.value, rememberMe.checked);
         location.href = '/pagina-inicio.html';
     } catch (err) {
         console.error(err);
@@ -22,4 +39,8 @@ boton.addEventListener('click', async (event) => {
                 : 'Error inesperado'
         );
     }
-});
+}
+
+function validate() {
+    return form.every((input) => !!input.value);
+}

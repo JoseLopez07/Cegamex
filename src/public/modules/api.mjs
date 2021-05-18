@@ -5,9 +5,6 @@ class ApiRequestError extends Error {
     }
 }
 
-// in milliseconds
-const RETRY_DELAY = 3000;
-
 // API client singleton
 class ApiClient {
     constructor() {
@@ -67,12 +64,19 @@ class ApiClient {
         return this.apiRequest('/api/v1/auth', 'GET');
     }
 
-    async logIn(email, password) {
-        const response = await this.apiRequest('/api/v1/auth/login', 'POST', {
-            email: email,
-            password: password,
-        });
-        console.log(response.json);
+    async logIn(email, password, rememberMe = false) {
+        const response = await this.apiRequest(
+            '/api/v1/auth/login',
+            'POST',
+            {
+                email,
+                password,
+                rememberMe,
+            },
+            {
+                credentials: 'include',
+            }
+        );
         this.token = (await response.json()).access_token;
     }
 
