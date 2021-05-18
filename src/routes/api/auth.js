@@ -20,6 +20,7 @@ const router = express.Router();
 
 router.get('/', verifyToken, (_, res) => res.status(204).send());
 
+// optional parameter rememberMe is used to configure how the cookie is stored
 router.post(
     '/login',
     verifyParams('email', 'password'),
@@ -27,6 +28,7 @@ router.post(
         try {
             const email = req.body.email;
             const password = req.body.password;
+            const rememberMe = req.body.rememberMe || false;
 
             const hash = (await db.getPasswordFromEmail(email)) || '';
             if (!hash || !(await bcrypt.compare(password, hash))) {
@@ -40,11 +42,15 @@ router.post(
                 throw `User with email ${email} has no id`;
             }
 
-            const tokens = await generateTokens(id);
+            const tokens = await generateTokens(
+                id,
+                await db.isUserAdmin(id),
+                rememberMe
+            );
             return res
                 .cookie('refresh_token', tokens.refresh, {
-                    maxAge: REFRESH_EXPIRATION * 1000,
                     httpOnly: true,
+                    ...(rememberMe && { maxAge: REFRESH_EXPIRATION * 1000 }),
                 })
                 .status(201)
                 .send({ access_token: tokens.access });
@@ -62,12 +68,17 @@ router.get('/refresh', cookieParser(), async (req, res, next) => {
         }
 
         const decoded = jwt.verify(token, TOKEN_SECRET);
+        const rememberMe = decoded.rememberMe;
 
-        const tokens = await generateTokens(decoded.id);
+        const tokens = await generateTokens(
+            decoded.id,
+            decoded.adm,
+            rememberMe
+        );
         return res
             .cookie('refresh_token', tokens.refresh, {
-                maxAge: REFRESH_EXPIRATION * 1000,
                 httpOnly: true,
+                ...(rememberMe && { maxAge: REFRESH_EXPIRATION * 1000 }),
             })
             .send({ access_token: tokens.access });
     } catch (err) {
@@ -83,17 +94,16 @@ router.get('/refresh', cookieParser(), async (req, res, next) => {
     }
 });
 
-router.get('/logout', (req, res) => {
+router.get('/logout', (_, res) => {
     return res.clearCookie('refresh_token').status(204).send();
 });
 
-async function generateTokens(id) {
-    const adm = await db.isUserAdmin(id);
+async function generateTokens(id, adm, rememberMe) {
     return {
         access: jwt.sign({ id, adm }, TOKEN_SECRET, {
             expiresIn: ACCESS_EXPIRATON,
         }),
-        refresh: jwt.sign({ id, adm }, TOKEN_SECRET, {
+        refresh: jwt.sign({ id, adm, rememberMe }, TOKEN_SECRET, {
             expiresIn: REFRESH_EXPIRATION,
         }),
     };
