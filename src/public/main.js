@@ -9,12 +9,9 @@ const pass = document.getElementById('password-input');
 const form = [email, pass];
 const rememberMe = document.getElementById('remember-check');
 
-email.addEventListener('click',porMientras2());
-
 // listen for button press or enter key on inputs to log in
 button.addEventListener('click', async (event) => {
     event.preventDefault();
-    porMientras();
     logIn();
 });
 form.forEach((input) => {
@@ -46,14 +43,4 @@ async function logIn() {
 
 function validate() {
     return form.every((input) => !!input.value);
-}
-
-function porMientras() {
-    email.classList.add('input-invalido');
-    pass.classList.add('input-invalido');
-}
-
-function porMientras2() {
-    email.classList.remove('input-invalido');
-    pass.classList.remove('input-invalido');
 }
