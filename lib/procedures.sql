@@ -76,6 +76,35 @@ AS
 	WHERE idUser = @id;
 GO
 
+CREATE OR ALTER PROCEDURE getSingleUserInfo
+	@id int
+AS
+	SET NOCOUNT ON;
+	SELECT idUser, nombre AS firstName, apellido AS lastName, userName, correo AS email
+	FROM [dbo].[usuarios]
+	WHERE idUser = @id
+GO
+
+
+-- https://stackoverflow.com/a/18480166/13215978
+CREATE OR ALTER PROCEDURE getMultipleUserInfo
+	@idList nvarchar(max)
+AS
+	SET NOCOUNT ON;
+	BEGIN
+		DECLARE @data xml;
+		SELECT @data = CAST('<id>' + REPLACE(@idList, ',', '</id><id>') + '</id>' AS xml);
+
+		SELECT TOP 100 idUser, nombre AS firstName, apellido AS lastName, userName, correo AS email
+		FROM [dbo].[usuarios]
+		WHERE idUser IN
+		(
+			SELECT t.c.value('.', 'INT')
+			FROM @data.nodes('id') AS t(c)
+		);
+	END
+GO
+
 -- TEST USERS
 
 -- INSERT INTO Usuarios VALUES('John', 'Doe', 'john.doe', 'john.doe@cemex.mx', '$2a$10$VQkTCGn3c1BDGBQGgCxeGucQ/DTZqUQpen.tdu2tbZP1JHi4wKVsG', NULL) -- password

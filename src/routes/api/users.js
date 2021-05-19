@@ -4,6 +4,7 @@ const db = require('../../db');
 const verifyToken = require('../../middleware/verifyToken');
 const verifyAdminToken = require('../../middleware/verifyAdminToken');
 const verifyParams = require('../../middleware/verifyParams');
+const { RequestError } = require('mssql');
 
 // used for generating the salt to encrypt passwords
 const SALT_ROUNDS = 10;
@@ -113,6 +114,28 @@ router.put(
     }
 );
 
+// by default returns OWN user info returning a single object, but an "id"
+// parameter can be used to speify multiple ids (sepparated by commas) and
+// returns an array of objects
+router.get('/', verifyToken, useTokenId, async (req, res, next) => {
+    try {
+        const queryId = req.query.id;
+
+        const result = queryId
+            ? await db.getMultipleUserInfo(queryId)
+            : await db.getSingleUserInfo(req.user.id);
+        res.send(result);
+    } catch (err) {
+        if (err instanceof RequestError) {
+            // console.error(err.message);
+            return res
+                .status(400)
+                .send({ error: 'Invalid id query parameter' });
+        }
+        return next(err);
+    }
+});
+
 // middlware for parsing a URL user id
 function parseUserId(req, res, next) {
     const parsedId = parseInt(req.params.userId);
@@ -124,6 +147,7 @@ function parseUserId(req, res, next) {
     return next();
 }
 
+// middelware for using token user id
 function useTokenId(req, _, next) {
     req.userId = req.user.id;
     return next();

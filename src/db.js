@@ -129,6 +129,24 @@ async function isUserAdmin(id) {
     return returnSingle(result, 'adm');
 }
 
+async function getSingleUserInfo(id) {
+    const query = await (await connect())
+        .input('id', sql.Int, id)
+        .execute('getSingleUserInfo');
+    const result = await query;
+
+    return result.recordset[0];
+}
+
+async function getMultipleUserInfo(idList) {
+    const query = await (await connect())
+        .input('idList', sql.NVarChar(sql.MAX), idList)
+        .execute('getMultipleUserInfo');
+    const result = await query;
+
+    return result.recordset;
+}
+
 module.exports = {
     getPasswordFromEmail,
     getIdFromEmail,
@@ -138,4 +156,6 @@ module.exports = {
     modifyUser,
     removeUser,
     isUserAdmin,
+    getSingleUserInfo,
+    getMultipleUserInfo,
 };
