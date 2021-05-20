@@ -86,7 +86,7 @@ a:link, a:visited, a:active {
 @media (min-width: 1000px) {
     .collapse.dont-collapse-sm {
         display: block;
-        height: auto !important;
+        height: auto;
         visibility: visible;
     }
 }
@@ -338,3 +338,37 @@ a:link, a:visited, a:active {
     }
 
 }
+
+.loading {
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: #d6dce2;
+    background-image: linear-gradient(90deg , #d6dce2 0%, #e3e8ec9a 20%, #d6dce2 40%, #d6dce2 100%);
+    border: none;
+    background-size: 70em;
+    background-repeat: no-repeat;
+}
+
+.loading2 {
+    background: #d6dce2;
+    border: none;
+}
+
+  @keyframes placeHolderShimmer {
+    0% {
+      background-position: -45em 0em
+    }
+    100% {
+      background-position: 45em 0em
+    }
+  }
+
+.loading-child {
+    visibility: hidden !important;    
+}
+
+
+    
