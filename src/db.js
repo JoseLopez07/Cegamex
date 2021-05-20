@@ -109,6 +109,9 @@ async function modifyUser(
         .input('userName', sql.NVarChar(255), userName)
         .input('email', sql.NVarChar(255), email)
         .input('passHash', sql.NVarChar(255), passHash)
+        .input('twitter', sql.NVarChar(255), twitter)
+        .input('picture', sql.NVarChar(255), picture)
+        .input('companyRole', sql.NVarChar(255), companyRole)
         .execute('modifyUser');
     await query;
 }
@@ -138,13 +141,87 @@ async function getSingleUserInfo(id) {
     return result.recordset[0];
 }
 
-async function getMultipleUserInfo(idList) {
+async function getMultipleUsersInfo(idList) {
     const query = await (await connect())
         .input('idList', sql.NVarChar(sql.MAX), idList)
-        .execute('getMultipleUserInfo');
+        .execute('getMultipleUsersInfo');
     const result = await query;
 
     return result.recordset;
+}
+
+async function getUserPet(userId) {
+    const query = (await connect())
+        .input('userId', sql.Int, userId)
+        .execute('getUserPet');
+    const result = await query;
+
+    return result.recordset[0];
+}
+
+async function createUserPet(
+    userId,
+    {
+        nivel,
+        upgradeP,
+        experiencia,
+        ptsAtaque,
+        ptsDefensa,
+        ptsVelocidad,
+        ptsMaxVida,
+        skill,
+    }
+) {
+    const query = (await connect())
+        .input('userId', sql.Int, userId)
+        .input('nivel', sql.Int, nivel)
+        .input('upgradeP', sql.Float, upgradeP)
+        .input('experiencia', sql.Float, experiencia)
+        .input('ptsAtaque', sql.Float, ptsAtaque)
+        .input('ptsDefensa', sql.Float, ptsDefensa)
+        .input('ptsVelocidad', sql.Float, ptsVelocidad)
+        .input('ptsMaxVida', sql.Float, ptsMaxVida)
+        .input('skill', sql.Float, skill)
+        .execute('createUserPet');
+    await query;
+}
+
+async function modifyUserPet(
+    userId,
+    {
+        nombre = '',
+        nivel = null,
+        upgradeP = null,
+        experiencia = null,
+        ptsAtaque = null,
+        ptsDefensa = null,
+        ptsVelocidad = null,
+        ptsMaxVida = null,
+        skill = null,
+        type = 0,
+    }
+) {
+    const query = (await connect())
+        .input('userId', sql.Int, userId)
+        .input('nombre', sql.NVarChar(255), nombre)
+        .input('nivel', sql.Int, nivel)
+        .input('upgradeP', sql.Float, upgradeP)
+        .input('experiencia', sql.Float, experiencia)
+        .input('ptsAtaque', sql.Float, ptsAtaque)
+        .input('ptsDefensa', sql.Float, ptsDefensa)
+        .input('ptsVelocidad', sql.Float, ptsVelocidad)
+        .input('ptsMaxVida', sql.Float, ptsMaxVida)
+        .input('skill', sql.Float, skill)
+        .input('type', sql.Int, type)
+        .execute('modifyUserPet');
+    await query;
+}
+
+async function deleteUserPet(userId) {
+    const query = (await connect())
+        .input('userId', sql.Int, userId)
+        .execute('deleteUserPet');
+    await query;
 }
 
 module.exports = {
@@ -157,5 +234,9 @@ module.exports = {
     removeUser,
     isUserAdmin,
     getSingleUserInfo,
-    getMultipleUserInfo,
+    getMultipleUsersInfo,
+    getUserPet,
+    createUserPet,
+    modifyUserPet,
+    deleteUserPet,
 };
