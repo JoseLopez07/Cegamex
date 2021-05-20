@@ -151,6 +151,7 @@ a:link, a:visited, a:active {
     position: absolute;
     top: 5%;
     right: 40%;
+    visibility: hidden;
 }
 
 #btn-registrar {
