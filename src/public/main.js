@@ -12,10 +12,12 @@ const rememberMe = document.getElementById('remember-check');
 // listen for button press or enter key on inputs to log in
 button.addEventListener('click', async (event) => {
     event.preventDefault();
+    inputColor(false);
     logIn();
 });
 form.forEach((input) => {
     input.addEventListener('keyup', async ({ key }) => {
+        inputColor(false);
         if (key === 'Enter') {
             logIn();
         }
@@ -33,14 +35,25 @@ async function logIn() {
         location.href = '/pagina-inicio.html';
     } catch (err) {
         console.error(err);
-        alert(
-            err instanceof api.ApiRequestError && err.status == 403
-                ? 'Datos incorrectos'
-                : 'Error inesperado'
-        );
+        if (err instanceof api.ApiRequestError && err.status == 403) {
+            inputColor(true)
+        } else {
+            alert ('Error inesperado')
+        } 
     }
 }
 
 function validate() {
     return form.every((input) => !!input.value);
+}
+
+function inputColor (invalido){
+    if (invalido === true) {
+        email.classList.add('input-invalido');
+        pass.classList.add('input-invalido');
+    }
+    else {
+        email.classList.remove('input-invalido');
+        pass.classList.remove('input-invalido');        
+    }
 }

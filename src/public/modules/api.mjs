@@ -14,7 +14,7 @@ class ApiClient {
         ApiClient._instance = this;
     }
 
-    async apiRequest(
+    async _apiRequest(
         uri,
         method,
         data = null,
@@ -34,7 +34,7 @@ class ApiClient {
         // access token is expired, try refreshing
         if (response.status == 401 && tryRefreshingTokens) {
             return this.refreshTokens().then(() =>
-                this.apiRequest(uri, method, data, {
+                this._apiRequest(uri, method, data, {
                     tryRefreshingTokens: false,
                 })
             );
@@ -61,11 +61,11 @@ class ApiClient {
     }
 
     async checkLoggedIn() {
-        return this.apiRequest('/api/v1/auth', 'GET');
+        return this._apiRequest('/api/v1/auth', 'GET');
     }
 
     async logIn(email, password, rememberMe = false) {
-        const response = await this.apiRequest(
+        const response = await this._apiRequest(
             '/api/v1/auth/login',
             'POST',
             {
@@ -81,7 +81,7 @@ class ApiClient {
     }
 
     async refreshTokens() {
-        const response = await this.apiRequest(
+        const response = await this._apiRequest(
             '/api/v1/auth/refresh',
             'GET',
             null,
@@ -95,16 +95,16 @@ class ApiClient {
 
     async logOut() {
         this.token = '';
-        return this.apiRequest('/api/v1/auth/logout', 'GET');
+        return this._apiRequest('/api/v1/auth/logout', 'GET');
     }
 
     async register(userData) {
-        return this.apiRequest('/api/v1/users', 'POST', userData);
+        return this._apiRequest('/api/v1/users', 'POST', userData);
     }
 
     // must be an admin to specify user id
     async changeUserInfo(userId = null, userData) {
-        return this.apiRequest(
+        return this._apiRequest(
             `/api/v1/users/${userId || ''}`,
             'PUT',
             userData
@@ -113,21 +113,28 @@ class ApiClient {
 
     // must be an admin to specify user id
     async deleteUser(userId = null) {
-        return this.apiRequest(`/api/v1/users/${userId || ''}`, 'DELETE');
+        return this._apiRequest(`/api/v1/users/${userId || ''}`, 'DELETE');
     }
 
     // must be an admin to specify user id
     async getUserAdmin(userId = null) {
-        return this.apiRequest(`/api/v1/users/admins/${userId}`, 'GET');
+        return this._apiRequest(`/api/v1/users/admins/${userId}`, 'GET');
     }
 
     // must be an admin to send request
     async setUserAdmin(userId, admData) {
-        return this.apiRequest(
+        return this._apiRequest(
             `/api/v1/users/admins/${userId}`,
             'PUT',
             admData
         );
+    }
+
+    // if userIds specified, response is an array, otherwise returns a single
+    // object with user's own info
+    async getUserData(userIds = null) {
+        const queryString = userIds ? `?id=${userIds.join()}` : '';
+        return this._apiRequest(`/api/v1/users${queryString}`, 'GET');
     }
 }
 
