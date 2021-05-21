@@ -9,4 +9,8 @@ let position = document.getElementById('user-position');
 
 const userData = await (await apiClient.getUserData()).json();
 nameProfile.innerText = userData.firstName + " " + userData.lastName;
+email.innerText = userData.email;
+twitterAccount.innerText = userData.twitter;
+position.innerText = userData.companyRole;
+profileImage[0].src = userData.picture;
 

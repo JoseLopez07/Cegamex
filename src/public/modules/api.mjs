@@ -95,7 +95,10 @@ class ApiClient {
 
     async logOut() {
         this.token = '';
-        return this._apiRequest('/api/v1/auth/logout', 'GET');
+        return this._apiRequest('/api/v1/auth/logout', 'GET',null, {
+            credentials: 'include'
+        });
+        
     }
 
     async register(userData) {

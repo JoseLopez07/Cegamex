@@ -7,11 +7,13 @@ let parents = document.getElementsByClassName('loading');
 let chiquis = document.getElementsByClassName('loading-child');
 let collapseItems = document.getElementsByClassName('dont-collapse-sm');
 let notificaciones = document.getElementById('campana');
+let logoutButtons = document.getElementsByClassName('logout');
 
 //Array from nodeList
 parents = Array.from(parents);
 chiquis = Array.from(chiquis);
 collapseItems = Array.from(collapseItems);
+logoutButtons = Array.from(logoutButtons);
 
 //Change navbar userName
 const userData = await (await apiClient.getUserData()).json();
@@ -23,6 +25,15 @@ if (sessionStorage.getItem('visibilityNotif') !== 'hidden') {
    notificaciones.addEventListener('click',onClick);
 }
 
+[].forEach.call(logoutButtons, function(b) {
+   b.addEventListener('click',onClickLogout)
+});
+
+async function onClickLogout(e) {
+   console.log(e.target);
+   await apiClient.logOut();
+   location.href = '/index.html'   
+} 
 //Notifications alert click event
 function onClick(e) {
    notificaciones.firstElementChild.nextElementSibling.style.visibility = 'hidden';
@@ -39,4 +50,4 @@ function onClick(e) {
 });
 [].forEach.call(collapseItems, function(c) {
     c.classList.add("collapse");
- });
+});
