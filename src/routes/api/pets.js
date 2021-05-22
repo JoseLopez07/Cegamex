@@ -1,7 +1,6 @@
 const express = require('express');
 const db = require('../../db');
 const verifyToken = require('../../middleware/verifyToken');
-const verifyParams = require('../../middleware/verifyParams');
 
 const router = express.Router();
 
@@ -17,41 +16,9 @@ router.get('/', verifyToken, async (req, res, next) => {
     }
 });
 
-router.post(
-    '/',
-    verifyToken,
-    verifyParams(
-        'nivel',
-        'upgradeP',
-        'experiencia',
-        'ptsAtaque',
-        'ptsDefensa',
-        'ptsVelocidad',
-        'ptsMaxVida',
-        'skill'
-    ),
-    async (req, res, next) => {
-        try {
-            await db.createUserPet(req.user.id, req.body);
-            return res.status(201).send();
-        } catch (err) {
-            return next(err);
-        }
-    }
-);
-
 router.put('/', verifyToken, async (req, res, next) => {
     try {
         await db.modifyUserPet(req.user.id, req.body);
-        return res.status(204).send();
-    } catch (err) {
-        return next(err);
-    }
-});
-
-router.delete('/', verifyToken, async (req, res, next) => {
-    try {
-        await db.deleteUserPet(req.user.id);
         return res.status(204).send();
     } catch (err) {
         return next(err);

@@ -159,68 +159,40 @@ async function getUserPet(userId) {
     return result.recordset[0];
 }
 
-async function createUserPet(
-    userId,
-    {
-        nivel,
-        upgradeP,
-        experiencia,
-        ptsAtaque,
-        ptsDefensa,
-        ptsVelocidad,
-        ptsMaxVida,
-        skill,
-    }
-) {
-    const query = (await connect())
-        .input('userId', sql.Int, userId)
-        .input('nivel', sql.Int, nivel)
-        .input('upgradeP', sql.Float, upgradeP)
-        .input('experiencia', sql.Float, experiencia)
-        .input('ptsAtaque', sql.Float, ptsAtaque)
-        .input('ptsDefensa', sql.Float, ptsDefensa)
-        .input('ptsVelocidad', sql.Float, ptsVelocidad)
-        .input('ptsMaxVida', sql.Float, ptsMaxVida)
-        .input('skill', sql.Float, skill)
-        .execute('createUserPet');
-    await query;
-}
-
 async function modifyUserPet(
     userId,
     {
-        nombre = '',
-        nivel = null,
-        upgradeP = null,
-        experiencia = null,
-        ptsAtaque = null,
-        ptsDefensa = null,
-        ptsVelocidad = null,
-        ptsMaxVida = null,
+        name = '',
+        level = null,
+        upgradePoints = null,
+        experience = null,
+        attack = null,
+        defense = null,
+        speed = null,
+        maxHealth = null,
+        move1 = 0,
+        move2 = 0,
+        move3 = 0,
         skill = null,
-        type = 0,
+        type = null,
     }
 ) {
     const query = (await connect())
         .input('userId', sql.Int, userId)
-        .input('nombre', sql.NVarChar(255), nombre)
-        .input('nivel', sql.Int, nivel)
-        .input('upgradeP', sql.Float, upgradeP)
-        .input('experiencia', sql.Float, experiencia)
-        .input('ptsAtaque', sql.Float, ptsAtaque)
-        .input('ptsDefensa', sql.Float, ptsDefensa)
-        .input('ptsVelocidad', sql.Float, ptsVelocidad)
-        .input('ptsMaxVida', sql.Float, ptsMaxVida)
-        .input('skill', sql.Float, skill)
+        .input('name', sql.NVarChar(255), name)
+        .input('level', sql.Int, level)
+        .input('upgradePoints', sql.Int, upgradePoints)
+        .input('experience', sql.Int, experience)
+        .input('attack', sql.Int, attack)
+        .input('defense', sql.Int, defense)
+        .input('speed', sql.Int, speed)
+        .input('maxHealth', sql.Int, maxHealth)
+        .input('move1', sql.Int, move1)
+        .input('move2', sql.Int, move2)
+        .input('move3', sql.Int, move3)
+        .input('skill', sql.Int, skill)
         .input('type', sql.Int, type)
         .execute('modifyUserPet');
-    await query;
-}
-
-async function deleteUserPet(userId) {
-    const query = (await connect())
-        .input('userId', sql.Int, userId)
-        .execute('deleteUserPet');
     await query;
 }
 
