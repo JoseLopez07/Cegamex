@@ -208,6 +208,14 @@ AS
 	WHERE u.idUser = @userId;
 GO
 
+CREATE OR ALTER PROCEDURE getFechasIssues
+AS
+	SET NOCOUNT ON;
+	SELECT fecha_fin
+	FROM issues
+	WHERE fecha_fin IS NOT NULL;
+GO
+
 -- ============= WARNING! RUNNING BELOW WILL DELETE USERS AND PETS =============
 
 -- DELETE FROM usuarios
@@ -225,6 +233,8 @@ GO
 -- EXEC createUser 'Test', 'Foo', 'test.foo', 'test.foo@cemex.mx', '$2a$10$KkhBaY3oIlxmdqPo8FL5le7zTEAAVI5Gdfd1YzXjOD9i1gsG10jO2' -- qwerty
 
 -- SELECT * FROM usuarios
+
+-- TEST USERS
 
 -- GO
 

@@ -196,6 +196,13 @@ async function modifyUserPet(
     await query;
 }
 
+async function getFechasIssues() {
+    const query = (await connect()).execute('getFechasIssues');
+    const result = await query;
+
+    return result.recordset;
+}
+
 module.exports = {
     getPasswordFromEmail,
     getIdFromEmail,
@@ -208,7 +215,6 @@ module.exports = {
     getSingleUserInfo,
     getMultipleUsersInfo,
     getUserPet,
-    createUserPet,
     modifyUserPet,
-    deleteUserPet,
+    getFechasIssues,
 };

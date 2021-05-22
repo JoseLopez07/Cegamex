@@ -95,7 +95,10 @@ class ApiClient {
 
     async logOut() {
         this.token = '';
-        return this._apiRequest('/api/v1/auth/logout', 'GET');
+        return this._apiRequest('/api/v1/auth/logout', 'GET',null, {
+            credentials: 'include'
+        });
+        
     }
 
     async register(userData) {
@@ -135,6 +138,10 @@ class ApiClient {
     async getUserData(userIds = null) {
         const queryString = userIds ? `?id=${userIds.join()}` : '';
         return this._apiRequest(`/api/v1/users${queryString}`, 'GET');
+    }
+    
+    async getFechasIssues(){
+        return this._apiRequest(`/api/v1/issues`, 'GET');
     }
 }
 
