@@ -147,6 +147,15 @@ async function getMultipleUserInfo(idList) {
     return result.recordset;
 }
 
+async function getCountIssuesFromMonth(month) {
+    const query = await (await connect())
+        .input('month', sql.Int, month)
+        .execute('getCountIssuesFromMonth');
+    const result = await query;
+    
+    return result.recordset;
+}
+
 module.exports = {
     getPasswordFromEmail,
     getIdFromEmail,
