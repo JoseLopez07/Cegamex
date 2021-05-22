@@ -9,7 +9,7 @@ const chart1 = new Chart(chKpi1, {
         labels: ["Enero", "Febrero", "Marzo"],
         datasets: [
             {
-            label: "Wenas",
+            label: "Issues Resueltas",
             backgroundColor: "rgba(0,255,0,0.2)",
             borderColor: "rgb(255,0,0)",
             data: data,
