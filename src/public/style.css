@@ -294,5 +294,6 @@ a:link, a:visited, a:active {
     visibility: hidden !important;    
 }
 
-
-    
+.show {
+    padding-right: 0.8em !important;
+}
