@@ -2,7 +2,8 @@ import api from '/modules/api.mjs';
 const apiClient = new api.ApiClient();
 const chKpi1 = document.getElementById("ChartKpi1").getContext("2d");
 const marzo = await (await apiClient.getCountIssuesFromMonth(03)).json();
-const data = [marzo,47,10];
+console.log(marzo);
+const data = [12,47,10];
 const chart1 = new Chart(chKpi1, {
     type: "bar",
     data: {
