@@ -147,10 +147,9 @@ async function getMultipleUserInfo(idList) {
     return result.recordset;
 }
 
-async function getCountIssuesFromMonth(month) {
+async function getFechasIssues() {
     const query = await (await connect())
-        .input('month', sql.Int, month)
-        .execute('getCountIssuesFromMonth');
+        .execute('getFechasIssues');
     const result = await query;
     
     return result.recordset;
