@@ -105,6 +105,15 @@ AS
 	END
 GO
 
+CREATE OR ALTER PROCEDURE getCountIssuesFromMonth
+	@month float
+AS
+	SET NOCOUNT ON
+	SELECT COUNT(fecha_fin)
+	FROM issues
+	WHERE month(fecha_fin) = @month
+GO
+
 -- TEST USERS
 
 -- INSERT INTO Usuarios VALUES('John', 'Doe', 'john.doe', 'john.doe@cemex.mx', '$2a$10$VQkTCGn3c1BDGBQGgCxeGucQ/DTZqUQpen.tdu2tbZP1JHi4wKVsG', NULL) -- password
