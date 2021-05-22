@@ -105,13 +105,12 @@ AS
 	END
 GO
 
-CREATE OR ALTER PROCEDURE getCountIssuesFromMonth
-	@month float
+CREATE OR ALTER PROCEDURE getFechasIssues
 AS
 	SET NOCOUNT ON
-	SELECT COUNT(fecha_fin)
+	SELECT fecha_fin
 	FROM issues
-	WHERE month(fecha_fin) = @month
+	WHERE fecha_fin is not null
 GO
 
 -- TEST USERS
