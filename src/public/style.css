@@ -295,5 +295,7 @@ a:link, a:visited, a:active {
 }
 
 .show {
-    padding-right: 0.8em !important;
+    padding-right: 1em !important;
+    padding-left: 0.2em !important;
+    padding-top: 1em !important;
 }
