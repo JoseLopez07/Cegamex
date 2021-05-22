@@ -139,6 +139,10 @@ class ApiClient {
         const queryString = userIds ? `?id=${userIds.join()}` : '';
         return this._apiRequest(`/api/v1/users${queryString}`, 'GET');
     }
+    
+    async getCountIssuesFromMonth(month){
+        return this._apiRequest(`/api/v1/issues`, 'GET', month);
+    }
 }
 
 export default { ApiRequestError, ApiClient };
