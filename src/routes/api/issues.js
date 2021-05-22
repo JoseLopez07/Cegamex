@@ -11,12 +11,12 @@ const SALT_ROUNDS = 10;
 
 const router = express.Router();
 
-router.get('/', getCountIssuesFromMonth);
+router.get('/', getFechaIssues);
 
-async function getCountIssuesFromMonth(req, res, next){
+async function getFechasIssues(req, res, next){
     try {
-        const cant = await db.getIssuesFromMonth(req);
-        return res.send(cant);
+        const fechas = await db.getFechaIssue();
+        return res.send(fechas);
     } catch(err) {
         return next(err);
 }
