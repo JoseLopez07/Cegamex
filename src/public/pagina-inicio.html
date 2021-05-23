@@ -18,10 +18,10 @@
 <body id="body-general">
 
     <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog" style="max-width: 400px;">
+        <div class="modal-dialog p-2" style="max-width: 400px;">
             <div class="modal-content">
                 <div class="modal-header p-3">
-                    <button type="button" data-dismiss="modal" class="p-0 m-0" style="border:none !important; background-color:white !important;"><i class="fa fa-times" aria-hidden="true" style="color: #011c5d"></i></button>
+                    <button type="button" data-dismiss="modal" class="p-0 m-0 close-button"><i class="fa fa-times" aria-hidden="true" style="color: #011c5d"></i></button>
                 </div>
                 <div class="modal-body"> 
                     <div class="row justify-content-center">
@@ -31,7 +31,7 @@
                         <img src="imagenes\newsletter.png" style="width: 15em; height: 12.5em;" class="my-2">
                         </div>
                         <div class="row my-4" style="width: 15em;">
-                        <button data-dismiss="modal" class="btn btn-primary btn-user btn-block texto-normal-mediano" style="background-color: #ee3a43; border-color: crimson; border-radius: 3.125em;">
+                        <button data-dismiss="modal" class="btn btn-primary btn-user btn-block texto-normal-mediano red-button">
                             Quiero suscribirme
                         </button>
                     </div>    
@@ -42,97 +42,83 @@
     </div>
 
     <div class="container-fluid container-gen" style="overflow-x:hidden;"></div>
+    
     <!-- BARRA DE NAVEGACIÓN-->
-
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-    <a class="navbar-brand px-0 mx-0" href="pagina-inicio.html"><img src="imagenes/cgm_bg.png"
-                style="height: 1.5em; width: 3em;"></a>
-        <div style="margin:auto">
-            <!-- Boton centrado -->
-            <button class="navbar-toggler" id="navbutton" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <a class="navbar-brand px-0 mx-0" href="pagina-inicio.html"><img src="imagenes\cgm_bg.png" style="height: 1.5em; width: 3em;"></a>
+        <div style="margin:auto"> <!-- Boton centrado -->
+        <button class="navbar-toggler" id="navbutton" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         </div>
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-3 text-center">
                 <li class="nav-item texto-normal">
-                    <a class="nav-link" href="perfil.html"> <i class="fa fa-user"></i> mi perfil</a>
+                    <a class="nav-link" href="perfil.html"><i class="fa fa-user d-lg-none" style="font-size: 0.8em;"></i>&nbsp mi perfil</a>
                 </li>
                 <hr class="sidebar-divider">
                 <li class="nav-item texto-normal">
-                    <a class="nav-link" href="juegos.html"> <i class="fa fa-gamepad"></i> juegos</a>
+                    <a class="nav-link" href="juegos.html"><i class="fa fa-gamepad d-lg-none" style="font-size: 0.8em;"></i>&nbsp juegos &nbsp</a>
                 </li>
-                <hr class="sidebar-divider">
+                <hr class="sidebar-divider"> 
                 <li class="nav-item texto-normal">
-                    <a class="nav-link" href="admin.html"> <i class="fa fa-fw fa-area-chart"></i> admin</a>
+                    <a class="nav-link" href="admin.html"> <i class="fa fa-fw fa-area-chart d-lg-none" style="font-size: 0.8em;"></i>&nbsp admin &nbsp</a> 
                 </li>
-                <hr class="sidebar-divider">
+                <hr class="sidebar-divider"> 
                 <li class="nav-item texto-normal d-lg-none">
-                    <a class="nav-link" href="index.html">cerrar sesión</a>
-                </li>
-            </ul>
+                    <a class="nav-link logout" href="#">cerrar sesión</a> 
+                </li>  
+            </ul> 
         </div>
 
-        <div class="navbar-expand" id="notificaciones-perfil">
+        <div class="navbar-expand" id = "notificaciones-perfil">
             <ul class="navbar-nav" id="ul-not-perfil" style="list-style-type: none;">
                 <!-- Menu que se despliega del icono -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="campana" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
+                <li class="nav-item dropdown"> 
+                    <a class="nav-link dropdown-toggle" href="#" id="campana" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="imagenes\campana.png" style="width: 1.5em; height: 1.75em; position: relative;">
                         <!-- Círculo rojo de número de notificaciones -->
-                        <div class="d-flex align-items-center justify-content-center numero-alertas">
-                            <div style="font-size: 70%; color: #ffffff;">3</div>
-                        </div>
+                        <div class="d-flex align-items-center justify-content-center numero-alertas"><div class="numero-alertas-texto">3</div></div>
                     </a>
 
                     <div class="dropdown-menu shadow" aria-labelledby="campana" style="border-radius: 0.3em;">
                         <h6 class="dropdown-header titulo-medio" style="font-size: 1em;">Centro de notificaciones</h6>
                         <a class="dropdown-item texto-normal-mediano-login" href="#">
-                            <i class="fa fa-star mx-2 my-2 px-1" aria-hidden="true"
-                                style="font-size:2em; color: #ffdb6d;"></i>
+                            <i class="fa fa-star mx-2 my-2 px-1 icono-menus-navbar" aria-hidden="true" style=" color: #ffdb6d;"></i>
                             ¡Descubre las novedades de esta semana!
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item texto-normal-mediano-login" href="#">
-                            <i class="fa fa-shopping-bag mx-2 my-2 px-1" aria-hidden="true"
-                                style="font-size:2em; color: #7db5d6;"></i>
+                        <a class="dropdown-item texto-normal-mediano-login" href="#"> 
+                            <i class="fa fa-shopping-bag mx-2 my-2 px-1 icono-menus-navbar" aria-hidden="true" style="color: #7db5d6;"></i> 
                             50% en la tienda
                         </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item texto-normal-mediano-login" href="#">
-                            <i class="fa fa-level-up mx-3 my-2" aria-hidden="true"
-                                style="font-size:2em; color: #ee3a43;"></i>
+                            <i class="fa fa-level-up mx-3 my-2 icono-menus-navbar" aria-hidden="true" style="color: #ee3a43;"></i>
                             ¡Felicidades! Has alcanzado el nivel 5
                         </a>
-                    </div>
+                      </div>
                 </li>
 
                 <!-- Menu que se despliega del icono -->
-                <li class="nav-item dropdown">
-                    <!-- Este icono desaparece en la versión móvil y se agrega una fila de cerrar sesión al menú de tres líneas -->
-                    <a class="nav-link dropdown-toggle collapse dont-collapse-sm" href="#" id="perfil-navbar"
-                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li class="nav-item dropdown">  <!-- Este icono desaparece en la versión móvil y se agrega una fila de cerrar sesión al menú de tres líneas -->
+                    <a class="nav-link dropdown-toggle collapse dont-collapse-sm" href="#" id="perfil-navbar" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="imagenes\perfil.png" style="width: 1.9em; height: 1.9em;">
                     </a>
-
                     <div class="dropdown-menu shadow" aria-labelledby="perfil-navbar" style="border-radius: 0.3em;">
-                        <h6 class="dropdown-header titulo-medio" style="font-size: 1em;">Nombre y apellidos</h6>
-                        <a class="dropdown-item texto-normal-mediano-login" href="#">
-                            <i class="fa fa-user mx-2 my-2 px-1" aria-hidden="true"
-                                style="font-size:2em; color: #297fba;"></i>
+                        <h6 class="dropdown-header titulo-medio user-name-navbar" style="font-size: 1em;">Nombre y apellidos</h6>
+                        <a class="dropdown-item texto-normal-mediano-login" href="perfil.html"> 
+                            <i class="fa fa-user mx-2 my-2 px-1" aria-hidden="true" style="font-size:2em; color: #297fba;"></i> 
                             Mi perfil
                         </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item texto-normal-mediano-login" href="#">
-                            <i class="fa fa-cog mx-2 my-2" aria-hidden="true"
-                                style="font-size:2em; color: #297fba;"></i>
+                            <i class="fa fa-cog mx-2 my-2 icono-menus-navbar" aria-hidden="true" style="color: #297fba;"></i> 
                             Configurar perfil
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item texto-normal-mediano-login" href="#">
+                        <a class="dropdown-item texto-normal-mediano-login logout" href="#">
                             <span style="color: #003777; font-weight: bold;"> Cerrar sesión</span>
                         </a>
                     </div>
@@ -142,6 +128,7 @@
     </nav>
 
     <div style="height: 0.2em; background-color: #ee3a43;"></div>
+    
     <!-- Contenido-->
     <!-- <div id="contenido-p_inicio" class="row justify-content-center mt-0">-->
     <div class="row justify-content-center align-items-center">
@@ -205,13 +192,10 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </section>
 
         <!------------------------FOOTER---------------------->
-
         <footer class="footer-basic p-3">
             <div class="social">
                 <a href="#"><i class="fa fa-instagram"></i></a>
@@ -246,5 +230,6 @@
         }, 5000);
     });
     </script>
+    <script type="module" src="general.js"></script>
 
 </body>
