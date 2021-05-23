@@ -109,6 +109,9 @@ async function modifyUser(
         .input('userName', sql.NVarChar(255), userName)
         .input('email', sql.NVarChar(255), email)
         .input('passHash', sql.NVarChar(255), passHash)
+        .input('twitter', sql.NVarChar(255), twitter)
+        .input('picture', sql.NVarChar(255), picture)
+        .input('companyRole', sql.NVarChar(255), companyRole)
         .execute('modifyUser');
     await query;
 }
@@ -138,20 +141,65 @@ async function getSingleUserInfo(id) {
     return result.recordset[0];
 }
 
-async function getMultipleUserInfo(idList) {
+async function getMultipleUsersInfo(idList) {
     const query = await (await connect())
         .input('idList', sql.NVarChar(sql.MAX), idList)
-        .execute('getMultipleUserInfo');
+        .execute('getMultipleUsersInfo');
     const result = await query;
 
     return result.recordset;
 }
 
-async function getFechasIssues() {
-    const query = await (await connect())
-        .execute('getFechasIssues');
+async function getUserPet(userId) {
+    const query = (await connect())
+        .input('userId', sql.Int, userId)
+        .execute('getUserPet');
     const result = await query;
-    
+
+    return result.recordset[0];
+}
+
+async function modifyUserPet(
+    userId,
+    {
+        name = '',
+        level = null,
+        upgradePoints = null,
+        experience = null,
+        attack = null,
+        defense = null,
+        speed = null,
+        maxHealth = null,
+        move1 = 0,
+        move2 = 0,
+        move3 = 0,
+        skill = null,
+        type = null,
+    }
+) {
+    const query = (await connect())
+        .input('userId', sql.Int, userId)
+        .input('name', sql.NVarChar(255), name)
+        .input('level', sql.Int, level)
+        .input('upgradePoints', sql.Int, upgradePoints)
+        .input('experience', sql.Int, experience)
+        .input('attack', sql.Int, attack)
+        .input('defense', sql.Int, defense)
+        .input('speed', sql.Int, speed)
+        .input('maxHealth', sql.Int, maxHealth)
+        .input('move1', sql.Int, move1)
+        .input('move2', sql.Int, move2)
+        .input('move3', sql.Int, move3)
+        .input('skill', sql.Int, skill)
+        .input('type', sql.Int, type)
+        .execute('modifyUserPet');
+    await query;
+}
+
+async function getFechasIssues() {
+    const query = (await connect()).execute('getFechasIssues');
+    const result = await query;
+
     return result.recordset;
 }
 
@@ -165,5 +213,8 @@ module.exports = {
     removeUser,
     isUserAdmin,
     getSingleUserInfo,
-    getMultipleUserInfo,
+    getMultipleUsersInfo,
+    getUserPet,
+    modifyUserPet,
+    getFechasIssues,
 };

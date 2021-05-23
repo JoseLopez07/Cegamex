@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"WARNING: No tests implemented\" && exit 0"
+    "test": "echo \"WARNING: No real tests implemented\"; timeout 10s npm start || code=$?; if [ $code -eq 124 ]; then exit 0; else exit $code; fi"
   },
   "author": "",
   "license": "ISC",

@@ -47,7 +47,7 @@ router.post(
     }
 );
 
-async function changeUserInfo(req, res, next) {
+async function modifyUserInfo(req, res, next) {
     try {
         let passHash;
         if (req.body.password) {
@@ -62,10 +62,10 @@ async function changeUserInfo(req, res, next) {
 }
 
 // method to change OWN user info
-router.put('/', verifyToken, useTokenId, changeUserInfo);
+router.put('/', verifyToken, useTokenId, modifyUserInfo);
 
 // method to change ANY user info (only accesible to admins)
-router.put('/:userId', verifyAdminToken, parseUserId, changeUserInfo);
+router.put('/:userId', verifyAdminToken, parseUserId, modifyUserInfo);
 
 async function deleteUser(req, res, next) {
     try {
@@ -122,7 +122,7 @@ router.get('/', verifyToken, useTokenId, async (req, res, next) => {
         const queryId = req.query.id;
 
         const result = queryId
-            ? await db.getMultipleUserInfo(queryId)
+            ? await db.getMultipleUsersInfo(queryId)
             : await db.getSingleUserInfo(req.user.id);
         res.send(result);
     } catch (err) {
