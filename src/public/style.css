@@ -5,7 +5,11 @@ a:link, a:visited, a:active {
 
 #body-general{
     background-color: #e2e9f1;
-    padding-right: 0 !important
+    padding-right: 0 !important;
+    margin: 0px;
+    padding: 0px;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 #body-inicio {

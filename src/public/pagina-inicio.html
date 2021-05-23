@@ -24,13 +24,13 @@
                     <button type="button" data-dismiss="modal" class="p-0 m-0 close-button"><i class="fa fa-times" aria-hidden="true" style="color: #011c5d"></i></button>
                 </div>
                 <div class="modal-body"> 
-                    <div class="row justify-content-center">
-                        <div class="row justify-content-center">
+                    <div class="row justify-content-center no-gutters">
+                        <div class="row justify-content-center no-gutters">
                         <span class="dropdown-header texto-normal text-center mt-3 mb-1" style="font-weight: bold; font-size: 1em;">SUSCRíBETE AL NEWSLETTER</span>
                         <span class="titulo-medio text-center mb-3">¡Recibe las últimas noticias de Cegamex!</span>
                         <img src="imagenes\newsletter.png" style="width: 15em; height: 12.5em;" class="my-2">
                         </div>
-                        <div class="row my-4" style="width: 15em;">
+                        <div class="row my-4 no-gutters" style="width: 15em;">
                         <button data-dismiss="modal" class="btn btn-primary btn-user btn-block texto-normal-mediano red-button">
                             Quiero suscribirme
                         </button>
@@ -130,12 +130,9 @@
     <div style="height: 0.2em; background-color: #ee3a43;"></div>
     
     <!-- Contenido-->
-    <!-- <div id="contenido-p_inicio" class="row justify-content-center mt-0">-->
-    <div class="row justify-content-center align-items-center">
-
         <!------------------------------------------CARAOUSEL--------------------------------------------->
 
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div id="carouselExampleControls" class="carousel slide no-gutters px-0 mx-0" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active" data-mdb-interval="1">
                     <img class="d-block w-100" src="imagenes/carousel1.png" alt="First slide">
@@ -156,44 +153,49 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
+
         <!------------------------------------------LISTA DE JUEGOS--------------------------------------------->
-        <section id="lista-juegos" class="mb-5">
-            <div class="container">
-                <div class="intro">
-                    <h2 class="titulo-medio text-center" style="margin: -16px;padding: 3px 0px 0px;">Nuestros juegos
-                    </h2>
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+            <section id="lista-juegos" class="mb-5">
+                <div class="container">
+                    <div class="intro">
+                        <h2 class="titulo-medio text-center" style="margin: -16px;padding: 3px 0px 0px;">Nuestros juegos
+                        </h2>
+                    </div>
+                    <div class="card-group" style="transform: translateY(41px);">
+                        <div id="cd_lista-juegos" class="card mx-1">
+                            <img id="img_cd_lista-juegos" src="imagenes/cu.jpg" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title titulo-medio">Juego 1</h5>
+                                <p class="card-text texto-normal-mediano">This is a wider card with supporting text below as
+                                    a natural lead-in to additional
+                                    content. This content is a little bit longer.</p>
+                            </div>
+                        </div>
+                        <div id="cd_lista-juegos" class="card mx-1">
+                            <img id="img_cd_lista-juegos" src="imagenes/cu.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title titulo-medio">Juego 2</h5>
+                                <p class="card-text texto-normal-mediano">This card has supporting text below as a natural
+                                    lead-in to additional content.</p>
+                            </div>
+                        </div>
+                        <div id="cd_lista-juegos" class="card mx-1">
+                            <img id="img_cd_lista-juegos" src="imagenes/cu.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title titulo-medio">Juego 3</h5>
+                                <p class="card-text texto-normal-mediano">This is a wider card with supporting text below as
+                                    a natural lead-in to additional
+                                    content. This card has even longer content than the first to show that equal height
+                                    action.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-group" style="transform: translateY(41px);">
-                    <div id="cd_lista-juegos" class="card mx-1">
-                        <img id="img_cd_lista-juegos" src="imagenes/cu.jpg" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title titulo-medio">Juego 1</h5>
-                            <p class="card-text texto-normal-mediano">This is a wider card with supporting text below as
-                                a natural lead-in to additional
-                                content. This content is a little bit longer.</p>
-                        </div>
-                    </div>
-                    <div id="cd_lista-juegos" class="card mx-1">
-                        <img id="img_cd_lista-juegos" src="imagenes/cu.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title titulo-medio">Juego 2</h5>
-                            <p class="card-text texto-normal-mediano">This card has supporting text below as a natural
-                                lead-in to additional content.</p>
-                        </div>
-                    </div>
-                    <div id="cd_lista-juegos" class="card mx-1">
-                        <img id="img_cd_lista-juegos" src="imagenes/cu.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title titulo-medio">Juego 3</h5>
-                            <p class="card-text texto-normal-mediano">This is a wider card with supporting text below as
-                                a natural lead-in to additional
-                                content. This card has even longer content than the first to show that equal height
-                                action.</p>
-                        </div>
-                    </div>
-                </div>
+            </section>
             </div>
-        </section>
+        </div>
 
         <!------------------------FOOTER---------------------->
         <footer class="footer-basic p-3">
@@ -212,7 +214,7 @@
             <p class="copyright texto-normal-pequeno">Cegamex © 2021</p>
         </footer>
 
-    </div>
+    <!-- </div>-->
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
