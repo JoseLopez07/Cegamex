@@ -321,3 +321,7 @@ a:link, a:visited, a:active {
     border-color: crimson !important; 
     border-radius: 3.125em !important;
 }
+
+*{
+    outline: 1px solid red;
+   }
