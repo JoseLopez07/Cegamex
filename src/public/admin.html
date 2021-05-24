@@ -13,7 +13,8 @@
 </head>
 
 <body id="body-general">
-    <div class="container-fluid container-gen" style="overflow-x:hidden;">
+    <div class="container-fluid container-gen">
+
         <!-- Barra de navegacion -->    
         <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
             <a class="navbar-brand px-0 mx-0" href="pagina-inicio.html"><img src="imagenes\cgm_bg.png" style="height: 1.5em; width: 3em;"></a>
@@ -26,19 +27,19 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-3 text-center">
                     <li class="nav-item texto-normal">
-                        <a class="nav-link" href="perfil.html">mi perfil</a>
+                        <a class="nav-link" href="perfil.html"><i class="fa fa-user d-lg-none" style="font-size: 0.8em;"></i>&nbsp mi perfil</a>
                     </li>
                     <hr class="sidebar-divider">
                     <li class="nav-item texto-normal">
-                        <a class="nav-link" href="juegos.html">juegos</a>
+                        <a class="nav-link" href="juegos.html"><i class="fa fa-gamepad d-lg-none" style="font-size: 0.8em;"></i>&nbsp juegos &nbsp</a>
                     </li>
                     <hr class="sidebar-divider"> 
                     <li class="nav-item texto-normal">
-                        <a class="nav-link" href="admin.html">admin</a> 
+                        <a class="nav-link" href="admin.html"> <i class="fa fa-fw fa-area-chart d-lg-none" style="font-size: 0.8em;"></i>&nbsp admin &nbsp</a> 
                     </li>
                     <hr class="sidebar-divider"> 
                     <li class="nav-item texto-normal d-lg-none">
-                        <a class="nav-link" href="index.html">cerrar sesión</a> 
+                        <a class="nav-link logout" href="#">cerrar sesión</a> 
                     </li>  
                 </ul> 
             </div>
@@ -50,23 +51,23 @@
                         <a class="nav-link dropdown-toggle" href="#" id="campana" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="imagenes\campana.png" style="width: 1.5em; height: 1.75em; position: relative;">
                             <!-- Círculo rojo de número de notificaciones -->
-                            <div class="d-flex align-items-center justify-content-center numero-alertas"><div style="font-size: 70%; color: #ffffff;">3</div></div>
+                            <div class="d-flex align-items-center justify-content-center numero-alertas"><div class="numero-alertas-texto">3</div></div>
                         </a>
 
                         <div class="dropdown-menu shadow" aria-labelledby="campana" style="border-radius: 0.3em;">
                             <h6 class="dropdown-header titulo-medio" style="font-size: 1em;">Centro de notificaciones</h6>
                             <a class="dropdown-item texto-normal-mediano-login" href="#">
-                                <i class="fa fa-star mx-2 my-2 px-1" aria-hidden="true" style="font-size:2em; color: #ffdb6d;"></i>
+                                <i class="fa fa-star mx-2 my-2 px-1 icono-menus-navbar" aria-hidden="true" style=" color: #ffdb6d;"></i>
                                 ¡Descubre las novedades de esta semana!
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item texto-normal-mediano-login" href="#"> 
-                                <i class="fa fa-shopping-bag mx-2 my-2 px-1" aria-hidden="true" style="font-size:2em; color: #7db5d6;"></i> 
+                                <i class="fa fa-shopping-bag mx-2 my-2 px-1 icono-menus-navbar" aria-hidden="true" style="color: #7db5d6;"></i> 
                                 50% en la tienda
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item texto-normal-mediano-login" href="#">
-                                <i class="fa fa-level-up mx-3 my-2" aria-hidden="true" style="font-size:2em; color: #ee3a43;"></i>
+                                <i class="fa fa-level-up mx-3 my-2 icono-menus-navbar" aria-hidden="true" style="color: #ee3a43;"></i>
                                 ¡Felicidades! Has alcanzado el nivel 5
                             </a>
                           </div>
@@ -74,44 +75,46 @@
 
                     <!-- Menu que se despliega del icono -->
                     <li class="nav-item dropdown">  <!-- Este icono desaparece en la versión móvil y se agrega una fila de cerrar sesión al menú de tres líneas -->
-                        <a class="nav-link dropdown-toggle collapse dont-collapse-sm" href="#" id="perfil-navbar" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle collapse dont-collapse-sm" href="#" id="perfil-navbar" 
+                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="imagenes\perfil.png" style="width: 1.9em; height: 1.9em;">
                         </a>
-
                         <div class="dropdown-menu shadow" aria-labelledby="perfil-navbar" style="border-radius: 0.3em;">
-                            <h6 class="dropdown-header titulo-medio" style="font-size: 1em;">Nombre y apellidos</h6>
-                            <a class="dropdown-item texto-normal-mediano-login" href="#"> 
-                                <i class="fa fa-user mx-2 my-2 px-1" aria-hidden="true" style="font-size:2em; color: #297fba;"></i> 
+                            <h6 class="dropdown-header titulo-medio user-name-navbar" style="font-size: 1em;">Nombre y apellidos</h6>
+                            <a class="dropdown-item texto-normal-mediano-login" href="perfil.html"> 
+                                <i class="fa fa-user mx-2 my-2 px-1 icono-menus-navbar" aria-hidden="true" style="color: #297fba;"></i> 
                                 Mi perfil
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item texto-normal-mediano-login" href="#">
-                                <i class="fa fa-cog mx-2 my-2" aria-hidden="true" style="font-size:2em; color: #297fba;"></i> 
+                                <i class="fa fa-cog mx-2 my-2 icono-menus-navbar" aria-hidden="true" style="color: #297fba;"></i> 
                                 Configurar perfil
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item texto-normal-mediano-login" href="#">
+                            <a class="dropdown-item texto-normal-mediano-login logout" href="#">
                                 <span style="color: #003777; font-weight: bold;"> Cerrar sesión</span>
                             </a>
-                          </div>
+                        </div>
                     </li>
                 </ul>
             </div>
-
         </nav>
-            <!-- Contenido -->
-        <div class="row justify-content-center mt-4">
-            <div class="col-lg-6 mb-4">
+
+        <!-- Contenido -->
+        <div class="row justify-content-center mt-4 g-0">
+            <div class="col-lg-6 mb-4 p-0 mx-xl-4 mx-lg-4 mx-sm-0 mx-xs-0">
                 <!-- Seccion principal-->
-                <div class="card shadow mb-4">
-                    <div class="card-body p-4">                                              
+                <div class="card mb-4 loading">
+                    <div class="card-body p-4 loading-child">                                              
                         <div class="mb-2 titulo">Resumen para administrador</div>
                         <div class="card shadow mt-3 mx-auto" id="kpi-1">
                             <div class="card-body p-4">
                                 <div class="mb-1 titulo-medio">KPI 1</div>
-                                <div class="texto-normal mb-1">Nombre del KPI</div>
+                                <div class="texto-normal mb-1">Issues resueltas</div>
                                 <div class="row justify-content-center mt-4  align-items-end">
-                                    <div class="col-3"><img src="imagenes\grafica-2.png" class="img-fluid"><div class="text-center texto-normal-pequeno mt-1">Titulo de la grafica</div></div>
+                                    <!-- Aqui se pondran los canvas para los charts -->
+                                    <canvas id="ChartKpi1"></canvas>
+                                    <!-- div class="col-3"><img src="imagenes\grafica-2.png" class="img-fluid"><div class="text-center texto-normal-pequeno mt-1">Titulo de la grafica</div></div -->
                                     <div class="col-3"><img src="imagenes\grafica-circulo.png" class="img-fluid"><div class="text-center texto-normal-pequeno mt-1">Titulo de la grafica</div></div>
                                 </div>
                             </div>
@@ -148,9 +151,9 @@
                  </div>                    
             </div>
             <!-- Opciones -->
-            <div class="col-lg-2 mb-4 collapse dont-collapse-sm">
-                <div class="card shadow mb-4">
-                    <div class="card-body py-1">
+            <div class="col-lg-2 mb-4 p-0 collapse dont-collapse-sm">
+                <div class="card mb-4 loading">
+                    <div class="card-body py-1 loading-child">
                         <ul class="list-group list-group-flush" id="menu-derecha">
                             <li class="list-group-item texto-normal-pequeno px-0 py-3 menu-sidebar"> <a href="#kpi-1">KPI 1</a></li>
                             <li class="list-group-item texto-normal-pequeno px-0 py-3 menu-sidebar" > <a href="#kpi-2">KPI 2</a></li>
@@ -161,9 +164,29 @@
                 </div>                
             </div>
         </div>
+        
+        <!------------------------FOOTER---------------------->
+        <footer class="footer-basic p-3">
+            <div class="social">
+                <a href="#"><i class="fa fa-instagram"></i></a>
+                <a href="#"><i class="fa fa-fw fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-facebook-official"></i></a>
+            </div>
+            <ul class="list-inline">
+                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Inicio</a></li>
+                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Mi perfil</a></li>
+                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Sobre nosotros</a></li>
+                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Descubre Cegamex</a></li>
+                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Privacidad y seguridad</a></li>
+            </ul>
+            <p class="copyright texto-normal-pequeno">Cegamex © 2021</p>
+        </footer>
     </div>
     
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="admin.js"></script>
+    <script type="module" src="general.js"></script>
 </body>

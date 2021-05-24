@@ -16,6 +16,8 @@ jobs:
         defaults:
             run:
                 working-directory: ./src
+        env:
+            TOKEN_SECRET: SECRET_STUB
 
         steps:
             - uses: actions/checkout@v2

@@ -47,7 +47,7 @@ router.post(
     }
 );
 
-async function changeUserInfo(req, res, next) {
+async function modifyUserInfo(req, res, next) {
     try {
         let passHash;
         if (req.body.password) {
@@ -62,10 +62,10 @@ async function changeUserInfo(req, res, next) {
 }
 
 // method to change OWN user info
-router.put('/', verifyToken, useTokenId, changeUserInfo);
+router.put('/', verifyToken, useTokenId, modifyUserInfo);
 
 // method to change ANY user info (only accesible to admins)
-router.put('/:userId', verifyAdminToken, parseUserId, changeUserInfo);
+router.put('/:userId', verifyAdminToken, parseUserId, modifyUserInfo);
 
 async function deleteUser(req, res, next) {
     try {
@@ -114,17 +114,14 @@ router.put(
     }
 );
 
-// by default returns OWN user info returning a single object, but an "id"
+// by default returns OWN user info returning a single object, but an "userIds"
 // parameter can be used to speify multiple ids (sepparated by commas) and
 // returns an array of objects
 router.get('/', verifyToken, useTokenId, async (req, res, next) => {
     try {
-        const queryId = req.query.id;
-
-        const result = queryId
-            ? await db.getMultipleUserInfo(queryId)
-            : await db.getSingleUserInfo(req.user.id);
-        res.send(result);
+        const queryIds = req.query.userIds;
+        const result = await db.getMultipleUsersInfo(queryIds || req.user.id);
+        return res.send(result);
     } catch (err) {
         if (err instanceof RequestError) {
             // console.error(err.message);
@@ -135,6 +132,48 @@ router.get('/', verifyToken, useTokenId, async (req, res, next) => {
         return next(err);
     }
 });
+
+// by default returns OWN friends info, but an optional "userId" parameter can
+// can be used to get any user's friends
+router.get('/friends', verifyToken, async (req, res, next) => {
+    try {
+        const queryId = parseInt(req.query.userId);
+        const result = await db.getUserFriendsInfo(queryId || req.user.id);
+        return res.send(result);
+    } catch (err) {
+        return next(err);
+    }
+});
+
+// method to add a friend (single way relationship)
+router.post(
+    '/friends',
+    verifyToken,
+    verifyParams('userId'),
+    async (req, res, next) => {
+        try {
+            await db.createFriendship(req.user.id, req.body.userId);
+            return res.status(201).send();
+        } catch (err) {
+            return next(err);
+        }
+    }
+);
+
+// method to remove a friend (single way relationship)
+router.delete(
+    '/friends/:userId',
+    verifyToken,
+    parseUserId,
+    async (req, res, next) => {
+        try {
+            await db.endFriendship(req.user.id, req.userId);
+            return res.status(204).send();
+        } catch (err) {
+            return next(err);
+        }
+    }
+);
 
 // middlware for parsing a URL user id
 function parseUserId(req, res, next) {

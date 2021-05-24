@@ -1,5 +1,4 @@
 const express = require('express');
-const sql = require('mssql');
 const apiRoutes = require('./routes/api');
 const errorHandler = require('./middleware/errorHandler');
 

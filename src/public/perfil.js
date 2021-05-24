@@ -1,13 +1,21 @@
 import api from '/modules/api.mjs';
-const apiClient = new api.ApiClient();
 
-let nombrePerfil = document.getElementById('nombre-perfil');
-let nombreNavbar = document.getElementById('nombre-navbar');
-let emailText = document.getElementById('email-text')
+(async function () {
+    const apiClient = new api.ApiClient();
 
-const userData = await (await apiClient.getUserData()).json();
-nombrePerfil.innerText = userData.firstName + " " + userData.lastName;
-nombreNavbar.innerText = userData.firstName + " " + userData.lastName;
-emailText.innerText = userData.email;
+    let nameProfile = document.getElementById('user-name-profile');
+    let email = document.getElementById('user-email');
+    let profileImage = document.getElementsByClassName('user-profile-image');
+    let twitterAccount = document.getElementById('user-twitter-acc');
+    let position = document.getElementById('user-position');
 
-console.log(userData);
+    const userData = await (await apiClient.getUserData()).json();
+
+    nameProfile.innerText = userData.firstName + ' ' + userData.lastName;
+    email.innerText = userData.email;
+    twitterAccount.innerText = userData.twitter;
+    position.innerText = userData.companyRole;
+    profileImage[0].src = userData.picture;
+
+    console.log(userData);
+})();

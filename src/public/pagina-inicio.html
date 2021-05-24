@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@700&family=Lato&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -15,146 +16,175 @@
 </head>
 
 <body id="body-general">
-    <div class="container-fluid container-gen" style="overflow-x:hidden;"></div>
-        <!-- BARRA DE NAVEGACIÓN-->
 
-        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-            <a class="navbar-brand px-0 mx-0" href="pagina-inicio.html"><img src="imagenes\cgm_bg.png" style="height: 1.5em; width: 3em;"></a>
-            <div style="margin:auto"> <!-- Boton centrado -->
-            <button class="navbar-toggler" id="navbutton" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            </div>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-3 text-center">
-                    <li class="nav-item texto-normal">
-                        <a class="nav-link" href="perfil.html">mi perfil</a>
-                    </li>
-                    <hr class="sidebar-divider">
-                    <li class="nav-item texto-normal">
-                        <a class="nav-link" href="juegos.html">juegos</a>
-                    </li>
-                    <hr class="sidebar-divider"> 
-                    <li class="nav-item texto-normal">
-                        <a class="nav-link" href="admin.html">admin</a> 
-                    </li>
-                    <hr class="sidebar-divider"> 
-                    <li class="nav-item texto-normal d-lg-none">
-                        <a class="nav-link" href="index.html">cerrar sesión</a> 
-                    </li>  
-                </ul> 
-            </div>
-
-            <div class="navbar-expand" id = "notificaciones-perfil">
-                <ul class="navbar-nav" id="ul-not-perfil" style="list-style-type: none;">
-                    <!-- Menu que se despliega del icono -->
-                    <li class="nav-item dropdown"> 
-                        <a class="nav-link dropdown-toggle" href="#" id="campana" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="imagenes\campana.png" style="width: 1.5em; height: 1.75em; position: relative;">
-                            <!-- Círculo rojo de número de notificaciones -->
-                            <div class="d-flex align-items-center justify-content-center numero-alertas"><div style="font-size: 70%; color: #ffffff;">3</div></div>
-                        </a>
-
-                        <div class="dropdown-menu shadow" aria-labelledby="campana" style="border-radius: 0.3em;">
-                            <h6 class="dropdown-header titulo-medio" style="font-size: 1em;">Centro de notificaciones</h6>
-                            <a class="dropdown-item texto-normal-mediano-login" href="#">
-                                <i class="fa fa-star mx-2 my-2 px-1" aria-hidden="true" style="font-size:2em; color: #ffdb6d;"></i>
-                                ¡Descubre las novedades de esta semana!
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item texto-normal-mediano-login" href="#"> 
-                                <i class="fa fa-shopping-bag mx-2 my-2 px-1" aria-hidden="true" style="font-size:2em; color: #7db5d6;"></i> 
-                                50% en la tienda
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item texto-normal-mediano-login" href="#">
-                                <i class="fa fa-level-up mx-3 my-2" aria-hidden="true" style="font-size:2em; color: #ee3a43;"></i>
-                                ¡Felicidades! Has alcanzado el nivel 5
-                            </a>
-                          </div>
-                    </li>
-
-                    <!-- Menu que se despliega del icono -->
-                    <li class="nav-item dropdown">  <!-- Este icono desaparece en la versión móvil y se agrega una fila de cerrar sesión al menú de tres líneas -->
-                        <a class="nav-link dropdown-toggle collapse dont-collapse-sm" href="#" id="perfil-navbar" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="imagenes\perfil.png" style="width: 1.9em; height: 1.9em;">
-                        </a>
-
-                        <div class="dropdown-menu shadow" aria-labelledby="perfil-navbar" style="border-radius: 0.3em;">
-                            <h6 class="dropdown-header titulo-medio" style="font-size: 1em;">Nombre y apellidos</h6>
-                            <a class="dropdown-item texto-normal-mediano-login" href="#"> 
-                                <i class="fa fa-user mx-2 my-2 px-1" aria-hidden="true" style="font-size:2em; color: #297fba;"></i> 
-                                Mi perfil
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item texto-normal-mediano-login" href="#">
-                                <i class="fa fa-cog mx-2 my-2" aria-hidden="true" style="font-size:2em; color: #297fba;"></i> 
-                                Configurar perfil
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item texto-normal-mediano-login" href="#">
-                                <span style="color: #003777; font-weight: bold;"> Cerrar sesión</span>
-                            </a>
-                          </div>
-                    </li>
-                </ul>
-            </div>
-
-        </nav>
-
-        <!-- Contenido-->
-    <div class="row justify-content-center mt-4">
-            <div class="jumbotron jumbotron-fluid">
-            
-                <div class="container">
-                    <h1> CEGAMEX</h1>
-                    <p id="pJB1">
-                        Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas
-                        eget quam.
-                        Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas
-                        eget
-                        quam. Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in,
-                        egestas eget
-                        quam. Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in,
-                        egestas eget
-                        quam.Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in,
-                        egestas eget
-                        quam.<br />
-                    </p>
-                    <a class="btn btn-primary texto-normal-mediano" role="button">Más sobre nosotros</a>
-            
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog p-2" style="max-width: 400px;">
+            <div class="modal-content">
+                <div class="modal-header p-3">
+                    <button type="button" data-dismiss="modal" class="p-0 m-0 close-button"><i class="fa fa-times" aria-hidden="true" style="color: #011c5d"></i></button>
+                </div>
+                <div class="modal-body"> 
+                    <div class="row justify-content-center no-gutters">
+                        <div class="row justify-content-center no-gutters">
+                        <span class="dropdown-header texto-normal text-center mt-3 mb-1" style="font-weight: bold; font-size: 1em;">SUSCRíBETE AL NEWSLETTER</span>
+                        <span class="titulo-medio text-center mb-3">¡Recibe las últimas noticias de Cegamex!</span>
+                        <img src="imagenes\newsletter.png" style="width: 15em; height: 12.5em;" class="my-2">
+                        </div>
+                        <div class="row my-4 no-gutters" style="width: 15em;">
+                        <button data-dismiss="modal" class="btn btn-primary btn-user btn-block texto-normal-mediano red-button">
+                            Quiero suscribirme
+                        </button>
+                    </div>    
+                    </div>     
                 </div>
             </div>
-            
-            <section id="lista-juegos" style="margin-right: 0px;margin-bottom: 0px;margin-top: 40px;">
+        </div>
+    </div>
+
+    <div class="container-fluid container-gen" style="overflow-x:hidden;"></div>
+    
+    <!-- BARRA DE NAVEGACIÓN-->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <a class="navbar-brand px-0 mx-0" href="pagina-inicio.html"><img src="imagenes\cgm_bg.png" style="height: 1.5em; width: 3em;"></a>
+        <div style="margin:auto"> <!-- Boton centrado -->
+        <button class="navbar-toggler" id="navbutton" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-3 text-center">
+                <li class="nav-item texto-normal">
+                    <a class="nav-link" href="perfil.html"><i class="fa fa-user d-lg-none" style="font-size: 0.8em;"></i>&nbsp mi perfil</a>
+                </li>
+                <hr class="sidebar-divider">
+                <li class="nav-item texto-normal">
+                    <a class="nav-link" href="juegos.html"><i class="fa fa-gamepad d-lg-none" style="font-size: 0.8em;"></i>&nbsp juegos &nbsp</a>
+                </li>
+                <hr class="sidebar-divider"> 
+                <li class="nav-item texto-normal">
+                    <a class="nav-link" href="admin.html"> <i class="fa fa-fw fa-area-chart d-lg-none" style="font-size: 0.8em;"></i>&nbsp admin &nbsp</a> 
+                </li>
+                <hr class="sidebar-divider"> 
+                <li class="nav-item texto-normal d-lg-none">
+                    <a class="nav-link logout" href="#">cerrar sesión</a> 
+                </li>  
+            </ul> 
+        </div>
+
+        <div class="navbar-expand" id = "notificaciones-perfil">
+            <ul class="navbar-nav" id="ul-not-perfil" style="list-style-type: none;">
+                <!-- Menu que se despliega del icono -->
+                <li class="nav-item dropdown"> 
+                    <a class="nav-link dropdown-toggle" href="#" id="campana" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="imagenes\campana.png" style="width: 1.5em; height: 1.75em; position: relative;">
+                        <!-- Círculo rojo de número de notificaciones -->
+                        <div class="d-flex align-items-center justify-content-center numero-alertas"><div class="numero-alertas-texto">3</div></div>
+                    </a>
+
+                    <div class="dropdown-menu shadow" aria-labelledby="campana" style="border-radius: 0.3em;">
+                        <h6 class="dropdown-header titulo-medio" style="font-size: 1em;">Centro de notificaciones</h6>
+                        <a class="dropdown-item texto-normal-mediano-login" href="#">
+                            <i class="fa fa-star mx-2 my-2 px-1 icono-menus-navbar" aria-hidden="true" style=" color: #ffdb6d;"></i>
+                            ¡Descubre las novedades de esta semana!
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item texto-normal-mediano-login" href="#"> 
+                            <i class="fa fa-shopping-bag mx-2 my-2 px-1 icono-menus-navbar" aria-hidden="true" style="color: #7db5d6;"></i> 
+                            50% en la tienda
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item texto-normal-mediano-login" href="#">
+                            <i class="fa fa-level-up mx-3 my-2 icono-menus-navbar" aria-hidden="true" style="color: #ee3a43;"></i>
+                            ¡Felicidades! Has alcanzado el nivel 5
+                        </a>
+                      </div>
+                </li>
+
+                <!-- Menu que se despliega del icono -->
+                <li class="nav-item dropdown">  <!-- Este icono desaparece en la versión móvil y se agrega una fila de cerrar sesión al menú de tres líneas -->
+                    <a class="nav-link dropdown-toggle collapse dont-collapse-sm" href="#" id="perfil-navbar" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="imagenes\perfil.png" style="width: 1.9em; height: 1.9em;">
+                    </a>
+                    <div class="dropdown-menu shadow" aria-labelledby="perfil-navbar" style="border-radius: 0.3em;">
+                        <h6 class="dropdown-header titulo-medio user-name-navbar" style="font-size: 1em;">Nombre y apellidos</h6>
+                        <a class="dropdown-item texto-normal-mediano-login" href="perfil.html"> 
+                            <i class="fa fa-user mx-2 my-2 px-1" aria-hidden="true" style="font-size:2em; color: #297fba;"></i> 
+                            Mi perfil
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item texto-normal-mediano-login" href="#">
+                            <i class="fa fa-cog mx-2 my-2 icono-menus-navbar" aria-hidden="true" style="color: #297fba;"></i> 
+                            Configurar perfil
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item texto-normal-mediano-login logout" href="#">
+                            <span style="color: #003777; font-weight: bold;"> Cerrar sesión</span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div style="height: 0.2em; background-color: #ee3a43;"></div>
+    
+    <!-- Contenido-->
+        <!------------------------------------------CARAOUSEL--------------------------------------------->
+    <div class="row justify-content-center align-items-center g-0" style="margin: 0!important">
+        <div id="carouselExampleControls" class="carousel slide no-gutters px-0 mx-0" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-mdb-interval="1">
+                    <img class="d-block w-100" src="imagenes/carousel1.png" alt="First slide">
+                </div>
+                <div class="carousel-item" data-mdb-interval="1">
+                    <img class="d-block w-100" src="imagenes/carousel2.png" alt="Second slide">
+                </div>
+                <div class="carousel-item" data-mdb-interval="1">
+                    <img class="d-block w-100" src="imagenes/carousel3.png" alt="Third slide">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+        <!------------------------------------------LISTA DE JUEGOS--------------------------------------------->
+        
+            <div class="col-12">
+            <section id="lista-juegos" class="mb-5">
                 <div class="container">
                     <div class="intro">
-                        <h2 class="titulo-medio text-center" style="margin: -16px;padding: 3px 0px 0px;">Nuestros juegos
+                        <h2 class="titulo-medio text-center" style="margin: 0px;padding: 3px 0px 0px;">Nuestros juegos
                         </h2>
                     </div>
                     <div class="card-group" style="transform: translateY(41px);">
-                        <div class="card">
-                            <img src="imagenes/cu.jpg" class="card-img-top">
+                        <div id="cd_lista-juegos" class="card mx-1">
+                            <img id="img_cd_lista-juegos" src="imagenes/cu.jpg" class="card-img-top">
                             <div class="card-body">
-                                <h5 class="card-title">Juego 1</h5>
+                                <h5 class="card-title titulo-medio">Juego 1</h5>
                                 <p class="card-text texto-normal-mediano">This is a wider card with supporting text below as
                                     a natural lead-in to additional
                                     content. This content is a little bit longer.</p>
                             </div>
                         </div>
-                        <div class="card">
-                            <img src="imagenes/cu.jpg" class="card-img-top" alt="...">
+                        <div id="cd_lista-juegos" class="card mx-1">
+                            <img id="img_cd_lista-juegos" src="imagenes/cu.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h5 class="card-title">Juego 2</h5>
+                                <h5 class="card-title titulo-medio">Juego 2</h5>
                                 <p class="card-text texto-normal-mediano">This card has supporting text below as a natural
                                     lead-in to additional content.</p>
                             </div>
                         </div>
-                        <div class="card">
-                            <img src="imagenes/cu.jpg" class="card-img-top" alt="...">
+                        <div id="cd_lista-juegos" class="card mx-1">
+                            <img id="img_cd_lista-juegos" src="imagenes/cu.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h5 class="card-title">Juego 3</h5>
+                                <h5 class="card-title titulo-medio">Juego 3</h5>
                                 <p class="card-text texto-normal-mediano">This is a wider card with supporting text below as
                                     a natural lead-in to additional
                                     content. This card has even longer content than the first to show that equal height
@@ -162,35 +192,46 @@
                             </div>
                         </div>
                     </div>
-            
-            
                 </div>
             </section>
-            
-            <section id="JB2">
-                <div class="jumbotron jumbotron-fluid">
-                    <div class="container">
-                        <h2 class="titulo-medio">
-                            Bienvenido a
-                            CEGAMEX</h2>
-                        <p class="texto-normal-mediano">
-                            Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo
-                            odio, dapibus ac facilisis in, egestas eget quam. <br />Nullam id dolor id nibh ultricies
-                            vehicula ut id elit.
-                            Cras
-                            justo odio, dapibus ac facilisis in, egestas eget quam.Nullam id dolor id nibh ultricies
-                            vehicula ut id elit.
-                            Cras
-                            justo odio, dapibus ac facilisis in, egestas eget quam.<br /><br />
-            
-                        </p>
-                    </div>
-                </div>
-            </section>
+            </div>
         </div>
-        
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <!------------------------FOOTER---------------------->
+        <footer class="footer-basic p-3">
+            <div class="social">
+                <a href="#"><i class="fa fa-instagram"></i></a>
+                <a href="#"><i class="fa fa-fw fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-facebook-official"></i></a>
+            </div>
+            <ul class="list-inline">
+                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Inicio</a></li>
+                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Mi perfil</a></li>
+                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Sobre nosotros</a></li>
+                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Descubre Cegamex</a></li>
+                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Privacidad y seguridad</a></li>
+            </ul>
+            <p class="copyright texto-normal-pequeno">Cegamex © 2021</p>
+        </footer>
+
+    <!-- </div>-->
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script>
+            $(window).on('load', function(){
+                setTimeout(function(){
+                $('#myModal').modal('show')
+        }, 5000);
+    });
+    </script>
+    <script type="module" src="general.js"></script>
 
 </body>
