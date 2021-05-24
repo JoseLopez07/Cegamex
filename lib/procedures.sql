@@ -54,6 +54,12 @@ AS
 			[adm], [idMascota])
         OUTPUT INSERTED.idUser INTO @newUser
         VALUES (@firstName, @lastName, @userName, @email, @passHash, 0, @petId);
+
+		SELECT @userId = SELECT idUser FROM @newUser;
+
+		-- base achievement
+		INSERT [dbo].[registroLogros] ([idUser], [idLogro])
+		VALUES (@userId, 1);
 	END
 GO
 
@@ -104,11 +110,14 @@ AS
 		ON m.idMascota = u.idMascota
 		WHERE idUser = @id;
 
-		DELETE FROM [dbo].[usuarios]
-		WHERE idUser = @id;
-
 		DELETE FROM [dbo].[amistades]
 		WHERE idUser1 = @id OR idUser2 = @id;
+
+		DELETE FROM [dbo].[registroLogros]
+		WHERE idUser = @id;
+
+		DELETE FROM [dbo].[usuarios]
+		WHERE idUser = @id;
 	END
 GO
 
@@ -247,10 +256,44 @@ AS
 	WHERE idUser1 = @userId1 AND idUser2 = @userId2;
 GO
 
+CREATE OR ALTER PROCEDURE getUserAchievs
+	@userId int
+AS
+	SET NOCOUNT ON;
+	SELECT a.idLogro AS achievId, nombre as [name], descripcion as [desc],
+		fechaHora AS [dateTime]
+	FROM [dbo].[logros] a
+	JOIN
+	(
+		SELECT idLogro, fechaHora
+		FROM [dbo].[registroLogros]
+		WHERE idUser = @userId
+	) x
+	ON a.idLogro = x.idLogro;
+GO
+
+CREATE OR ALTER PROCEDURE giveUserAchiev
+	@userId int,
+	@achievId int
+AS
+	INSERT [dbo].[registroLogros] ([idUser], [idLogro])
+	VALUES (@userId, @achievId);
+GO
+
+CREATE OR ALTER PROCEDURE hasUserAchiev
+	@userId int,
+	@achievId int
+AS
+	SELECT fechasHora AS [dateTime]
+	FROM [dbo].[registroLogros]
+	WHERE idUser = @userId AND idLogro = @achievId;
+GO
+
 
 -- ======== WARNING! RUNNING BELOW WILL DELETE USERS, PETS AND FRIENDS =========
 
 -- DELETE FROM amistades
+-- DELETE FROM reigstroLogros
 -- DELETE FROM usuarios
 -- DELETE FROM mascotas
 

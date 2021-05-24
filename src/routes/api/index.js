@@ -3,6 +3,7 @@ const verifyJson = require('../../middleware/verifyJson');
 const authRoutes = require('./auth');
 const usersRoutes = require('./users');
 const issuesRoutes = require('./issues');
+const achievsRoutes = require('./achievements');
 
 const router = express.Router();
 
@@ -16,5 +17,6 @@ router.use(verifyJson);
 router.use('/auth', authRoutes);
 router.use('/users', usersRoutes);
 router.use('/issues', issuesRoutes);
+router.use('/achievements', achievsRoutes);
 
 module.exports = router;

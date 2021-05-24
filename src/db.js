@@ -228,6 +228,33 @@ async function endFriendship(userId1, userId2) {
     await query;
 }
 
+async function getUserAchievs(userId) {
+    const query = (await connect())
+        .input('userId', sql.Int, userId)
+        .execute('getUserAchievs');
+    const result = await query;
+
+    return result.recordset;
+}
+
+async function giveUserAchiev(userId, achievId) {
+    const query = (await connect())
+        .input('userId', sql.Int, userId)
+        .input('achievId', sql.Int, achievId)
+        .execute('giveUserAchiev');
+    await query;
+}
+
+async function hasUserAchiev(userId, achievId) {
+    const query = (await connect())
+        .input('userId', sql.Int, userId)
+        .input('achievId', sql.Int, achievId)
+        .execute('hasUserAchiev');
+    const result = await query;
+
+    return result.recordset[0];
+}
+
 module.exports = {
     getPasswordFromEmail,
     getIdFromEmail,
@@ -245,4 +272,7 @@ module.exports = {
     getUserFriendsInfo,
     createFriendship,
     endFriendship,
+    getUserAchievs,
+    giveUserAchiev,
+    hasUserAchiev,
 };

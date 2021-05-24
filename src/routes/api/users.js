@@ -121,7 +121,7 @@ router.get('/', verifyToken, useTokenId, async (req, res, next) => {
     try {
         const queryIds = req.query.userIds;
         const result = await db.getMultipleUsersInfo(queryIds || req.user.id);
-        res.send(result);
+        return res.send(result);
     } catch (err) {
         if (err instanceof RequestError) {
             // console.error(err.message);
@@ -147,13 +147,13 @@ router.get('/friends', verifyToken, async (req, res, next) => {
 
 // method to add a friend (single way relationship)
 router.post(
-    '/friends/:userId',
+    '/friends',
     verifyToken,
-    parseUserId,
+    verifyParams('userId'),
     async (req, res, next) => {
         try {
-            await db.createFriendship(req.user.id, req.userId);
-            res.status(201).send();
+            await db.createFriendship(req.user.id, req.body.userId);
+            return res.status(201).send();
         } catch (err) {
             return next(err);
         }
@@ -168,7 +168,7 @@ router.delete(
     async (req, res, next) => {
         try {
             await db.endFriendship(req.user.id, req.userId);
-            res.status(204).send();
+            return res.status(204).send();
         } catch (err) {
             return next(err);
         }
