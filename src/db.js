@@ -203,6 +203,31 @@ async function getFechasIssues() {
     return result.recordset;
 }
 
+async function getUserFriendsInfo(userId) {
+    const query = (await connect())
+        .input('userId', sql.Int, userId)
+        .execute('getUserFriendsInfo');
+    const result = await query;
+
+    return result.recordset;
+}
+
+async function createFriendship(userId1, userId2) {
+    const query = (await connect())
+        .input('userId1', sql.Int, userId1)
+        .input('userId2', sql.Int, userId2)
+        .execute('createFriendship');
+    await query;
+}
+
+async function endFriendship(userId1, userId2) {
+    const query = (await connect())
+        .input('userId1', sql.Int, userId1)
+        .input('userId2', sql.Int, userId2)
+        .execute('endFriendship');
+    await query;
+}
+
 module.exports = {
     getPasswordFromEmail,
     getIdFromEmail,
@@ -217,4 +242,7 @@ module.exports = {
     getUserPet,
     modifyUserPet,
     getFechasIssues,
+    getUserFriendsInfo,
+    createFriendship,
+    endFriendship,
 };

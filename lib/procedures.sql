@@ -47,19 +47,13 @@ AS
 		OUTPUT INSERTED.idMascota INTO @newPet
 		VALUES (1, 0, 0, 5, 5, 5, 50, 0, 3); -- default values
 
+        SELECT @petId = idMascota FROM @newPet;
+
 		-- user creation
 		INSERT [dbo].[usuarios] ([nombre], [apellido], [userName], [correo], [pass],
-			[adm])
+			[adm], [idMascota])
         OUTPUT INSERTED.idUser INTO @newUser
-        VALUES (@firstName, @lastName, @userName, @email, @passHash, 0);
-
-		-- assign pet to user
-        SELECT @petId = idMascota FROM @newPet;
-        SELECT @userId = idUser FROM @newUser;
-
-		UPDATE [dbo].[usuarios]
-		SET idMascota = @petId
-		WHERE idUser = @userId;
+        VALUES (@firstName, @lastName, @userName, @email, @passHash, 0, @petId);
 	END
 GO
 
@@ -112,6 +106,9 @@ AS
 
 		DELETE FROM [dbo].[usuarios]
 		WHERE idUser = @id;
+
+		DELETE FROM [dbo].[amistades]
+		WHERE idUser1 = @id OR idUser2 = @id;
 	END
 GO
 
@@ -180,9 +177,9 @@ CREATE OR ALTER PROCEDURE modifyUserPet
 	@defense int = NULL,
 	@speed int = NULL,
 	@maxHealth int = NULL,
-	@move1 int = 0.
-	@move2 int = 0.
-	@move3 int = 0.
+	@move1 int = 0,
+	@move2 int = 0,
+	@move3 int = 0,
 	@skill int = NULL,
 	@type int = NULL
 AS
@@ -197,9 +194,9 @@ AS
 	ptsDefensa = ISNULL(@defense, ptsDefensa),
 	ptsVelocidad = ISNULL(@speed, ptsVelocidad),
 	ptsMaxVida = ISNULL(@maxHealth, ptsMaxVida),
-	idMovimiento1 = IIF(@move1 IS NULL OR @move1 > 0, @move1, idMovimiento1)
-	idMovimiento2 = IIF(@move2 IS NULL OR @move2 > 0, @move2, idMovimiento2)
-	idMovimiento3 = IIF(@move3 IS NULL OR @move3 > 0, @move3, idMovimiento3)
+	idMovimiento1 = IIF(@move1 IS NULL OR @move1 > 0, @move1, idMovimiento1),
+	idMovimiento2 = IIF(@move2 IS NULL OR @move2 > 0, @move2, idMovimiento2),
+	idMovimiento3 = IIF(@move3 IS NULL OR @move3 > 0, @move3, idMovimiento3),
 	skill = ISNULL(@skill, skill),
 	[type] = IIF(@type IS NULL OR @type > 0, @type, [type])
     FROM [dbo].[mascotas] m
@@ -216,10 +213,47 @@ AS
 	WHERE fecha_fin IS NOT NULL;
 GO
 
--- ============= WARNING! RUNNING BELOW WILL DELETE USERS AND PETS =============
 
+CREATE OR ALTER PROCEDURE getUserFriendsInfo
+	@userId int
+AS
+	SET NOCOUNT ON;
+    SELECT idUser, nombre AS firstName, apellido AS lastName, userName,
+		correo AS email, twitter, foto AS picture, rol AS companyRole
+	FROM [dbo].[usuarios] u
+    JOIN (
+    	SELECT idUser2
+        FROM [dbo].amistadesConfirmadas
+        WHERE idUser1 = @userId
+    ) f
+    ON u.idUser = f.idUser2;
+GO
+
+CREATE OR ALTER PROCEDURE createFriendship
+	@userId1 int,
+	@userId2 int
+AS
+	SET NOCOUNT ON;
+	INSERT [dbo].[amistades] ([idUser1], [idUser2])
+	VALUES (@userId1, @userId2);
+GO
+
+CREATE OR ALTER PROCEDURE endFriendship
+	@userId1 int,
+	@userId2 int
+AS
+	SET NOCOUNT ON;
+	DELETE FROM [dbo].[amistades]
+	WHERE idUser1 = @userId1 AND idUser2 = @userId2;
+GO
+
+
+-- ======== WARNING! RUNNING BELOW WILL DELETE USERS, PETS AND FRIENDS =========
+
+-- DELETE FROM amistades
 -- DELETE FROM usuarios
 -- DELETE FROM mascotas
+
 -- DBCC CHECKIDENT (usuarios, RESEED, 0)
 -- DBCC CHECKIDENT (mascotas, RESEED, 0)
 
@@ -232,10 +266,16 @@ GO
 
 -- EXEC createUser 'Test', 'Foo', 'test.foo', 'test.foo@cemex.mx', '$2a$10$KkhBaY3oIlxmdqPo8FL5le7zTEAAVI5Gdfd1YzXjOD9i1gsG10jO2' -- qwerty
 
+-- EXEC createFriendship 1, 2
+-- EXEC createFriendship 2, 1
+-- EXEC createFriendship 1, 3
+-- EXEC createFriendship 3, 1
+-- EXEC createFriendship 3, 2
+
 -- SELECT * FROM usuarios
 
--- TEST USERS
+-- SELECT * FROM amistades
 
 -- GO
 
--- ============= WARNING! RUNNING ABOVE WILL DELETE USERS AND PETS =============
+-- ======== WARNING! RUNNING ABOVE WILL DELETE USERS, PETS AND FRIENDS =========

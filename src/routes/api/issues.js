@@ -4,15 +4,13 @@ const verifyToken = require('../../middleware/verifyToken');
 
 const router = express.Router();
 
-router.get('/', verifyToken, getFechasIssues);
-
-async function getFechasIssues(req, res, next) {
+router.get('/', verifyToken, async (_, res, next) => {
     try {
         const fechas = await db.getFechasIssue();
         return res.send(fechas);
     } catch (err) {
         return next(err);
     }
-}
+});
 
 module.exports = router;
