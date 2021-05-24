@@ -120,7 +120,9 @@ router.put(
 router.get('/', verifyToken, useTokenId, async (req, res, next) => {
     try {
         const queryIds = req.query.userIds;
-        const result = await db.getMultipleUsersInfo(queryIds || req.user.id);
+        const result = queryIds
+            ? await db.getMultipleUsersInfo(queryIds)
+            : await db.getSingleUserInfo(req.user.id);
         return res.send(result);
     } catch (err) {
         if (err instanceof RequestError) {
