@@ -207,7 +207,7 @@ AS
 	idMovimiento2 = IIF(@move2 IS NULL OR @move2 > 0, @move2, idMovimiento2),
 	idMovimiento3 = IIF(@move3 IS NULL OR @move3 > 0, @move3, idMovimiento3),
 	skill = ISNULL(@skill, skill),
-	[type] = IIF(@type IS NULL OR @type > 0, @type, [type])
+	[type] = ISNULL(@type, [type])
     FROM [dbo].[mascotas] m
 	JOIN [dbo].[usuarios] u
 	ON m.idMascota = u.idMascota
