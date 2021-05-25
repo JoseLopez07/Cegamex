@@ -9,8 +9,10 @@ import api from '/modules/api.mjs';
     let profileImage = document.getElementsByClassName('user-profile-image');
     let twitterAccount = document.getElementById('user-twitter-acc');
     let position = document.getElementById('user-position');
+    let trophies = document.getElementById('trophies');
 
     const userData = await (await apiClient.getUserData()).json();
+    const achievements = await (await apiClient.getAchievements()).json(); 
 
     nameProfile.innerText = userData.firstName + " " + userData.lastName;
     email.innerText = userData.email;
@@ -19,6 +21,8 @@ import api from '/modules/api.mjs';
     profileImage[0].src = userData.picture;
 
     console.log(userData);
+    console.log(achievements);
+
 })();
 
 
