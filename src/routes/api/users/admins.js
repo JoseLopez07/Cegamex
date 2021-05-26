@@ -1,10 +1,13 @@
 const express = require('express');
 const db = require('../../../db');
 const verifyAdmin = require('../../../middleware/verifyAdmin');
+const verifyToken = require('../../../middleware/verifyToken');
 const verifyParams = require('../../../middleware/verifyParams');
 const selectUserId = require('../../../middleware/selectUserId');
 
 const router = express.Router();
+
+router.use(verifyToken);
 
 async function getUserAdmin(req, res, next) {
     try {
