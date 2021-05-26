@@ -1,6 +1,7 @@
 const express = require('express');
-const db = require('../../db');
+const db = require('../../../db');
 const verifyParams = require('../../../middleware/verifyParams');
+const selectUserId = require('../../../middleware/selectUserId');
 
 const router = express.Router();
 

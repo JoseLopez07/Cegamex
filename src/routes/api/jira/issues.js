@@ -1,10 +1,9 @@
 const express = require('express');
-const db = require('../../db');
-const verifyToken = require('../../middleware/verifyToken');
+const db = require('../../../db');
 
 const router = express.Router();
 
-router.get('/', verifyToken, async (_, res, next) => {
+router.get('/', async (_, res, next) => {
     try {
         const fechas = await db.getFechasIssues();
         return res.send(fechas);
