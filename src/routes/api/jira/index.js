@@ -7,6 +7,6 @@ const router = express.Router();
 router.use(verifyToken);
 
 // use routes
-router.use(issuesRoutes);
+router.use('/issues',issuesRoutes);
 
 module.exports = router;
