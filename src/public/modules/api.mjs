@@ -95,10 +95,9 @@ class ApiClient {
 
     async logOut() {
         this.token = '';
-        return this._apiRequest('/api/v1/auth/logout', 'GET',null, {
-            credentials: 'include'
+        return this._apiRequest('/api/v1/auth/logout', 'GET', null, {
+            credentials: 'include',
         });
-        
     }
 
     async register(userData) {
@@ -106,7 +105,7 @@ class ApiClient {
     }
 
     // must be an admin to specify user id
-    async changeUserInfo(userId = null, userData) {
+    async modifyUserData(userId = null, userData) {
         return this._apiRequest(
             `/api/v1/users/${userId || ''}`,
             'PUT',
@@ -136,12 +135,50 @@ class ApiClient {
     // if userIds specified, response is an array, otherwise returns a single
     // object with user's own info
     async getUserData(userIds = null) {
-        const queryString = userIds ? `?id=${userIds.join()}` : '';
-        return this._apiRequest(`/api/v1/users${queryString}`, 'GET');
+        return this._apiRequest(
+            `/api/v1/users${userIds ? '?userIds=' + userIds.join() : ''}`,
+            'GET'
+        );
     }
-    
-    async getFechasIssues(){
+
+    // defaults to getting your own
+    async getPetData(userId = null) {
+        return this._apiRequest(
+            `/api/v1/pets${userId ? '?userId=' + userId : ''}`,
+            'GET'
+        );
+    }
+
+    async modifyPetData(petData) {
+        return this._apiRequest('/api/v1/pets', 'POST', petData);
+    }
+
+    async getFechasIssues() {
         return this._apiRequest(`/api/v1/issues`, 'GET');
+    }
+
+    // defaults to getting your own
+    async getAchievements(userId = null) {
+        return this._apiRequest(
+            `/api/v1/achievements${userId ? '?userId=' + userId : ''}`,
+            'GET'
+        );
+    }
+
+    // defaults to getting your own
+    async getFriends(userId = null) {
+        return this._apiRequest(
+            `/api/v1/users/friends${userId ? '?userId=' + userId : ''}`,
+            'GET'
+        );
+    }
+
+    async addFriend(userId) {
+        return this._apiRequest('/api/v1/users/friends', 'POST', { userId });
+    }
+
+    async removeFriend(userId) {
+        return this._apiRequest(`/api/v1/users/friends/${userId}`, 'DELETE');
     }
 }
 
