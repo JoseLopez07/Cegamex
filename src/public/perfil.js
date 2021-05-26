@@ -10,9 +10,14 @@ import api from '/modules/api.mjs';
     let position = document.getElementById('user-position');
     let trophies = document.getElementById('trophies');
     let trophiesSummary = document.getElementById('trophies-summary');
+    let levelImage = document.getElementById('level-img-profile');
+    let levelMessage = document.getElementById('level-message');
+    let levelMessageNavbar = document.getElementById('level-message-navbar');
+    let progressBarColor = document.getElementById('progress-color');
 
     const userData = await (await apiClient.getUserData()).json();
     const achievements = await (await apiClient.getAchievements()).json();
+    const gameData = await (await apiClient.getPetData()).json();
 
     nameProfile.innerText = userData.firstName + ' ' + userData.lastName;
     email.innerText = userData.email;
@@ -42,10 +47,11 @@ import api from '/modules/api.mjs';
 
         newAchievementContainerSummary.appendChild(newAchievementImageSummary);
         trophiesSummary.appendChild(newAchievementContainerSummary);
-    });    
+    });
 
-    console.log(userData);
-    console.log(achievements);
-    console.log(gameData)
+    levelImage.src = `imagenes\\nivel-${gameData.level}.png`;
+    levelMessage.innerText = `¡${100 - gameData.experience} puntos más para nivel ${gameData.level + 1}!`;
+    levelMessageNavbar.childNodes[2].nodeValue = `¡Felicidades! Has alcanzado el nivel ${gameData.level}`;
+    progressBarColor.style.width = `${gameData.experience}%`
 
 })();

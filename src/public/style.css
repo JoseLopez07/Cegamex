@@ -329,3 +329,15 @@ a:link, a:visited, a:active {
 .margin-trophy {
     margin-right: 1em !important;
 }
+
+#progress-color {
+    width: 0%; 
+    background-color: #2c4f8f !important;
+}
+
+#progress-bar-cont {
+    border-radius: 3.25em; 
+    width: auto; 
+    height: 2em; 
+    background-color: #e2e9f1 !important;
+}
