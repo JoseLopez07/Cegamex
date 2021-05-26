@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', verifyToken, async (_, res, next) => {
     try {
-        const fechas = await db.getFechasIssue();
+        const fechas = await db.getFechasIssues();
         return res.send(fechas);
     } catch (err) {
         return next(err);
