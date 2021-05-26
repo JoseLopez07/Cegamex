@@ -144,13 +144,13 @@ class ApiClient {
     // defaults to getting your own
     async getPetData(userId = null) {
         return this._apiRequest(
-            `/api/v1/pets${userId ? '?userId=' + userId : ''}`,
+            `/api/v1/users/pets${userId ? '?userId=' + userId : ''}`,
             'GET'
         );
     }
 
     async modifyPetData(petData) {
-        return this._apiRequest('/api/v1/pets', 'POST', petData);
+        return this._apiRequest('/api/v1/users/pets', 'POST', petData);
     }
 
     async getFechasIssues() {
@@ -160,7 +160,7 @@ class ApiClient {
     // defaults to getting your own
     async getAchievements(userId = null) {
         return this._apiRequest(
-            `/api/v1/achievements${userId ? '?userId=' + userId : ''}`,
+            `/api/v1/users/achievements${userId ? '?userId=' + userId : ''}`,
             'GET'
         );
     }
