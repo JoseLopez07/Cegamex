@@ -341,3 +341,8 @@ a:link, a:visited, a:active {
     height: 2em; 
     background-color: #e2e9f1 !important;
 }
+
+.carousel-item {
+    background-color: #ffffff;
+    position: relative;
+}
