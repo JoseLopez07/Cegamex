@@ -12,6 +12,7 @@ const DB_PORT = parseInt(process.env.DB_PORT) || 1433;
 const DB_MAX_POOL = parseInt(process.env.DB_MAX_POOL) || 10;
 const DB_MIN_POOL = parseInt(process.env.DB_MIN_POOL) || 0;
 const DB_POOL_TIMEOUT = parseInt(process.env.DB_POOL_TIMEOUT) || 30000;
+const QUERY_LIMIT = parseInt(process.env.QUERY_LIMIT) || 500;
 
 // required env
 const DB_CONFIG = {
@@ -255,6 +256,78 @@ async function hasUserAchiev(userId, achievId) {
     return result.recordset[0];
 }
 
+async function queryIssues({
+    limit = null,
+    page = 1,
+    orderBy = null,
+    orderAsc = 0,
+    id = null,
+    type = null,
+    name = null,
+    creatorEId = '',
+    leadEId = '',
+    reporterEId = '',
+    asigneeId = 0,
+    state = null,
+    from = null,
+    to = null,
+}) {
+    const query = (await connect())
+        .input('limit', sql.Int, Math.min(limit, QUERY_LIMIT) || QUERY_LIMIT)
+        .input('page', sql.Int, page)
+        .input('orderBy', sql.NVarChar(255), orderBy)
+        .input('orderAsc', sql.Int, orderAsc)
+        .input('id', sql.Int, id)
+        .input('type', sql.NVarChar(255), type)
+        .input('name', sql.NVarChar(255), name)
+        .input('creatorEId', sql.NVarChar(255), creatorEId)
+        .input('leadEId', sql.NVarChar(255), leadEId)
+        .input('reporterEId', sql.NVarChar(255), reporterEId)
+        .input('asigneeId', sql.Int, asigneeId)
+        .input('state', sql.NVarChar(255), state)
+        .input('from', sql.DateTime, from && new Date(from))
+        .input('to', sql.DateTime, to && new Date(to))
+        .execute('queryIssues');
+    const result = await query;
+
+    return result.recordset;
+}
+
+async function querySubtasks({
+    limit = null,
+    page = 1,
+    orderBy = null,
+    orderAsc = 0,
+    id = null,
+    issueId = null,
+    name = null,
+    creatorEId = '',
+    leadEId = '',
+    reporterEId = '',
+    state = null,
+    from = null,
+    to = null,
+}) {
+    const query = (await connect())
+        .input('limit', sql.Int, Math.min(limit, QUERY_LIMIT) || QUERY_LIMIT)
+        .input('page', sql.Int, page)
+        .input('orderBy', sql.NVarChar(255), orderBy)
+        .input('orderAsc', sql.Int, orderAsc)
+        .input('id', sql.Int, id)
+        .input('issueId', sql.Int, issueId)
+        .input('name', sql.NVarChar(255), name)
+        .input('creatorEId', sql.NVarChar(255), creatorEId)
+        .input('leadEId', sql.NVarChar(255), leadEId)
+        .input('reporterEId', sql.NVarChar(255), reporterEId)
+        .input('state', sql.NVarChar(255), state)
+        .input('from', sql.DateTime, from && new Date(from))
+        .input('to', sql.DateTime, to && new Date(to))
+        .execute('querySubtasks');
+    const result = await query;
+
+    return result.recordset;
+}
+
 module.exports = {
     getPasswordFromEmail,
     getIdFromEmail,
@@ -275,4 +348,6 @@ module.exports = {
     getUserAchievs,
     giveUserAchiev,
     hasUserAchiev,
+    queryIssues,
+    querySubtasks,
 };
