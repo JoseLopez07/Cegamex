@@ -204,13 +204,6 @@ async function modifyUserPet(
     await query;
 }
 
-async function getFechasIssues() {
-    const query = (await connect()).execute('getFechasIssues');
-    const result = await query;
-
-    return result.recordset;
-}
-
 async function getUserFriendsInfo(userId) {
     const query = (await connect())
         .input('userId', sql.Int, userId)
@@ -335,6 +328,58 @@ async function querySubtasks({
     return result.recordset;
 }
 
+async function insertIssue({
+    id,
+    type,
+    name,
+    creatorEId = null,
+    leadEId = null,
+    reporterEId = null,
+    asigneeId = null,
+    state,
+    startDate,
+    endDate = null,
+}) {
+    const query = (await connect())
+        .input('id', sql.Int, id)
+        .input('type', sql.NVarChar(255), type)
+        .input('name', sql.NVarChar(255), name)
+        .input('creatorEId', sql.NVarChar(255), creatorEId)
+        .input('leadEId', sql.NVarChar(255), leadEId)
+        .input('reporterEId', sql.NVarChar(255), reporterEId)
+        .input('asigneeId', sql.Int, asigneeId)
+        .input('state', sql.NVarChar(255), state)
+        .input('startDate', sql.DateTime, new Date(startDate))
+        .input('endDate', sql.DateTime, endDate && new Date(endDate))
+        .execute('queryIssues');
+    await query;
+}
+
+async function insertSubtask({
+    id,
+    issueId,
+    name,
+    creatorEId = null,
+    leadEId = null,
+    reporterEId = null,
+    state,
+    startDate,
+    endDate,
+}) {
+    const query = (await connect())
+        .input('id', sql.Int, id)
+        .input('issueId', sql.Int, issueId)
+        .input('name', sql.NVarChar(255), name)
+        .input('creatorEId', sql.NVarChar(255), creatorEId)
+        .input('leadEId', sql.NVarChar(255), leadEId)
+        .input('reporterEId', sql.NVarChar(255), reporterEId)
+        .input('state', sql.NVarChar(255), state)
+        .input('startDate', sql.DateTime, new Date(startDate))
+        .input('endDate', sql.DateTime, new Date(endDate))
+        .execute('queryIssues');
+    await query;
+}
+
 module.exports = {
     getPasswordFromEmail,
     getIdFromEmail,
@@ -357,4 +402,6 @@ module.exports = {
     hasUserAchiev,
     queryIssues,
     querySubtasks,
+    insertIssue,
+    insertSubtask,
 };

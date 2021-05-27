@@ -53,6 +53,11 @@ router.post(
     }
 );
 
+// -----------------------------------------------------------------------------
+// IMPORTANT:
+// EVERY OTHER ROUTE UNDER /users USES TOKENS
+router.use(verifyToken);
+
 async function modifyUserInfo(req, res, next) {
     try {
         let passHash;
@@ -68,16 +73,10 @@ async function modifyUserInfo(req, res, next) {
 }
 
 // method to change OWN user info
-router.put('/', verifyToken, selectUserId('token'), modifyUserInfo);
+router.put('/', selectUserId('token'), modifyUserInfo);
 
 // method to change ANY user info (only accesible to admins)
-router.put(
-    '/:userId',
-    verifyToken,
-    verifyAdmin,
-    selectUserId('params'),
-    modifyUserInfo
-);
+router.put('/:userId', verifyAdmin, selectUserId('params'), modifyUserInfo);
 
 async function deleteUser(req, res, next) {
     try {
@@ -89,21 +88,15 @@ async function deleteUser(req, res, next) {
 }
 
 // method to delete OWN account
-router.delete('/', verifyToken, selectUserId('token'), deleteUser);
+router.delete('/', selectUserId('token'), deleteUser);
 
 // method to delete ANY account (only accessible to admins)
-router.delete(
-    '/:userId',
-    verifyToken,
-    verifyAdmin,
-    selectUserId('params'),
-    deleteUser
-);
+router.delete('/:userId', verifyAdmin, selectUserId('params'), deleteUser);
 
 // by default returns OWN user info returning a single object, but an "userIds"
 // parameter can be used to speify multiple ids (sepparated by commas) and
 // returns an array of objects
-router.get('/', verifyToken, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     try {
         const queryIds = req.query.userIds;
         const result = queryIds

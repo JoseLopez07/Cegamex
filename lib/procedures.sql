@@ -214,20 +214,13 @@ AS
 	WHERE u.idUser = @userId;
 GO
 
-CREATE OR ALTER PROCEDURE getFechasIssues
-AS
-	SET NOCOUNT ON;
-	SELECT fecha_fin
-	FROM issues
-	WHERE fecha_fin IS NOT NULL;
-GO
-
 CREATE OR ALTER PROCEDURE getCountFechasIssues
 AS
 	SET NOCOUNT ON;
-	SELECT (SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 1) as enero,
-	(SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 2) as febrero,
-	(SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 3) as marzo
+	SELECT
+    (SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 1) AS enero,
+    (SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 2) AS febrero,
+    (SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 3) AS marzo
 GO
 
 CREATE OR ALTER PROCEDURE getUserFriendsInfo
@@ -536,7 +529,7 @@ CREATE OR ALTER PROCEDURE insertIssue
     @asigneeId int = NULL,
     @state nvarchar(255),
     @startDate datetime,
-    @endDate datetime
+    @endDate datetime = NULL
 AS
     INSERT [dbo].[issues] (idIssue, tipo, nombre, idCreador, idLider,
 		idReporter, idEncargado, estado, fecha_inicio, fecha_fin)
