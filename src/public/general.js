@@ -29,6 +29,16 @@ const apiClient = new api.ApiClient();
       adminNavbarDivider.classList.remove('collapse');
    }
 
+   if (location.href === 'http://localhost:3001/admin.html') {
+      if (isAdmin.adm !== 1){
+         location.href = '/pagina-inicio.html';
+      } else {
+         showPageElements();
+      }
+   } else {
+      showPageElements();
+   }
+
    //Notificactions alert visibility
    if (sessionStorage.getItem('visibilityNotif') !== 'hidden') {
       notifications.firstElementChild.nextElementSibling.style.visibility = 'visible';
@@ -46,6 +56,7 @@ const apiClient = new api.ApiClient();
    }
 
    //Show page elements
+   function showPageElements() {
    [].forEach.call(loadingParents, function(p) {
       p.classList.remove("loading");
       p.classList.add("shadow")
@@ -56,7 +67,7 @@ const apiClient = new api.ApiClient();
    [].forEach.call(collapseItems, function(c) {
       c.classList.add("collapse");
    });
-
+   }
    console.log(userData);
    console.log(isAdmin);
 
