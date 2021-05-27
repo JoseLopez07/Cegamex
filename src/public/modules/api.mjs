@@ -120,7 +120,7 @@ class ApiClient {
 
     // must be an admin to specify user id
     async getUserAdmin(userId = null) {
-        return this._apiRequest(`/api/v1/users/admins/${userId}`, 'GET');
+        return this._apiRequest(`/api/v1/users/admins/${userId || ''}`, 'GET');
     }
 
     // must be an admin to send request

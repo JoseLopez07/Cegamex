@@ -275,7 +275,7 @@ module.exports = {
     getMultipleUsersInfo,
     getUserPet,
     modifyUserPet,
-    getCountFechasIssues,,
+    getCountFechasIssues,
     getUserFriendsInfo,
     createFriendship,
     endFriendship,
