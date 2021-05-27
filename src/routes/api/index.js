@@ -1,5 +1,6 @@
 const express = require('express');
 const verifyJson = require('../../middleware/verifyJson');
+const invalidTokenHandler = require('../../middleware/invalidTokenHandler');
 
 const authRoutes = require('./auth');
 const usersRoutes = require('./users');
@@ -17,5 +18,7 @@ router.use(verifyJson);
 router.use('/auth', authRoutes);
 router.use('/users', usersRoutes);
 router.use('/jira', jiraRoutes);
+
+router.use(invalidTokenHandler);
 
 module.exports = router;

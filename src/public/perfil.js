@@ -14,6 +14,7 @@ import api from '/modules/api.mjs';
     let levelMessage = document.getElementById('level-message');
     let levelMessageNavbar = document.getElementById('level-message-navbar');
     let progressBarColor = document.getElementById('progress-color');
+    let profileImageContainer = document.getElementById('profile-image-container');
 
     const userData = await (await apiClient.getUserData()).json();
     const achievements = await (await apiClient.getAchievements()).json();
@@ -24,6 +25,19 @@ import api from '/modules/api.mjs';
     twitterAccount.innerText = userData.twitter;
     position.innerText = userData.companyRole;
     profileImage[0].src = userData.picture;
+
+    if (userData.twitter === null) {
+        twitterAccount.parentElement.remove();
+    }
+    if (userData.companyRole === null) {
+        position.remove();
+        nameProfile.classList.remove('mb-2');
+        nameProfile.classList.add('py-3');
+        profileImageContainer.classList.remove('mb-2');
+    }
+    if (userData.picture === null) {
+        profileImage[0].src = "imagenes\\profile-default.png";
+    }
 
     [].forEach.call(achievements,function(a){
         let newAchievementContainer = document.createElement('div');
@@ -52,6 +66,6 @@ import api from '/modules/api.mjs';
     levelImage.src = `imagenes\\nivel-${gameData.level}.png`;
     levelMessage.innerText = `¡${100 - gameData.experience} puntos más para nivel ${gameData.level + 1}!`;
     levelMessageNavbar.childNodes[2].nodeValue = `¡Felicidades! Has alcanzado el nivel ${gameData.level}`;
-    progressBarColor.style.width = `${gameData.experience}%`
+    progressBarColor.style.width = `${gameData.experience}%`;
 
 })();

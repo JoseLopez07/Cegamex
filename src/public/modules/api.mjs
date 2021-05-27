@@ -120,7 +120,7 @@ class ApiClient {
 
     // must be an admin to specify user id
     async getUserAdmin(userId = null) {
-        return this._apiRequest(`/api/v1/users/admins/${userId}`, 'GET');
+        return this._apiRequest(`/api/v1/users/admins/${userId || ''}`, 'GET');
     }
 
     // must be an admin to send request
@@ -152,9 +152,10 @@ class ApiClient {
     async modifyPetData(petData) {
         return this._apiRequest('/api/v1/users/pets', 'POST', petData);
     }
-
-    async getFechasIssues() {
-        return this._apiRequest(`/api/v1/issues`, 'GET');
+    
+    async getCountFechasIssues() {
+        //
+        return this._apiRequest(`/api/v1/jira/issues`, 'GET');
     }
 
     // defaults to getting your own

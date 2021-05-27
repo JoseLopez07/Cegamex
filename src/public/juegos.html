@@ -34,8 +34,8 @@
                 <li class="nav-item texto-normal">
                     <a class="nav-link" href="juegos.html"><i class="fa fa-gamepad d-lg-none" style="font-size: 0.8em;"></i>&nbsp juegos &nbsp</a>
                 </li>
-                <hr class="sidebar-divider"> 
-                <li class="nav-item texto-normal">
+                <hr class="sidebar-divider collapse" id="admin-navbar-divider"> 
+                <li class="nav-item texto-normal collapse" id="admin-navbar">
                     <a class="nav-link" href="admin.html"> <i class="fa fa-fw fa-area-chart d-lg-none" style="font-size: 0.8em;"></i>&nbsp admin &nbsp</a> 
                 </li>
                 <hr class="sidebar-divider"> 
@@ -100,62 +100,71 @@
         </div>
     </nav>
     <!-- Contenido-->
-    <div class="row justify-content-center mt-5">
-       <img src="imagenes/CGM_INI3.png" class="img-fluid" style = "width: 650px;height: 200px;">
-        <!--LISTA DE JUEGOS-->
-        <section class="highlight-clean" style="margin-right: 0px;margin-bottom: 0px;margin-top: 40px;">
-            <div class="container">
-                <h2 class="text-center" style="font-family: Alatsi, sans-serif;font-size: 32px;letter-spacing: 2px;">¿Qué es CEGAMEX?</h2>
-                
-                <p class="text-center" style = "margin-left: 330px ;margin-top: 40px;width: 650px;">Nunc luctus in metus eget fringilla. Aliquam sed justo ligula. Vestibulum nibh erat,
-                    pellentesque ut laoreet vitae.Nunc luctus in metus eget fringilla. Aliquam sed justo ligula. Vestibulum nibh erat,
-                    pellentesque ut laoreet vitae.Nunc luctus in metus eget fringilla. Aliquam sed justo ligula. Vestibulum nibh erat,
-                    pellentesque ut laoreet vitae.
-                </p>
-                
-            </div>
-        </section>
-        <section class="highlight-clean" style="margin-right: 0px;margin-bottom: 0px;margin-top: 40px;">
-            <div class="container">
-                <h2 class="text-center" style="font-family: Alatsi, sans-serif;font-size: 32px;letter-spacing: 2px;">¿Cómo funciona?</h2>
-        
-                <p class="text-center" style="margin-left: 330px ;margin-top: 40px;width: 650px;">Nunc luctus in metus eget
-                    fringilla. Aliquam sed justo ligula. Vestibulum nibh erat,
-                    pellentesque ut laoreet vitae.Nunc luctus in metus eget fringilla. Aliquam sed justo ligula. Vestibulum nibh
-                    erat,
-                    pellentesque ut laoreet vitae.Nunc luctus in metus eget fringilla. Aliquam sed justo ligula. Vestibulum nibh
-                    erat,
-                    pellentesque ut laoreet vitae.
-                </p>
-                <a class="btn btn-primary" style="color:#e2e9f1 ;background: #2c5499;font-family: Alatsi, sans-serif;margin-left: 620px ;margin-top: 40px;"
-                 role="button" href="#">JUGAR</a>
-        
-            </div>
-        </section>
+    <div id="contenido-p_inicio" class="row justify-content-center mt-0">
 
-        <h2 class="text-center" style="font-family: Alatsi, sans-serif;font-size: 32px;letter-spacing: 2px;margin-top: 40px;">TITULO JUEGO</h2>
-        <img src="imagenes/empty.jpg" class="img-fluid" style="width: 850px;height: 600px;margin-top: 40px;">
+        <!------------------------------------------CARAOUSEL--------------------------------------------->
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-mdb-interval="1">
+                    <img class="d-block w-100" src="imagenes/juego1.png" alt="First slide">
+                </div>
+                <div class="carousel-item" data-mdb-interval="1">
+                    <img class="d-block w-100" src="imagenes/juego2.png" alt="Second slide">
+                </div>
 
-        <footer class="footer-basic p-3">
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <!-------------------------------------PLAY COLUMN------------------------------------------------>
+
+        <div id="play" class="row justify-content-center  text-center mt-4">
+            <h1 id="t_play"> COMENZAR PARTIDA</h1>
+            <div class="mt-4">
+                <button id="btn_play" type="button" class="btn btn-warning">PLAY</button>
+            </div>
+            <img src="imagenes/empty.jpg" class="img-fluid" style="width: 850px;height: 600px; margin-top: 40px;">
+
+
+        </div>
+
+
+
+        <!------------------------------------------FOOTER------------------------------------------------>
+        <footer class="footer-basic">
             <div class="social">
                 <a href="#"><i class="fa fa-instagram"></i></a>
                 <a href="#"><i class="fa fa-fw fa-twitter"></i></a>
                 <a href="#"><i class="fa fa-facebook-official"></i></a>
             </div>
             <ul class="list-inline">
-                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Inicio</a></li>
-                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Mi perfil</a></li>
-                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Sobre nosotros</a></li>
-                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Descubre Cegamex</a></li>
-                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Privacidad y seguridad</a></li>
+                <li class="list-inline-item"><a href="#">Home</a></li>
+                <li class="list-inline-item"><a href="#">Services</a></li>
+                <li class="list-inline-item"><a href="#">About</a></li>
+                <li class="list-inline-item"><a href="#">Terms</a></li>
+                <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
             </ul>
-            <p class="copyright texto-normal-pequeno">Cegamex © 2021</p>
+            <p class="copyright">Company Name © 2021</p>
         </footer>
-    
-    </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script type="module" src="general.js"></script>
-</body>
 
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+</body>

@@ -11,6 +11,8 @@ const apiClient = new api.ApiClient();
    let collapseItems = document.getElementsByClassName('dont-collapse-sm');
    let notifications = document.getElementById('campana');
    let logoutButtons = document.getElementsByClassName('logout');
+   let adminNavbar = document.getElementById('admin-navbar');
+   let adminNavbarDivider = document.getElementById('admin-navbar-divider');
 
    //Array from nodeList
    loadingParents = Array.from(loadingParents);
@@ -18,8 +20,14 @@ const apiClient = new api.ApiClient();
    collapseItems = Array.from(collapseItems);
    logoutButtons = Array.from(logoutButtons);
 
+   const isAdmin = await (await apiClient.getUserAdmin()).json();
    const userData = await (await apiClient.getUserData()).json();
    nameNavbar[0].innerText = userData.firstName + " " + userData.lastName;
+
+   if (isAdmin.adm !== 0) {
+      adminNavbar.classList.remove('collapse');
+      adminNavbarDivider.classList.remove('collapse');
+   }
 
    //Notificactions alert visibility
    if (sessionStorage.getItem('visibilityNotif') !== 'hidden') {
@@ -48,6 +56,9 @@ const apiClient = new api.ApiClient();
    [].forEach.call(collapseItems, function(c) {
       c.classList.add("collapse");
    });
+
+   console.log(userData);
+   console.log(isAdmin);
 
 })();
 

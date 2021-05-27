@@ -1,9 +1,12 @@
 const express = require('express');
 const db = require('../../../db');
+const verifyToken = require('../../../middleware/verifyToken');
 const verifyParams = require('../../../middleware/verifyParams');
 const selectUserId = require('../../../middleware/selectUserId');
 
 const router = express.Router();
+
+router.use(verifyToken);
 
 // by default returns OWN friends info, but an optional "userId" parameter can
 // can be used to get any user's friends

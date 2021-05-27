@@ -142,6 +142,13 @@ async function getSingleUserInfo(id) {
     return result.recordset[0];
 }
 
+async function getCountFechasIssues() {
+    const query = (await connect()).execute('getCountFechasIssues');
+    const result = await query;
+
+    return result.recordset;
+}
+
 async function getMultipleUsersInfo(idList) {
     const query = await (await connect())
         .input('idList', sql.NVarChar(sql.MAX), idList)
@@ -341,7 +348,7 @@ module.exports = {
     getMultipleUsersInfo,
     getUserPet,
     modifyUserPet,
-    getFechasIssues,
+    getCountFechasIssues,
     getUserFriendsInfo,
     createFriendship,
     endFriendship,

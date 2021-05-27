@@ -1,5 +1,5 @@
 const jwtMiddleware = require('express-jwt');
-const { UnauthorizedError } = require('express-jwt');
+// const { UnauthorizedError } = require('express-jwt');
 
 // import env vars
 require('dotenv').config();
@@ -7,16 +7,17 @@ require('dotenv').config();
 // required env
 const TOKEN_SECRET = process.env.TOKEN_SECRET;
 
-function checkToken(err, req, res, next) {
-    if (err instanceof UnauthorizedError || !req.user) {
-        return res.status(401).send({
-            error: 'Invalid or expired access token',
-        });
-    }
-    return next(err);
-}
+// function checkToken(err, req, res, next) {
+//     if (err instanceof UnauthorizedError || !req.user) {
+//         return res.status(401).send({
+//             error: 'Invalid or expired access token',
+//         });
+//     }
+//     return next(err);
+// }
 
-module.exports = [
-    jwtMiddleware({ secret: TOKEN_SECRET, algorithms: ['HS256'] }),
-    checkToken,
-];
+module.exports = jwtMiddleware({ secret: TOKEN_SECRET, algorithms: ['HS256'] });
+// [
+// ,
+// checkToken,
+// ];

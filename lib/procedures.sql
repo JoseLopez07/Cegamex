@@ -222,6 +222,13 @@ AS
 	WHERE fecha_fin IS NOT NULL;
 GO
 
+CREATE OR ALTER PROCEDURE getCountFechasIssues
+AS
+	SET NOCOUNT ON;
+	SELECT (SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 1) as enero,
+	(SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 2) as febrero,
+	(SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 3) as marzo
+GO
 
 CREATE OR ALTER PROCEDURE getUserFriendsInfo
 	@userId int
