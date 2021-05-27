@@ -1,10 +1,7 @@
 const express = require('express');
 const db = require('../../../db');
-const verifyToken = require('../../../middleware/verifyToken');
 
 const router = express.Router();
-
-router.use(verifyToken);
 
 // method to get pet info, by default gets own pet but an "userId" parameter can
 // be used a specific users id

@@ -214,20 +214,13 @@ AS
 	WHERE u.idUser = @userId;
 GO
 
-CREATE OR ALTER PROCEDURE getFechasIssues
-AS
-	SET NOCOUNT ON;
-	SELECT fecha_fin
-	FROM issues
-	WHERE fecha_fin IS NOT NULL;
-GO
-
 CREATE OR ALTER PROCEDURE getCountFechasIssues
 AS
 	SET NOCOUNT ON;
-	SELECT (SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 1) as enero,
-	(SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 2) as febrero,
-	(SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 3) as marzo
+	SELECT
+    (SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 1) AS enero,
+    (SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 2) AS febrero,
+    (SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 3) AS marzo
 GO
 
 CREATE OR ALTER PROCEDURE getUserFriendsInfo
@@ -295,6 +288,272 @@ AS
 	FROM [dbo].[registroLogros]
 	WHERE idUser = @userId AND idLogro = @achievId;
 GO
+
+
+
+-- https://stackoverflow.com/a/66659077/5699112
+CREATE OR ALTER PROCEDURE queryIssues
+    @limit int,
+    @page int = 1,
+    @orderBy nvarchar(255) = NULL,
+    @orderAsc int = 0,
+
+    @id int = NULL,
+    @type nvarchar(255) = NULL,
+    @name nvarchar(255) = NULL,
+    @creatorEId nvarchar(255) = '',
+    @leadEId nvarchar(255) = '',
+    @reporterEId nvarchar(255) = '',
+    @asigneeId int = 0,
+    @state nvarchar(255) = NULL,
+    @from datetime = NULL,
+    @to datetime = NULL
+AS
+	SET NOCOUNT ON;
+
+    SELECT idIssue AS issueId, tipo AS [type], nombre AS [name],
+		idCreador AS creatorEId, idLider AS leadEId, idReporter AS reporterEId,
+		estado AS [state], fecha_inicio AS startDate, fecha_fin AS endDate,
+		idEncargado AS asigneeId
+    INTO #results
+    FROM [dbo].[issues]
+    WHERE (idIssue = @id OR @id IS NULL) AND
+    (tipo = @type OR @type IS NULL) AND
+    (nombre = @name OR @name IS NULL) AND
+    (idCreador = @creatorEId OR @creatorEId = '') AND
+    (idLider = @leadEId OR @leadEId = '') AND
+    (idReporter = @reporterEId OR @reporterEId = '') AND
+    (idEncargado = @asigneeId OR @asigneeId = 0) AND
+    (estado = @state OR @state IS NULL) AND
+    (fecha_inicio >= @from OR @from IS NULL) AND
+    (fecha_fin < @to OR @to IS NULL);
+
+    IF (@orderAsc = 1 AND @orderBy = 'issueId')
+        SELECT * FROM #results
+		ORDER BY issueId ASC OFFSET @limit * (@page - 1) ROWS
+		FETCH NEXT @limit ROWS ONLY;
+    ELSE IF (@orderAsc = 0 AND @orderBy = 'issueId')
+        SELECT * FROM #results
+		ORDER BY issueId DESC OFFSET @limit * (@page - 1) ROWS
+		FETCH NEXT @limit ROWS ONLY;
+    
+    ELSE IF (@orderAsc = 1 AND @orderBy = 'name')
+        SELECT * FROM #results
+        ORDER BY [name] ASC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+    ELSE IF (@orderAsc = 0 AND @orderBy = 'name')
+        SELECT * FROM #results
+        ORDER BY [name] DESC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+    
+    ELSE IF (@orderAsc = 1 AND @orderBy = 'creatorEId')
+        SELECT * FROM #results
+        ORDER BY creatorEId ASC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+    ELSE IF (@orderAsc = 0 AND @orderBy = 'creatorEId')
+        SELECT * FROM #results
+        ORDER BY creatorEId DESC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+    
+    ELSE IF (@orderAsc = 1 AND @orderBy = 'leadEId')
+        SELECT * FROM #results
+        ORDER BY leadEId ASC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+    ELSE IF (@orderAsc = 0 AND @orderBy = 'leadEId')
+        SELECT * FROM #results
+        ORDER BY leadEId DESC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+
+    ELSE IF (@orderAsc = 1 AND @orderBy = 'state')
+        SELECT * FROM #results
+        ORDER BY [state] ASC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+    ELSE IF (@orderAsc = 0 AND @orderBy = 'state')
+        SELECT * FROM #results
+        ORDER BY [state] DESC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+        
+    ELSE IF (@orderAsc = 1 AND @orderBy = 'startDate')
+        SELECT * FROM #results
+        ORDER BY startDate ASC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+    ELSE IF (@orderAsc = 0 AND @orderBy = 'startDate')
+        SELECT * FROM #results
+        ORDER BY startDate DESC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+
+    ELSE IF (@orderAsc = 1 AND @orderBy = 'endDate')
+        SELECT * FROM #results
+        ORDER BY endDate ASC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+    ELSE IF (@orderAsc = 0 AND @orderBy = 'endDate')
+        SELECT * FROM #results
+        ORDER BY endDate DESC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+
+    ELSE IF (@orderAsc = 1 AND @orderBy = 'asigneeId')
+        SELECT * FROM #results
+        ORDER BY asigneeId ASC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+    ELSE IF (@orderAsc = 0 AND @orderBy = 'asigneeId')
+        SELECT * FROM #results
+        ORDER BY asigneeId DESC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+    
+    -- default ordering
+    ELSE
+        SELECT * FROM #results
+        ORDER BY issueId OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+GO
+
+CREATE OR ALTER PROCEDURE querySubtasks
+    @limit int,
+    @page int = 1,
+    @orderBy nvarchar(255) = NULL,
+    @orderAsc int = 0,
+
+    @id int = NULL,
+    @issueId int = NULL,
+    @name nvarchar(255) = NULL,
+    @creatorEId nvarchar(255) = '',
+    @leadEId nvarchar(255) = '',
+    @reporterEId nvarchar(255) = '',
+    @state nvarchar(255) = NULL,
+    @from datetime = NULL,
+    @to datetime = NULL
+AS
+	SET NOCOUNT ON;
+
+    SELECT idSubtarea AS subtaskId, idIssue AS issueId, nombre AS [name],
+		idCreador AS creatorEId, idLider AS leadEId, idReporter AS reporterEId,
+		estado AS [state], fecha_inicio AS startDate, fecha_fin AS endDate
+    INTO #results
+    FROM [dbo].[subtareas]
+    WHERE (idSubtarea = @id OR @id IS NULL) AND
+    (idIssue = @issueId OR @issueId IS NULL) AND
+    (nombre = @name OR @name IS NULL) AND
+    (idCreador = @creatorEId OR @creatorEId = '') AND
+    (idLider = @leadEId OR @leadEId = '') AND
+    (idReporter = @reporterEId OR @reporterEId = '') AND
+    (estado = @state OR @state IS NULL) AND
+    (fecha_inicio >= @from OR @from IS NULL) AND
+    (fecha_fin < @to OR @to IS NULL);
+
+    IF (@orderAsc = 1 AND @orderBy = 'subtaskId')
+        SELECT * FROM #results
+		ORDER BY subtaskId ASC OFFSET @limit * (@page - 1) ROWS
+		FETCH NEXT @limit ROWS ONLY;
+    ELSE IF (@orderAsc = 0 AND @orderBy = 'subtaskId')
+        SELECT * FROM #results
+		ORDER BY subtaskId DESC OFFSET @limit * (@page - 1) ROWS
+		FETCH NEXT @limit ROWS ONLY;
+
+    ELSE IF (@orderAsc = 1 AND @orderBy = 'issueId')
+        SELECT * FROM #results
+		ORDER BY issueId ASC OFFSET @limit * (@page - 1) ROWS
+		FETCH NEXT @limit ROWS ONLY;
+    ELSE IF (@orderAsc = 0 AND @orderBy = 'issueId')
+        SELECT * FROM #results
+		ORDER BY issueId DESC OFFSET @limit * (@page - 1) ROWS
+		FETCH NEXT @limit ROWS ONLY;
+
+    ELSE IF (@orderAsc = 1 AND @orderBy = 'name')
+        SELECT * FROM #results
+		ORDER BY [name] ASC OFFSET @limit * (@page - 1) ROWS
+		FETCH NEXT @limit ROWS ONLY;
+    ELSE IF (@orderAsc = 0 AND @orderBy = 'name')
+        SELECT * FROM #results
+		ORDER BY [name] DESC OFFSET @limit * (@page - 1) ROWS
+		FETCH NEXT @limit ROWS ONLY;
+
+    ELSE IF (@orderAsc = 1 AND @orderBy = 'creatorEId')
+        SELECT * FROM #results
+        ORDER BY creatorEId ASC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+    ELSE IF (@orderAsc = 0 AND @orderBy = 'creatorEId')
+        SELECT * FROM #results
+        ORDER BY creatorEId DESC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+    
+    ELSE IF (@orderAsc = 1 AND @orderBy = 'leadEId')
+        SELECT * FROM #results
+        ORDER BY leadEId ASC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+    ELSE IF (@orderAsc = 0 AND @orderBy = 'leadEId')
+        SELECT * FROM #results
+        ORDER BY leadEId DESC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+
+    ELSE IF (@orderAsc = 1 AND @orderBy = 'state')
+        SELECT * FROM #results
+        ORDER BY [state] ASC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+    ELSE IF (@orderAsc = 0 AND @orderBy = 'state')
+        SELECT * FROM #results
+        ORDER BY [state] DESC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+        
+    ELSE IF (@orderAsc = 1 AND @orderBy = 'startDate')
+        SELECT * FROM #results
+        ORDER BY startDate ASC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+    ELSE IF (@orderAsc = 0 AND @orderBy = 'startDate')
+        SELECT * FROM #results
+        ORDER BY startDate DESC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+
+    ELSE IF (@orderAsc = 1 AND @orderBy = 'endDate')
+        SELECT * FROM #results
+        ORDER BY endDate ASC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+    ELSE IF (@orderAsc = 0 AND @orderBy = 'endDate')
+        SELECT * FROM #results
+        ORDER BY endDate DESC OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+
+    -- default ordering
+    ELSE
+        SELECT * FROM #results
+        ORDER BY subtaskId OFFSET @limit * (@page - 1) ROWS
+        FETCH NEXT @limit ROWS ONLY;
+GO
+
+CREATE OR ALTER PROCEDURE insertIssue
+    @id int,
+    @type nvarchar(255),
+    @name nvarchar(255),
+    @creatorEId nvarchar(255) = NULL,
+    @leadEId nvarchar(255) = NULL,
+    @reporterEId nvarchar(255) = NULL,
+    @asigneeId int = NULL,
+    @state nvarchar(255),
+    @startDate datetime,
+    @endDate datetime = NULL
+AS
+    INSERT [dbo].[issues] (idIssue, tipo, nombre, idCreador, idLider,
+		idReporter, idEncargado, estado, fecha_inicio, fecha_fin)
+    VALUES (@id, @type, @name, @creatorEId, @leadEId, @reporterEId, @asigneeId,
+		@state, @startDate, @endDate);
+GO
+
+CREATE OR ALTER PROCEDURE insertSubtask
+    @id int,
+    @issueId int,
+    @name nvarchar(255),
+    @creatorEId nvarchar(255) = NULL,
+    @leadEId nvarchar(255) = NULL,
+    @reporterEId nvarchar(255) = NULL,
+    @state nvarchar(255),
+    @startDate datetime,
+    @endDate datetime
+AS
+    INSERT [dbo].[subtareas] (idSubtarea, idIssue, nombre, idCreador, idLider,
+		idReporter, estado, fecha_inicio, fecha_fin)
+    VALUES (@id, @issueId, @name, @creatorEId, @leadEId, @reporterEId, @state,
+		@startDate, @endDate);
+GO
+
 
 
 -- ======== WARNING! RUNNING BELOW WILL DELETE USERS, PETS AND FRIENDS =========

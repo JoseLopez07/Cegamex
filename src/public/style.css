@@ -346,3 +346,42 @@ a:link, a:visited, a:active {
     background-color: #ffffff;
     position: relative;
 }
+
+/*PAGINA DE JUEGOS*/
+
+/*JUEGO*/
+
+#play{
+    height: auto;
+    margin-bottom: 40px;
+    
+}
+
+#t_play{
+    color: #123685;
+    font-family: "Fira sans";
+    font-size: 48px;
+
+    
+}
+#btn_play{
+    color: #2c5499;
+    height: 50px;
+    width: 150px;
+    border-radius: 20px;
+    
+    font-family: "Fira sans";
+    font-size: 30px;
+    
+
+}
+
+#bg_img {
+    content: center;
+    
+}
+#bg_img2 {
+
+    padding-top: 20px;
+}
+/*FIN PAGINA DE JUEGOS*/

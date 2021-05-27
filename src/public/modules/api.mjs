@@ -152,10 +152,10 @@ class ApiClient {
     async modifyPetData(petData) {
         return this._apiRequest('/api/v1/users/pets', 'POST', petData);
     }
-    
+
     async getCountFechasIssues() {
         //
-        return this._apiRequest(`/api/v1/jira/issues`, 'GET');
+        return this._apiRequest(`/api/v1/jira/issues/dates`, 'GET');
     }
 
     // defaults to getting your own
