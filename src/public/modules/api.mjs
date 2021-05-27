@@ -154,6 +154,7 @@ class ApiClient {
     }
     
     async getCountFechasIssues() {
+        //
         return this._apiRequest(`/api/v1/jira/issues`, 'GET');
     }
 
