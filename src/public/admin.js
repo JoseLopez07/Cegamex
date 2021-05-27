@@ -17,7 +17,7 @@ const chart1 = new Chart(chKpi1, {
         labels: ["Enero", "Febrero", "Marzo"],
         datasets: [
             {
-            label: "Issues Resueltas",
+            label: "Issues Resueltas por mes",
             //Color de las barras
             backgroundColor: "rgba(0,255,0,0.2)",
             borderColor: "rgb(255,0,0)",
