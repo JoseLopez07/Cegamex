@@ -4,7 +4,6 @@ let chKpi1 = document.getElementById("ChartKpi1").getContext("2d");
 let chKpi2 = document.getElementById("ChartKpi2").getContext("2d");
 const countsfechas = await (await apiClient.getCountFechasIssues()).json();
 
-console.log(userData);
 const dataEnero = countsfechas[0].enero;
 const dataFebrero = countsfechas[0].febrero;
 const dataMarzo = countsfechas[0].marzo;
