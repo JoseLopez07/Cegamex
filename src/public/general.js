@@ -28,8 +28,8 @@ const apiClient = new api.ApiClient();
       adminNavbar.classList.remove('collapse');
       adminNavbarDivider.classList.remove('collapse');
    }
-
-   if (location.href === 'http://localhost:3001/admin.html') {
+   
+   if (location.href == `${window.location.protocol}//${window.location.host}/admin.html`) {
       if (isAdmin.adm !== 1){
          location.href = '/pagina-inicio.html';
       } else {
