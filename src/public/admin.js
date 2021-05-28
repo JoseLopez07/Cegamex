@@ -19,13 +19,13 @@ const chart1 = new Chart(chKpi1, {
             {
             label: "Issues Resueltas por mes",
             //Color de las barras
-            backgroundColor: "rgba(0,255,0,0.2)",
-            borderColor: "rgb(255,0,0)",
+            backgroundColor: "#7db5d6",
+            barPercentage: 0.6,
             data: data,
             },
             ],
         },
-        options: {},
+        options: {}
     }
 );
 
@@ -37,8 +37,7 @@ const chart2 = new Chart(chKpi2, {
             {
             label: "Issues Resueltas vs sin resolver",
             //Color de la rueda ["color1", "color2"]
-            backgroundColor: ["rgba(0,255,0,0.2)", "red"],
-            borderColor: "rgb(255,0,0)",
+            backgroundColor: ["#2c5499", "#297fba"],
             data: data2,
             },
             ],

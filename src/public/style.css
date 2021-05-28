@@ -353,25 +353,27 @@ a:link, a:visited, a:active {
 
 #play{
     height: auto;
-    margin-bottom: 40px;
+    margin-bottom: 2em;
     
 }
 
 #t_play{
     color: #123685;
     font-family: "Fira sans";
-    font-size: 48px;
+    font-size: 2em;
 
     
 }
 #btn_play{
     color: #2c5499;
-    height: 50px;
-    width: 150px;
-    border-radius: 20px;
+    height: 2em;
+    width: 3.5em;
+    border-radius: 3.25em;
+    background-color: #ffdb6d;
+    border-color: #ffdb6d;
     
     font-family: "Fira sans";
-    font-size: 30px;
+    font-size: 2em;
     
 
 }
@@ -385,3 +387,24 @@ a:link, a:visited, a:active {
     padding-top: 20px;
 }
 /*FIN PAGINA DE JUEGOS*/
+
+.fa-instagram {
+    position: absolute; 
+    font-size: 100%; 
+    top: 17%; 
+    left: 23%;
+}
+
+.fa-twitter {
+    position: absolute; 
+    font-size: 100%; 
+    top: 17%; 
+    left: 13%;
+}
+
+.fa-facebook {
+    position: absolute; 
+    font-size: 100%; 
+    top: 17%; 
+    left: 9%;
+}

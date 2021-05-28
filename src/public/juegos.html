@@ -76,13 +76,14 @@
 
                 <!-- Menu que se despliega del icono -->
                 <li class="nav-item dropdown">  <!-- Este icono desaparece en la versión móvil y se agrega una fila de cerrar sesión al menú de tres líneas -->
-                    <a class="nav-link dropdown-toggle collapse dont-collapse-sm" href="#" id="perfil-navbar" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle collapse dont-collapse-sm" href="#" id="perfil-navbar" 
+                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="imagenes\perfil.png" style="width: 1.9em; height: 1.9em;">
                     </a>
                     <div class="dropdown-menu shadow" aria-labelledby="perfil-navbar" style="border-radius: 0.3em;">
                         <h6 class="dropdown-header titulo-medio user-name-navbar" style="font-size: 1em;">Nombre y apellidos</h6>
                         <a class="dropdown-item texto-normal-mediano-login" href="perfil.html"> 
-                            <i class="fa fa-user mx-2 my-2 px-1" aria-hidden="true" style="font-size:2em; color: #297fba;"></i> 
+                            <i class="fa fa-user mx-2 my-2 px-1 icono-menus-navbar" aria-hidden="true" style="color: #297fba;"></i> 
                             Mi perfil
                         </a>
                         <div class="dropdown-divider"></div>
@@ -100,57 +101,57 @@
         </div>
     </nav>
     <!-- Contenido-->
-    <div id="contenido-p_inicio" class="row justify-content-center mt-0">
+    <div id="contenido-p_inicio" class="row justify-content-center mt-0 g-0">
 
         <!------------------------------------------CARAOUSEL--------------------------------------------->
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div id="myCarousel" class="carousel slide"
+        data-bs-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active" data-mdb-interval="1">
-                    <img class="d-block w-100" src="imagenes/juego1.png" alt="First slide">
+                <div class="carousel-item active">
+                    <img src="imagenes/juego1.png" style="height: 100%; width: 100%;">
                 </div>
-                <div class="carousel-item" data-mdb-interval="1">
-                    <img class="d-block w-100" src="imagenes/juego2.png" alt="Second slide">
+                <div class="carousel-item">
+                    <img src="imagenes/juego2.png" style="height: 100%; width: 100%;">
                 </div>
-
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <a href="#myCarousel" class="carousel-control-prev" role="button" data-bs-slide="prev">
                 <span class="sr-only">Previous</span>
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <a href="#myCarousel" class="carousel-control-next" role="button" data-bs-slide="next">
                 <span class="sr-only">Next</span>
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
             </a>
         </div>
         <!-------------------------------------PLAY COLUMN------------------------------------------------>
 
-        <div id="play" class="row justify-content-center  text-center mt-4">
-            <h1 id="t_play"> COMENZAR PARTIDA</h1>
-            <div class="mt-4">
-                <button id="btn_play" type="button" class="btn btn-warning">PLAY</button>
+        <div id="play" class="row justify-content-center text-center mt-5 g-0">
+            <div class="col-xl-8 col-sm-auto p-2">
+                <h1 id="t_play">¡Comienza una partida!</h1>
+                <div class="mt-4">
+                    <button id="btn_play" type="button" class="btn btn-warning">PLAY</button>
+                </div>
+                <img src="imagenes/empty.jpg" class="img-fluid" style="width: 850px;height: 600px; margin-top: 40px;">
             </div>
-            <img src="imagenes/empty.jpg" class="img-fluid" style="width: 850px;height: 600px; margin-top: 40px;">
-
-
         </div>
 
 
 
         <!------------------------------------------FOOTER------------------------------------------------>
-        <footer class="footer-basic">
-            <div class="social">
-                <a href="#"><i class="fa fa-instagram"></i></a>
-                <a href="#"><i class="fa fa-fw fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-facebook-official"></i></a>
+        <footer class="footer-basic p-3 m-0 mt-xl-5 mt-lg-5">
+            <div class="social py-2">
+                <a href="#" style="position: relative;"><i class="fa fa-instagram"></i></a>
+                <a href="#" style="position: relative;"><i class="fa fa-fw fa-twitter"></i></a>
+                <a href="#" style="position: relative;"><i class="fa fa-fw fa-facebook"></i></a>
             </div>
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="#">Home</a></li>
-                <li class="list-inline-item"><a href="#">Services</a></li>
-                <li class="list-inline-item"><a href="#">About</a></li>
-                <li class="list-inline-item"><a href="#">Terms</a></li>
-                <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Inicio</a></li>
+                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Mi perfil</a></li>
+                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Sobre nosotros</a></li>
+                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Descubre Cegamex</a></li>
+                <li class="list-inline-item texto-normal-mediano-login"><a href="#">Privacidad y seguridad</a></li>
             </ul>
-            <p class="copyright">Company Name © 2021</p>
+            <p class="copyright texto-normal-pequeno">Cegamex © 2021</p>
         </footer>
 
 
@@ -167,4 +168,7 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    <script type="module" src="general.js"></script>
 </body>
