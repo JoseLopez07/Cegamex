@@ -1,3 +1,6 @@
+import api from '/modules/api.mjs';
+const apiClient = new api.ApiClient();
+
 //Show page elements
 function showPageElements() {
     let loadingParents = document.getElementsByClassName('loading');
@@ -20,4 +23,57 @@ function showPageElements() {
     });
 }
 
-export default { showPageElements };
+function showNotifications() {
+   let notifications = document.getElementById('campana');
+
+   //Notificactions alert visibility
+   if (sessionStorage.getItem('visibilityNotif') !== 'hidden') {
+      notifications.firstElementChild.nextElementSibling.style.visibility = 'visible';
+      notifications.addEventListener('click',onClick);
+   }
+
+   //Notifications alert click event
+   function onClick(e) {
+      notifications.firstElementChild.nextElementSibling.style.visibility = 'hidden';
+      sessionStorage.setItem('visibilityNotif','hidden');
+   }
+}
+
+function logOutButtons() {
+   let logoutButtons = document.getElementsByClassName('logout');
+   
+   logoutButtons = Array.from(logoutButtons);
+
+   [].forEach.call(logoutButtons, function(b) {
+      b.addEventListener('click',onClickLogout)
+   });
+}
+
+async function onClickLogout(e) {
+   console.log(e.target);
+   await apiClient.logOut();
+   location.href = '/index.html'   
+} 
+
+async function navbarUserName() {
+   let nameNavbar = document.getElementsByClassName('user-name-navbar');
+   const userData = await (await apiClient.getUserData()).json();
+   
+   nameNavbar[0].innerText = userData.firstName + " " + userData.lastName;
+}
+
+async function showAdminNavbar() {
+   let adminNavbar = document.getElementById('admin-navbar');
+   let adminNavbarDivider = document.getElementById('admin-navbar-divider');
+   const isAdmin = await (await apiClient.getUserAdmin()).json();
+   
+   if (isAdmin.adm !== 0) {
+      adminNavbar.classList.remove('collapse');
+      adminNavbarDivider.classList.remove('collapse');
+   }
+   
+}
+
+
+export default { showPageElements , showNotifications ,
+               navbarUserName , logOutButtons , showAdminNavbar };
