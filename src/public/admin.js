@@ -58,6 +58,7 @@ const chart2 = new Chart(chKpi2, {
     },
 });
 
+//Redirect or show page content
 if (isAdmin.adm !== 1) {
     location.href = '/pagina-inicio.html';
 } else {

@@ -3,29 +3,32 @@ const apiClient = new api.ApiClient();
 
 //Show page elements
 function showPageElements(includeShadow) {
-    let loadingParents = document.getElementsByClassName('loading');
-    let loadingChildren = document.getElementsByClassName('loading-child');
-    let collapseItems = document.getElementsByClassName('dont-collapse-sm');
- 
-    loadingParents = Array.from(loadingParents);
-    loadingChildren = Array.from(loadingChildren);
-    collapseItems = Array.from(collapseItems);
- 
-    [].forEach.call(loadingParents, function(p) {
-       p.classList.remove("loading");
+   let loadingParents = document.getElementsByClassName('loading');
+   let loadingChildren = document.getElementsByClassName('loading-child');
+   let collapseItems = document.getElementsByClassName('dont-collapse-sm');
 
-       if (includeShadow !== false) {
-         p.classList.add("shadow")
-       }
-    });
-    [].forEach.call(loadingChildren, function(c) {
-       c.classList.remove("loading-child");
-    });
-    [].forEach.call(collapseItems, function(c) {
-       c.classList.add("collapse");
-    });
+   //Nodelist to array
+   loadingParents = Array.from(loadingParents);
+   loadingChildren = Array.from(loadingChildren);
+   collapseItems = Array.from(collapseItems);
+
+   //Remove classes
+   [].forEach.call(loadingParents, function(p) {
+      p.classList.remove("loading");
+
+      if (includeShadow !== false) {
+      p.classList.add("shadow")
+      }
+   });
+   [].forEach.call(loadingChildren, function(c) {
+      c.classList.remove("loading-child");
+   });
+   [].forEach.call(collapseItems, function(c) {
+      c.classList.add("collapse");
+   });
 }
 
+//Navbar notifications
 function showNotifications() {
    let notifications = document.getElementById('campana');
 
@@ -42,6 +45,7 @@ function showNotifications() {
    }
 }
 
+//Set event to logout buttons
 function logOutButtons() {
    let logoutButtons = document.getElementsByClassName('logout');
    
@@ -56,8 +60,9 @@ async function onClickLogout(e) {
    console.log(e.target);
    await apiClient.logOut();
    location.href = '/index.html';   
-} 
+}
 
+//Set user name to dropdown menu
 async function navbarUserName() {
    let nameNavbar = document.getElementsByClassName('user-name-navbar');
    const userData = await (await apiClient.getUserData()).json();
@@ -65,6 +70,7 @@ async function navbarUserName() {
    nameNavbar[0].innerText = userData.firstName + " " + userData.lastName;
 }
 
+//Admin access on navbar
 async function showAdminNavbar() {
    let adminNavbar = document.getElementById('admin-navbar');
    let adminNavbarDivider = document.getElementById('admin-navbar-divider');
@@ -73,10 +79,8 @@ async function showAdminNavbar() {
    if (isAdmin.adm !== 0) {
       adminNavbar.classList.remove('collapse');
       adminNavbarDivider.classList.remove('collapse');
-   }
-   
+   } 
 }
-
 
 export default { showPageElements , showNotifications ,
                navbarUserName , logOutButtons , showAdminNavbar };
