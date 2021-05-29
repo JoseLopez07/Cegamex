@@ -4,15 +4,15 @@ const apiClient = new api.ApiClient();
 //Change navbar userName
 (async function () {
    //Get elements from the DOM
-   let nameNavbar = document.getElementsByClassName('user-name-navbar');
    let notifications = document.getElementById('campana');
+   let nameNavbar = document.getElementsByClassName('user-name-navbar');
    let logoutButtons = document.getElementsByClassName('logout');
    let adminNavbar = document.getElementById('admin-navbar');
    let adminNavbarDivider = document.getElementById('admin-navbar-divider');
 
    //Array from nodeList
    logoutButtons = Array.from(logoutButtons);
-
+/*
    const isAdmin = await (await apiClient.getUserAdmin()).json();
    const userData = await (await apiClient.getUserData()).json();
    nameNavbar[0].innerText = userData.firstName + " " + userData.lastName;
@@ -29,7 +29,7 @@ const apiClient = new api.ApiClient();
          showPageElements();
       }
    }
-
+*/
    //Notificactions alert visibility
    if (sessionStorage.getItem('visibilityNotif') !== 'hidden') {
       notifications.firstElementChild.nextElementSibling.style.visibility = 'visible';
@@ -53,4 +53,8 @@ async function onClickLogout(e) {
    await apiClient.logOut();
    location.href = '/index.html'   
 } 
-
+/*
+function showNavbarNotifications() {
+   let notifications = document.getElementById('campana');
+}
+*/

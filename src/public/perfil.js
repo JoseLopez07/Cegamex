@@ -1,4 +1,5 @@
 import api from '/modules/api.mjs';
+import utils from '/modules/utils.mjs';
 
 (async function () {
     const apiClient = new api.ApiClient();
@@ -68,6 +69,6 @@ import api from '/modules/api.mjs';
     levelMessageNavbar.childNodes[2].nodeValue = `¡Felicidades! Has alcanzado el nivel ${gameData.level}`;
     progressBarColor.style.width = `${gameData.experience}%`;
 
-    api.showPageElements();
+    utils.showPageElements();
 
 })();
