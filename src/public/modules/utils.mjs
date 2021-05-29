@@ -2,7 +2,7 @@ import api from '/modules/api.mjs';
 const apiClient = new api.ApiClient();
 
 //Show page elements
-function showPageElements() {
+function showPageElements(includeShadow) {
     let loadingParents = document.getElementsByClassName('loading');
     let loadingChildren = document.getElementsByClassName('loading-child');
     let collapseItems = document.getElementsByClassName('dont-collapse-sm');
@@ -13,7 +13,10 @@ function showPageElements() {
  
     [].forEach.call(loadingParents, function(p) {
        p.classList.remove("loading");
-       p.classList.add("shadow")
+
+       if (includeShadow !== false) {
+         p.classList.add("shadow")
+       }
     });
     [].forEach.call(loadingChildren, function(c) {
        c.classList.remove("loading-child");
@@ -52,7 +55,7 @@ function logOutButtons() {
 async function onClickLogout(e) {
    console.log(e.target);
    await apiClient.logOut();
-   location.href = '/index.html'   
+   location.href = '/index.html';   
 } 
 
 async function navbarUserName() {

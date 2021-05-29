@@ -104,9 +104,9 @@
     <div id="contenido-p_inicio" class="row justify-content-center mt-0 g-0">
 
         <!------------------------------------------CARAOUSEL--------------------------------------------->
-        <div id="myCarousel" class="carousel slide"
+        <div id="myCarousel" class="carousel slide loading"
         data-bs-ride="carousel">
-            <div class="carousel-inner">
+            <div class="carousel-inner loading-child">
                 <div class="carousel-item active">
                     <img src="imagenes/juego1.png" style="height: 100%; width: 100%;">
                 </div>
@@ -126,12 +126,12 @@
         <!-------------------------------------PLAY COLUMN------------------------------------------------>
 
         <div id="play" class="row justify-content-center text-center mt-5 g-0">
-            <div class="col-xl-8 col-sm-auto p-2">
-                <h1 id="t_play">¡Comienza una partida!</h1>
+            <div class="col-xl-8 col-sm-auto p-2 loading">
+                <h1 id="t_play" class="loading-child">¡Comienza una partida!</h1>
                 <div class="mt-4">
-                    <button id="btn_play" type="button" class="btn btn-warning">PLAY</button>
+                    <button id="btn_play" type="button" class="btn btn-warning loading-child">PLAY</button>
                 </div>
-                <img src="imagenes/empty.jpg" class="img-fluid" style="width: 850px;height: 600px; margin-top: 40px;">
+                <img src="imagenes/empty.jpg" class="img-fluid loading-child" style="width: 850px;height: 600px; margin-top: 40px;">
             </div>
         </div>
 
@@ -158,6 +158,7 @@
 
     </div>
 
+    <script type="module" src="juego.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -170,5 +171,4 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
-    <script type="module" src="general.js"></script>
 </body>

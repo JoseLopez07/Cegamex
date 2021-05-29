@@ -1,8 +1,10 @@
 import api from '/modules/api.mjs';
+import utils from '/modules/utils.mjs';
 const apiClient = new api.ApiClient();
 let chKpi1 = document.getElementById('ChartKpi1').getContext('2d');
 let chKpi2 = document.getElementById('ChartKpi2').getContext('2d');
 const countsfechas = await (await apiClient.getCountFechasIssues()).json();
+const isAdmin = await (await apiClient.getUserAdmin()).json();
 
 const dataEnero = countsfechas[0].enero;
 const dataFebrero = countsfechas[0].febrero;
@@ -55,3 +57,19 @@ const chart2 = new Chart(chKpi2, {
         },
     },
 });
+
+if (isAdmin.adm !== 1) {
+    location.href = '/pagina-inicio.html';
+} else {
+    utils.showAdminNavbar();
+    utils.showPageElements();
+    utils.showNotifications();
+    utils.navbarUserName();
+    utils.logOutButtons();
+}
+
+
+
+
+
+
