@@ -69,6 +69,11 @@ import utils from '/modules/utils.mjs';
     levelMessageNavbar.childNodes[2].nodeValue = `¡Felicidades! Has alcanzado el nivel ${gameData.level}`;
     progressBarColor.style.width = `${gameData.experience}%`;
 
+    // Show page content, admin access, user name, etc
+    utils.showAdminNavbar();
     utils.showPageElements();
+    utils.showNotifications();
+    utils.navbarUserName();
+    utils.logOutButtons();
 
 })();
