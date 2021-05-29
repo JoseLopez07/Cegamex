@@ -68,4 +68,6 @@ import api from '/modules/api.mjs';
     levelMessageNavbar.childNodes[2].nodeValue = `¡Felicidades! Has alcanzado el nivel ${gameData.level}`;
     progressBarColor.style.width = `${gameData.experience}%`;
 
+    api.showPageElements();
+
 })();
