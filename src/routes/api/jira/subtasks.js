@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('../../../db');
 const verifyAdmin = require('../../../middleware/verifyAdmin');
 const verifyParams = require('../../../middleware/verifyParams');
+const objectParser = require('../../../middleware/objectParser');
 
 const router = express.Router();
 

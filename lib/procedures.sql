@@ -55,7 +55,7 @@ AS
         OUTPUT INSERTED.idUser INTO @newUser
         VALUES (@firstName, @lastName, @userName, @email, @passHash, 0, @petId);
 
-		SELECT @userId = SELECT idUser FROM @newUser;
+		SELECT @userId = idUser FROM @newUser;
 
 		-- base achievement
 		INSERT [dbo].[registroLogros] ([idUser], [idLogro])
@@ -284,7 +284,7 @@ CREATE OR ALTER PROCEDURE hasUserAchiev
 	@userId int,
 	@achievId int
 AS
-	SELECT fechasHora AS [dateTime]
+	SELECT fechaHora AS [dateTime]
 	FROM [dbo].[registroLogros]
 	WHERE idUser = @userId AND idLogro = @achievId;
 GO
@@ -556,30 +556,34 @@ GO
 
 
 
--- ======== WARNING! RUNNING BELOW WILL DELETE USERS, PETS AND FRIENDS =========
+-- ==== WARNING! RUNNING BELOW WILL DELETE USERS, PETS, FRIENDS AND ACHIEVS ====
 
--- DELETE FROM amistades
--- DELETE FROM reigstroLogros
--- DELETE FROM usuarios
--- DELETE FROM mascotas
+DELETE FROM amistades
+DELETE FROM registroLogros
+DELETE FROM usuarios
+DELETE FROM mascotas
+DELETE FROM logros
 
--- DBCC CHECKIDENT (usuarios, RESEED, 0)
--- DBCC CHECKIDENT (mascotas, RESEED, 0)
+DBCC CHECKIDENT (usuarios, RESEED, 0)
+DBCC CHECKIDENT (mascotas, RESEED, 0)
+DBCC CHECKIDENT (logros, RESEED, 0)
 
--- EXEC createUser 'John', 'Doe', 'john.doe', 'john.doe@cemex.mx', '$2a$10$VQkTCGn3c1BDGBQGgCxeGucQ/DTZqUQpen.tdu2tbZP1JHi4wKVsG' -- password
--- EXEC modifyUser 1, @picture = 'https://i.imgur.com/BwVJBLs.png', @companyRole = 'Arquitecto de Inteligencia de Negocio'
--- EXEC setUserAdmin 1, 1
+INSERT INTO [dbo].[logros] (nombre, descripcion) VALUES ('Hello, world!', 'Crea una cuenta en Cegamex');
 
--- EXEC createUser 'Mary', 'Sue', 'mary.sue', 'mary.sue@cemex.mx', '$2a$10$fPM5jtJnBijMPRBKO0e3U.BU0mFg3K2ng1yWbF386HoA3ir9eP2N6' -- 12345
--- EXEC modifyUser 2, @picture = 'https://i.imgur.com/tnFuqvt.jpg', @companyRole = 'Ingeniera DevOps', @twitter = '@MerrySioux'
+EXEC createUser 'John', 'Doe', 'john.doe', 'john.doe@cemex.mx', '$2a$10$VQkTCGn3c1BDGBQGgCxeGucQ/DTZqUQpen.tdu2tbZP1JHi4wKVsG' -- password
+EXEC modifyUser 1, @picture = 'https://i.imgur.com/BwVJBLs.png', @companyRole = 'Arquitecto de Inteligencia de Negocio'
+EXEC setUserAdmin 1, 1
 
--- EXEC createUser 'Test', 'Foo', 'test.foo', 'test.foo@cemex.mx', '$2a$10$KkhBaY3oIlxmdqPo8FL5le7zTEAAVI5Gdfd1YzXjOD9i1gsG10jO2' -- qwerty
+EXEC createUser 'Mary', 'Sue', 'mary.sue', 'mary.sue@cemex.mx', '$2a$10$fPM5jtJnBijMPRBKO0e3U.BU0mFg3K2ng1yWbF386HoA3ir9eP2N6' -- 12345
+EXEC modifyUser 2, @picture = 'https://i.imgur.com/tnFuqvt.jpg', @companyRole = 'Ingeniera DevOps', @twitter = '@MerrySioux'
 
--- EXEC createFriendship 1, 2
--- EXEC createFriendship 2, 1
--- EXEC createFriendship 1, 3
--- EXEC createFriendship 3, 1
--- EXEC createFriendship 3, 2
+EXEC createUser 'Test', 'Foo', 'test.foo', 'test.foo@cemex.mx', '$2a$10$KkhBaY3oIlxmdqPo8FL5le7zTEAAVI5Gdfd1YzXjOD9i1gsG10jO2' -- qwerty
+
+EXEC createFriendship 1, 2
+EXEC createFriendship 2, 1
+EXEC createFriendship 1, 3
+EXEC createFriendship 3, 1
+EXEC createFriendship 3, 2
 
 -- SELECT * FROM usuarios
 
@@ -587,4 +591,4 @@ GO
 
 -- GO
 
--- ======== WARNING! RUNNING ABOVE WILL DELETE USERS, PETS AND FRIENDS =========
+-- ==== WARNING! RUNNING ABOVE WILL DELETE USERS, PETS, FRIENDS AND ACHIEVS ====

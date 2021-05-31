@@ -257,7 +257,7 @@ async function hasUserAchiev(userId, achievId) {
 }
 
 async function queryIssues({
-    limit = null,
+    limit = QUERY_LIMIT,
     page = 1,
     orderBy = null,
     orderAsc = 0,
@@ -273,7 +273,7 @@ async function queryIssues({
     to = null,
 }) {
     const query = (await connect())
-        .input('limit', sql.Int, Math.min(limit, QUERY_LIMIT) || QUERY_LIMIT)
+        .input('limit', sql.Int, Math.min(limit, QUERY_LIMIT))
         .input('page', sql.Int, page)
         .input('orderBy', sql.NVarChar(255), orderBy)
         .input('orderAsc', sql.Int, orderAsc)
@@ -294,7 +294,7 @@ async function queryIssues({
 }
 
 async function querySubtasks({
-    limit = null,
+    limit = QUERY_LIMIT,
     page = 1,
     orderBy = null,
     orderAsc = 0,
@@ -309,7 +309,7 @@ async function querySubtasks({
     to = null,
 }) {
     const query = (await connect())
-        .input('limit', sql.Int, Math.min(limit, QUERY_LIMIT) || QUERY_LIMIT)
+        .input('limit', sql.Int, Math.min(limit, QUERY_LIMIT))
         .input('page', sql.Int, page)
         .input('orderBy', sql.NVarChar(255), orderBy)
         .input('orderAsc', sql.Int, orderAsc)
@@ -351,7 +351,7 @@ async function insertIssue({
         .input('state', sql.NVarChar(255), state)
         .input('startDate', sql.DateTime, new Date(startDate))
         .input('endDate', sql.DateTime, endDate && new Date(endDate))
-        .execute('queryIssues');
+        .execute('insertIssue');
     await query;
 }
 
@@ -376,7 +376,7 @@ async function insertSubtask({
         .input('state', sql.NVarChar(255), state)
         .input('startDate', sql.DateTime, new Date(startDate))
         .input('endDate', sql.DateTime, new Date(endDate))
-        .execute('queryIssues');
+        .execute('insertSubtask');
     await query;
 }
 
