@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
     try {
+        console.log(req.query);
         const results = await db.queryIssues(req.query);
         return res.send(results);
     } catch (err) {
@@ -31,7 +32,7 @@ router.post(
     ),
     async (req, res, next) => {
         try {
-            await db.insertSubtask(req.body);
+            await db.insertIssue(req.body);
             res.status(201).send();
         } catch (err) {
             return next(err);
