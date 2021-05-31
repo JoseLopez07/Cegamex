@@ -17,28 +17,14 @@ import utils from '/modules/utils.mjs';
     let progressBarColor = document.getElementById('progress-color');
     let profileImageContainer = document.getElementById('profile-image-container');
 
+    // Get user information
     const userData = await (await apiClient.getUserData()).json();
     const achievements = await (await apiClient.getAchievements()).json();
     const gameData = await (await apiClient.getPetData()).json();
 
-    nameProfile.innerText = userData.firstName + ' ' + userData.lastName;
-    email.innerText = userData.email;
-    twitterAccount.innerText = userData.twitter;
-    position.innerText = userData.companyRole;
+    // Images
     profileImage[0].src = userData.picture;
-
-    if (userData.twitter === null) {
-        twitterAccount.parentElement.remove();
-    }
-    if (userData.companyRole === null) {
-        position.remove();
-        nameProfile.classList.remove('mb-2');
-        nameProfile.classList.add('py-3');
-        profileImageContainer.classList.remove('mb-2');
-    }
-    if (userData.picture === null) {
-        profileImage[0].src = "imagenes\\profile-default.png";
-    }
+    levelImage.src = `imagenes\\nivel-${gameData.level}.png`;
 
     [].forEach.call(achievements,function(a){
         let newAchievementContainer = document.createElement('div');
@@ -64,11 +50,36 @@ import utils from '/modules/utils.mjs';
         trophiesSummary.appendChild(newAchievementContainerSummary);
     });
 
-    levelImage.src = `imagenes\\nivel-${gameData.level}.png`;
+    // Text
+    nameProfile.innerText = userData.firstName + ' ' + userData.lastName;
+    email.innerText = userData.email;
+    twitterAccount.innerText = userData.twitter;
+    position.innerText = userData.companyRole;
     levelMessage.innerText = `¡${100 - gameData.experience} puntos más para nivel ${gameData.level + 1}!`;
     levelMessageNavbar.childNodes[2].nodeValue = `¡Felicidades! Has alcanzado el nivel ${gameData.level}`;
     progressBarColor.style.width = `${gameData.experience}%`;
 
+    // Possible null values
+    if (userData.twitter === null) {
+        twitterAccount.parentElement.remove();
+    }
+    if (userData.companyRole === null) {
+        position.remove();
+        nameProfile.classList.remove('mb-2');
+        nameProfile.classList.add('py-3');
+        profileImageContainer.classList.remove('mb-2');
+    }
+    if (userData.picture === null) {
+        profileImage[0].src = "imagenes\\profile-default.png";
+    }
+
+    // Show admin access, notifications alert, user name, etc
+    utils.showAdminNavbar();
+    utils.showNotifications();
+    utils.navbarUserName();
+    utils.logOutButtons();
+    
+    // Show page content
     utils.showPageElements();
 
 })();
