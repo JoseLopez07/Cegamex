@@ -15,14 +15,14 @@ CREATE OR ALTER PROCEDURE getIdFromEmail
 	@email nvarchar(255)
 AS
 	SET NOCOUNT ON;
-	SELECT idUser FROM [dbo].[usuarios] WHERE correo = @email;
+	SELECT idUser AS userId FROM [dbo].[usuarios] WHERE correo = @email;
 GO
 
 CREATE OR ALTER PROCEDURE getIdFromUserName
 	@userName nvarchar(255)
 AS
 	SET NOCOUNT ON;
-	SELECT idUser FROM [dbo].[usuarios] WHERE userName = @userName;
+	SELECT idUser AS userId FROM [dbo].[usuarios] WHERE userName = @userName;
 GO
 
 CREATE OR ALTER PROCEDURE createUser
@@ -133,8 +133,8 @@ CREATE OR ALTER PROCEDURE getSingleUserInfo
 	@id int
 AS
 	SET NOCOUNT ON;
-	SELECT idUser, nombre AS firstName, apellido AS lastName, userName,
-		correo AS email, twitter, foto AS picture, rol AS companyRole
+	SELECT idUser AS userId, nombre AS firstName, apellido AS lastName,
+    userName, correo AS email, twitter, foto AS picture, rol AS companyRole
 	FROM [dbo].[usuarios]
 	WHERE idUser = @id
 GO
@@ -149,8 +149,8 @@ AS
 		SELECT @data = CAST('<id>' + REPLACE(@idList, ',', '</id><id>') +
 			'</id>' AS xml);
 
-		SELECT TOP 100 idUser, nombre AS firstName, apellido AS lastName,
-			userName, correo AS email, twitter, foto AS picture,
+		SELECT TOP 100 idUser AS userId, nombre AS firstName, apellido AS
+            lastName, userName, correo AS email, twitter, foto AS picture,
 			rol AS companyRole
 		FROM [dbo].[usuarios]
 		WHERE idUser IN
@@ -227,8 +227,8 @@ CREATE OR ALTER PROCEDURE getUserFriendsInfo
 	@userId int
 AS
 	SET NOCOUNT ON;
-    SELECT idUser, nombre AS firstName, apellido AS lastName, userName,
-		correo AS email, twitter, foto AS picture, rol AS companyRole
+    SELECT idUser AS userId, nombre AS firstName, apellido AS lastName,
+        userName, correo AS email, twitter, foto AS picture, rol AS companyRole
 	FROM [dbo].[usuarios] u
     JOIN (
     	SELECT idUser2
@@ -236,6 +236,16 @@ AS
         WHERE idUser1 = @userId
     ) f
     ON u.idUser = f.idUser2;
+GO
+
+CREATE OR ALTER PROCEDURE areUsersFriends
+    @userId1 int,
+    @userId2 int
+AS
+    SET NOCOUNT ON;
+    SELECT COUNT(*) AS [status]
+    FROM [dbo].amistadesConfirmadas
+    WHERE idUser1 = @userId1 AND idUser2 = @userId2;
 GO
 
 CREATE OR ALTER PROCEDURE createFriendship

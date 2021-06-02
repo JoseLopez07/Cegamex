@@ -134,9 +134,13 @@ class ApiClient {
 
     // if userIds specified, response is an array, otherwise returns a single
     // object with user's own info
-    async getUserData(userIds = null) {
+    // using userName has precedence over ids, which also returns an object
+    async getUserData(userIds = null, userName = null) {
         return this._apiRequest(
-            `/api/v1/users${userIds ? '?userIds=' + userIds.join() : ''}`,
+            formatQuery('/api/v1/users', {
+                userIds: userIds && userIds.join(),
+                userName,
+            }),
             'GET'
         );
     }
@@ -144,7 +148,7 @@ class ApiClient {
     // defaults to getting your own
     async getPetData(userId = null) {
         return this._apiRequest(
-            `/api/v1/users/pets${userId ? '?userId=' + userId : ''}`,
+            formatQuery('/api/v1/users/pets', { userId }),
             'GET'
         );
     }
@@ -161,7 +165,7 @@ class ApiClient {
     // defaults to getting your own
     async getAchievements(userId = null) {
         return this._apiRequest(
-            `/api/v1/users/achievements${userId ? '?userId=' + userId : ''}`,
+            formatQuery('/api/v1/users/achievements', { userId }),
             'GET'
         );
     }
@@ -169,9 +173,13 @@ class ApiClient {
     // defaults to getting your own
     async getFriends(userId = null) {
         return this._apiRequest(
-            `/api/v1/users/friends${userId ? '?userId=' + userId : ''}`,
+            formatQuery('/api/v1/users/friends', { userId }),
             'GET'
         );
+    }
+
+    async isUserFriend(userId) {
+        return this._apiRequest(`/api/v1/users/friends/${userId}`, 'GET');
     }
 
     async addFriend(userId) {
@@ -181,6 +189,16 @@ class ApiClient {
     async removeFriend(userId) {
         return this._apiRequest(`/api/v1/users/friends/${userId}`, 'DELETE');
     }
+}
+
+function omitNull(obj) {
+    return Object.fromEntries(
+        Object.entries(obj).filter(([_, v]) => v != null)
+    );
+}
+
+function formatQuery(path, params) {
+    return `${path}?${new URLSearchParams(omitNull(params)).toString()}`;
 }
 
 export default { ApiRequestError, ApiClient };
