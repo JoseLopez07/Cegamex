@@ -96,12 +96,23 @@ router.delete('/:userId', verifyAdmin, selectUserId('params'), deleteUser);
 // by default returns OWN user info returning a single object, but an "userIds"
 // parameter can be used to speify multiple ids (sepparated by commas) and
 // returns an array of objects
+// additionally, a "userName" parameter can be used in place of "userIds" (has
+// precedence), to get info for a specified userName
 router.get('/', async (req, res, next) => {
     try {
-        const queryIds = req.query.userIds;
-        const result = queryIds
-            ? await db.getMultipleUsersInfo(queryIds)
-            : await db.getSingleUserInfo(req.user.id);
+        let result;
+
+        const queryName = req.query.userName;
+        if (queryName) {
+            const id = await db.getIdFromUserName(queryName);
+            result = await db.getSingleUserInfo(id);
+        } else {
+            const queryIds = req.query.userIds;
+            result = queryIds
+                ? await db.getMultipleUsersInfo(queryIds)
+                : await db.getSingleUserInfo(req.user.id);
+        }
+
         return res.send(result);
     } catch (err) {
         if (err instanceof RequestError) {

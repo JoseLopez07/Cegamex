@@ -2,7 +2,6 @@ const express = require('express');
 const db = require('../../../db');
 const verifyAdmin = require('../../../middleware/verifyAdmin');
 const verifyParams = require('../../../middleware/verifyParams');
-const objectParser = require('../../../middleware/objectParser');
 
 const router = express.Router();
 
@@ -34,7 +33,7 @@ router.post(
     async (req, res, next) => {
         try {
             await db.insertIssue(req.body);
-            res.status(201).send();
+            return res.status(201).send();
         } catch (err) {
             return next(err);
         }

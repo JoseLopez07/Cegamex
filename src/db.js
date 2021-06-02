@@ -63,7 +63,7 @@ async function getIdFromEmail(email) {
         .execute('getIdFromEmail');
     const result = await query;
 
-    return returnSingle(result, 'idUser');
+    return returnSingle(result, 'userId');
 }
 
 async function getIdFromUserName(userName) {
@@ -72,7 +72,7 @@ async function getIdFromUserName(userName) {
         .execute('getIdFromUserName');
     const result = await query;
 
-    return returnSingle(result, 'idUser');
+    return returnSingle(result, 'userId');
 }
 
 async function createUser({ firstName, lastName, userName, email, passHash }) {
@@ -211,6 +211,16 @@ async function getUserFriendsInfo(userId) {
     const result = await query;
 
     return result.recordset;
+}
+
+async function areUsersFriends(userId1, userId2) {
+    const query = (await connect())
+        .input('userId1', sql.Int, userId1)
+        .input('userId2', sql.Int, userId2)
+        .execute('areUsersFriends');
+    const result = await query;
+
+    return returnSingle(result, 'status');
 }
 
 async function createFriendship(userId1, userId2) {
@@ -395,6 +405,7 @@ module.exports = {
     modifyUserPet,
     getCountFechasIssues,
     getUserFriendsInfo,
+    areUsersFriends,
     createFriendship,
     endFriendship,
     getUserAchievs,
