@@ -113,7 +113,7 @@ router.get('/', async (req, res, next) => {
                 : await db.getSingleUserInfo(req.user.id);
         }
 
-        return res.send(result);
+        return res.send(result || {});
     } catch (err) {
         if (err instanceof RequestError) {
             // console.error(err.message);

@@ -6,7 +6,6 @@ import utils from '/modules/utils.mjs';
 
     let params = new URLSearchParams(document.location.search.substring(1));
     let userId = params.get("userid");
-    console.log(userId);
 
     let nameProfile = document.getElementById('user-name-profile');
     let email = document.getElementById('user-email');
@@ -23,12 +22,12 @@ import utils from '/modules/utils.mjs';
     let userData;
     let addFriendButton = document.getElementById('btnFriend');
     let onlyUserContent = document.getElementsByClassName('only-user');
+    let loggedUserData = await (await utils.loggedUser).json();
+    loggedUserData = loggedUserData.userName;
 
     // Get user information
     if (userId != null) {
-        console.log(userId);
         userData = await (await apiClient.getUserData(null,userId)).json();
-        console.log(userData);
     } else {
         userData = await (await apiClient.getUserData()).json();
         onlyUserContent = Array.from(onlyUserContent);
@@ -131,7 +130,7 @@ import utils from '/modules/utils.mjs';
     utils.logOutButtons();
 
     // Add friend button
-    if (userId != null) {
+    if (userId != null && userId != loggedUserData) {
         let isUserFriend = await (await apiClient.isUserFriend(userData.userId)).json();
         // Check if they are friends
         if (isUserFriend.friends) {

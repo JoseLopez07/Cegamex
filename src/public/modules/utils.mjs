@@ -84,18 +84,36 @@ async function showAdminNavbar() {
 
 function searchUser() {
    let searchButtons = document.getElementsByClassName('button-search');
-
    searchButtons = Array.from(searchButtons);
 
-   [].forEach.call(searchButtons, function(b) {
-      b.addEventListener('click', (e) => {
-         const url = new URL(`${window.location.protocol}//${window.location.host}/perfil.html?userid=${b.previousElementSibling.value}`);
-         const params = new URLSearchParams(url.search);
-         console.log(params.toString());
-         location.href = url;
-     });
-   });  
+   searchButtons[0].addEventListener('click', async (e) => {
+      const inputValue = searchButtons[0].previousElementSibling.value;
+      let search = await (await apiClient.getUserData(null,inputValue)).json();
+
+      validateSearch(search,inputValue);
+   });
+
+   searchButtons[1].addEventListener('click', async (e) => {
+      const inputValue = searchButtons[1].previousElementSibling.value;
+      let search = await (await apiClient.getUserData(null,inputValue)).json();
+
+      validateSearch(search,inputValue);
+   });
 }
 
+function validateSearch(search,inputValue) {
+   
+   if (Object.keys(search).length === 0) {
+      alert('Ingresa un usuario valido');
+   }
+   else {
+      const url = new URL(`${window.location.protocol}//${window.location.host}/perfil.html?userid=${inputValue}`);
+      location.href = url;
+   }
+}
+
+// Logged user data
+let loggedUser = apiClient.getUserData();
+
 export default { showPageElements , showNotifications ,
-               navbarUserName , logOutButtons , showAdminNavbar , searchUser };
+               navbarUserName , logOutButtons , showAdminNavbar , searchUser , loggedUser };
