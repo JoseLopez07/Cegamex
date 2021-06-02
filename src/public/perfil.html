@@ -43,21 +43,46 @@
                     <hr class="sidebar-divider"> 
                     <li class="nav-item texto-normal d-lg-none">
                         <a class="nav-link logout" href="#">cerrar sesión</a> 
-                    </li>  
+                    </li>
+                    <li class="nav-item texto-normal d-lg-none">
+                        <a class="nav-link" href="#">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control texto-normal-mediano-login input-search" placeholder="Busca a un usuario..." aria-label="Recipient's username" 
+                                aria-describedby="button-addon2" style="background-color:#f8f9fc; border-color: #f8f9fc;">
+                                <button class="btn btn-outline-secondary button-search" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>                            
+                        </a> 
+                    </li>                      
+                    
                 </ul> 
             </div>
 
             <div class="navbar-expand" id = "notificaciones-perfil">
                 <ul class="navbar-nav" id="ul-not-perfil" style="list-style-type: none;">
-                    <!-- Menu que se despliega del icono -->
+                    <!-----------nuevo-------------->
+                    <li class="nav-item dropdown">  <!-- Este icono desaparece en la versión móvil y se agrega una fila de cerrar sesión al menú de tres líneas -->
+                        <a class="nav-link collapse dont-collapse-sm" href="#" id="search-navbar" 
+                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="imagenes\search.svg" style="width: 1.6em; height: 1.6em;">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right p-2 shadow animated--grow-in" style="width: 20em; height: 3.5em;"
+                        aria-labelledby="search-navbar">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control texto-normal-mediano-login input-search" placeholder="Busca a un usuario..." aria-label="Recipient's username" 
+                                aria-describedby="button-addon2" style="background-color:#f8f9fc; border-color: #f8f9fc;">
+                                <button class="btn btn-outline-secondary button-search" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </li>
+                    <!-----------nuevo-------------->
                     <li class="nav-item dropdown"> 
-                        <a class="nav-link dropdown-toggle" href="#" id="campana" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="imagenes\campana.png" style="width: 1.5em; height: 1.75em; position: relative;">
+                        <a class="nav-link" href="#" id="campana" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="imagenes\notification.svg" style="width: 1.50em; height: 1.55em; position: relative;">
                             <!-- Círculo rojo de número de notificaciones -->
                             <div class="d-flex align-items-center justify-content-center numero-alertas"><div class="numero-alertas-texto">3</div></div>
                         </a>
-
-                        <div class="dropdown-menu shadow" aria-labelledby="campana" style="border-radius: 0.3em;">
+                        <!-- Menu que se despliega del icono -->
+                        <div class="dropdown-menu shadow animated--grow-in" aria-labelledby="campana" style="border-radius: 0.3em;">
                             <h6 class="dropdown-header titulo-medio" style="font-size: 1em;">Centro de notificaciones</h6>
                             <a class="dropdown-item texto-normal-mediano-login" href="#">
                                 <i class="fa fa-star mx-2 my-2 px-1 icono-menus-navbar" aria-hidden="true" style=" color: #ffdb6d;"></i>
@@ -75,12 +100,13 @@
                           </div>
                     </li>
 
-                    <!-- Menu que se despliega del icono -->
+                    
                     <li class="nav-item dropdown">  <!-- Este icono desaparece en la versión móvil y se agrega una fila de cerrar sesión al menú de tres líneas -->
                         <a class="nav-link dropdown-toggle collapse dont-collapse-sm" href="#" id="perfil-navbar" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="imagenes\perfil.png" style="width: 1.9em; height: 1.9em;">
+                            <img src="imagenes\profile-user.svg" style="width: 1.5em; height: 1.5em;">
                         </a>
-                        <div class="dropdown-menu shadow" aria-labelledby="perfil-navbar" style="border-radius: 0.3em;">
+                        <!-- Menu que se despliega del icono -->
+                        <div class="dropdown-menu shadow animated--grow-in" aria-labelledby="perfil-navbar" style="border-radius: 0.3em;">
                             <h6 class="dropdown-header titulo-medio user-name-navbar" style="font-size: 1em;">Nombre y apellidos</h6>
                             <a class="dropdown-item texto-normal-mediano-login" href="perfil.html"> 
                                 <i class="fa fa-user mx-2 my-2 px-1" aria-hidden="true" style="font-size:2em; color: #297fba;"></i> 
@@ -108,9 +134,11 @@
                 <div class="card mb-4 loading">
                     <div class="card-body p-4 loading-child">                                              
                         <div class="row">
-                            <div class="col-sm-auto mb-2" id="profile-image-container"><img src="imagenes/profile-white.png" style="width: 10.5em; height: 10.5em;" class="mx-auto d-block user-profile-image"></div>                          
+                            <div class="col-sm-auto" id="profile-image-container"><img src="imagenes/profile-white.png" style="width: 10.5em; height: 10.5em;" class="mx-auto d-block user-profile-image"></div>                          
                             <div class="col-sm-auto">
-                                <div class="mb-2 titulo" id="user-name-profile">‎‎‎ </div>
+                                <div class="mb-2 titulo" id="user-name-profile" style="display: inline; margin-right: 0.3em;">‎‎‎</div>
+                                <!-- <button class="btn btn-primary btn-user btn-block texto-normal-mediano mb-2" id="btnFriend"> Amigo &nbsp<i class="fa fa-check" aria-hidden="true" style="font-weight: 100;"></i> </button>-->
+                                <button class="btn btn-primary btn-user btn-block texto-normal-mediano mb-2" id="btnFriend">Agregar amigo</button>
                                 <div class="mb-4 texto-normal" id="user-position"></div>
                                 <div class="d-flex flex-row" id="trophies-summary">
                                 </div>
@@ -168,13 +196,15 @@
                             <h4 class="titulo-medio" id="amigos">Amigos</h4>
                             <div class="my-4"></div>
                             <div>
-                                <ul class="list-group">
+                                <ul class="list-group" id="friends-list">
+                                    <!--
                                     <li style="list-style-type: none;" class="my-2">
                                         <img src="imagenes\foto_perfil.png" class="perfil-amigo"> <span class="mx-2 texto-normal">Nombre y apellidos</span>
                                     </li>
                                     <li style="list-style-type: none;" class="my-2">
                                         <img src="imagenes\foto_perfil.png" class="perfil-amigo"> <span class="mx-2 texto-normal">Nombre y apellidos</span>
                                     </li>
+                                    -->
                                 </ul>
                             </div>
                     </div>
@@ -190,9 +220,9 @@
                             <li class="list-group-item texto-normal-pequeno px-0 py-3 dont-collapse-sm menu-sidebar" ><a href="#mis-logros">MIS LOGROS</a></li>
                             <li class="list-group-item texto-normal-pequeno px-0 py-3 dont-collapse-sm menu-sidebar" ><a href="#estadisticas">ESTADÍSTICAS</a></li>
                             <li class="list-group-item texto-normal-pequeno px-0 py-3 dont-collapse-sm menu-sidebar" ><a href="#amigos">AMIGOS</a></li>
-                            <li class="list-group-item texto-normal-pequeno px-0 py-3 menu-sidebar" >CONFIGURAR PERFIL</li>
-                            <li class="list-group-item texto-normal-pequeno px-0 py-3 menu-sidebar" >PRIVACIDAD Y SEGURIDAD</li>
-                            <li class="list-group-item texto-normal-pequeno px-0 py-3 menu-sidebar logout" >CERRAR SESIÓN</li>
+                            <li class="list-group-item texto-normal-pequeno px-0 py-3 menu-sidebar only-user" >CONFIGURAR PERFIL</li>
+                            <li class="list-group-item texto-normal-pequeno px-0 py-3 menu-sidebar only-user" >PRIVACIDAD Y SEGURIDAD</li>
+                            <li class="list-group-item texto-normal-pequeno px-0 py-3 menu-sidebar logout only-user" >CERRAR SESIÓN</li>
                         </ul>
                     </div>
                 </div>                

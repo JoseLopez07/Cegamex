@@ -82,5 +82,19 @@ async function showAdminNavbar() {
    } 
 }
 
+function searchUser() {
+   let searchButtons = document.getElementsByClassName('button-search');
+
+   searchButtons = Array.from(searchButtons);
+
+   [].forEach.call(searchButtons, function(b) {
+      b.addEventListener('click', (e) => {
+         const url = new URL(`${window.location.protocol}//${window.location.host}/perfil.html?userid=${b.previousElementSibling.value}`);
+         //const params = new URLSearchParams(url.search);
+         location.href = url;
+     });
+   });  
+}
+
 export default { showPageElements , showNotifications ,
-               navbarUserName , logOutButtons , showAdminNavbar };
+               navbarUserName , logOutButtons , showAdminNavbar , searchUser };

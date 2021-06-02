@@ -120,9 +120,9 @@ a:link, a:visited, a:active {
     De esta manera, el ícono de notificaciones permanece en su lugar y su contenedor se hace más ancho para que el espacio
     respecto al cual se centra el botón de tres líneas, sea el adecuado*/
 @media (max-width: 1000px) {
-    .navbar {
-       display: flex;
-       flex-direction: row;
+        .navbar {
+            display: flex;
+            flex-direction: row;
        }
        #navbarNav { order: 2; }
        #notificaciones-perfil { 
@@ -150,13 +150,13 @@ a:link, a:visited, a:active {
 }
 
 .numero-alertas {
-    width: 1em;
-    height: 1em; 
+    width: 0.85em;
+    height: 0.85em; 
     background-color: #ea3c41;
     border-radius: 50%;
     position: absolute;
-    top: 5%;
-    right: 40%;
+    top: 10%;
+    right: 12%;
     visibility: hidden;
 }
 
@@ -170,7 +170,7 @@ a:link, a:visited, a:active {
 }
 
 .numero-alertas-texto {
-    font-size: 70%; 
+    font-size: 65%; 
     color: #ffffff;    
 }
 
@@ -407,4 +407,61 @@ a:link, a:visited, a:active {
     font-size: 100%; 
     top: 17%; 
     left: 9%;
+}
+
+#btnFriend {
+    background-color: #2d5699;
+    border-color: #2d5699 !important; 
+    border-width: 0.14em;
+    border-radius: 3.125em !important;
+    visibility: hidden;
+}
+
+  @-webkit-keyframes growIn {
+    0% {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes growIn {
+    0% {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+.animated--grow-in, .sidebar .nav-item .collapse {
+    -webkit-animation-name: growIn;
+    animation-name: growIn;
+    -webkit-animation-duration: 200ms;
+    animation-duration: 200ms;
+    -webkit-animation-timing-function: transform cubic-bezier(0.18, 1.25, 0.4, 1), opacity cubic-bezier(0, 1, 0.4, 1);
+    animation-timing-function: transform cubic-bezier(0.18, 1.25, 0.4, 1), opacity cubic-bezier(0, 1, 0.4, 1);
+  }
+
+.button-search {
+    border-color: #ea3c41;
+    background-color: #ea3c41;
+    color: white;
+}
+
+.only-user {
+    display: none;
+}
+
+.not-list-style {
+    list-style-type: none;
+}
+
+.user-profile-image {
+    margin-bottom: 0.8em;
 }
