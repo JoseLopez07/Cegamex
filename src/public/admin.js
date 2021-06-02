@@ -62,6 +62,7 @@ const chart2 = new Chart(chKpi2, {
 if (isAdmin.adm !== 1) {
     location.href = '/pagina-inicio.html';
 } else {
+    utils.searchUser()
     utils.showAdminNavbar();
     utils.showPageElements();
     utils.showNotifications();
