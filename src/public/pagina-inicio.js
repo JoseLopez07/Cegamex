@@ -1,5 +1,6 @@
 import utils from '/modules/utils.mjs';
 
+utils.searchUser();
 utils.showAdminNavbar();
 utils.showPageElements(false);
 utils.showNotifications();

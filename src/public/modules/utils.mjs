@@ -90,7 +90,8 @@ function searchUser() {
    [].forEach.call(searchButtons, function(b) {
       b.addEventListener('click', (e) => {
          const url = new URL(`${window.location.protocol}//${window.location.host}/perfil.html?userid=${b.previousElementSibling.value}`);
-         //const params = new URLSearchParams(url.search);
+         const params = new URLSearchParams(url.search);
+         console.log(params.toString());
          location.href = url;
      });
    });  

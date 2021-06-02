@@ -70,21 +70,46 @@
                 <hr class="sidebar-divider"> 
                 <li class="nav-item texto-normal d-lg-none">
                     <a class="nav-link logout" href="#">cerrar sesión</a> 
-                </li>  
+                </li>
+                <li class="nav-item texto-normal d-lg-none">
+                    <a class="nav-link" href="#">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control texto-normal-mediano-login input-search" placeholder="Busca a un usuario..." aria-label="Recipient's username" 
+                            aria-describedby="button-addon2" style="background-color:#f8f9fc; border-color: #f8f9fc;">
+                            <button class="btn btn-outline-secondary button-search" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </div>                            
+                    </a> 
+                </li>                      
+                
             </ul> 
         </div>
 
         <div class="navbar-expand" id = "notificaciones-perfil">
             <ul class="navbar-nav" id="ul-not-perfil" style="list-style-type: none;">
-                <!-- Menu que se despliega del icono -->
+                <!-----------nuevo-------------->
+                <li class="nav-item dropdown">  <!-- Este icono desaparece en la versión móvil y se agrega una fila de cerrar sesión al menú de tres líneas -->
+                    <a class="nav-link collapse dont-collapse-sm" href="#" id="search-navbar" 
+                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="imagenes\search.svg" style="width: 1.6em; height: 1.6em;">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right p-2 shadow animated--grow-in" style="width: 20em; height: 3.5em;"
+                    aria-labelledby="search-navbar">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control texto-normal-mediano-login input-search" placeholder="Busca a un usuario..." aria-label="Recipient's username" 
+                            aria-describedby="button-addon2" style="background-color:#f8f9fc; border-color: #f8f9fc;">
+                            <button class="btn btn-outline-secondary button-search" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </li>
+                <!-----------nuevo-------------->
                 <li class="nav-item dropdown"> 
-                    <a class="nav-link dropdown-toggle" href="#" id="campana" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="imagenes\campana.png" style="width: 1.5em; height: 1.75em; position: relative;">
+                    <a class="nav-link" href="#" id="campana" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="imagenes\notification.svg" style="width: 1.50em; height: 1.55em; position: relative;">
                         <!-- Círculo rojo de número de notificaciones -->
                         <div class="d-flex align-items-center justify-content-center numero-alertas"><div class="numero-alertas-texto">3</div></div>
                     </a>
-
-                    <div class="dropdown-menu shadow" aria-labelledby="campana" style="border-radius: 0.3em;">
+                    <!-- Menu que se despliega del icono -->
+                    <div class="dropdown-menu shadow animated--grow-in" aria-labelledby="campana" style="border-radius: 0.3em;">
                         <h6 class="dropdown-header titulo-medio" style="font-size: 1em;">Centro de notificaciones</h6>
                         <a class="dropdown-item texto-normal-mediano-login" href="#">
                             <i class="fa fa-star mx-2 my-2 px-1 icono-menus-navbar" aria-hidden="true" style=" color: #ffdb6d;"></i>
@@ -96,19 +121,19 @@
                             50% en la tienda
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item texto-normal-mediano-login" href="#">
-                            <i class="fa fa-level-up mx-3 my-2 icono-menus-navbar" aria-hidden="true" style="color: #ee3a43;"></i>
-                            ¡Felicidades! Has alcanzado el nivel 5
+                        <a class="dropdown-item texto-normal-mediano-login" href="#" id="level-message-navbar">
+                            <i class="fa fa-level-up mx-3 my-2 icono-menus-navbar" aria-hidden="true" style="color: #ee3a43;"></i>                   
                         </a>
                       </div>
                 </li>
 
-                <!-- Menu que se despliega del icono -->
+                
                 <li class="nav-item dropdown">  <!-- Este icono desaparece en la versión móvil y se agrega una fila de cerrar sesión al menú de tres líneas -->
                     <a class="nav-link dropdown-toggle collapse dont-collapse-sm" href="#" id="perfil-navbar" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="imagenes\perfil.png" style="width: 1.9em; height: 1.9em;">
+                        <img src="imagenes\profile-user.svg" style="width: 1.5em; height: 1.5em;">
                     </a>
-                    <div class="dropdown-menu shadow" aria-labelledby="perfil-navbar" style="border-radius: 0.3em;">
+                    <!-- Menu que se despliega del icono -->
+                    <div class="dropdown-menu shadow animated--grow-in" aria-labelledby="perfil-navbar" style="border-radius: 0.3em;">
                         <h6 class="dropdown-header titulo-medio user-name-navbar" style="font-size: 1em;">Nombre y apellidos</h6>
                         <a class="dropdown-item texto-normal-mediano-login" href="perfil.html"> 
                             <i class="fa fa-user mx-2 my-2 px-1" aria-hidden="true" style="font-size:2em; color: #297fba;"></i> 
