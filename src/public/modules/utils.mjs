@@ -104,7 +104,7 @@ function searchUser() {
 function validateSearch(search,inputValue) {
    
    if (Object.keys(search).length === 0) {
-      alert('Ingresa un usuario valido');
+      $("#invalidSearch").modal('show');
    }
    else {
       const url = new URL(`${window.location.protocol}//${window.location.host}/perfil.html?userid=${inputValue}`);
