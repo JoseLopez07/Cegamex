@@ -99,6 +99,24 @@ function searchUser() {
 
       validateSearch(search,inputValue);
    });
+
+   searchButtons[0].previousElementSibling.addEventListener('keyup', async ({ key }) => {
+      if (key === 'Enter') {
+         const inputValue = searchButtons[0].previousElementSibling.value;
+         let search = await (await apiClient.getUserData(null,inputValue)).json();
+   
+         validateSearch(search,inputValue);
+      }
+   });
+
+   searchButtons[1].previousElementSibling.addEventListener('keyup', async ({ key }) => {
+      if (key === 'Enter') {
+         const inputValue = searchButtons[1].previousElementSibling.value;
+         let search = await (await apiClient.getUserData(null,inputValue)).json();
+   
+         validateSearch(search,inputValue);
+      }
+   });
 }
 
 function validateSearch(search,inputValue) {

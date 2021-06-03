@@ -454,10 +454,6 @@ a:link, a:visited, a:active {
     color: white;
 }
 
-.only-user {
-    display: none;
-}
-
 .not-list-style {
     list-style-type: none;
 }

@@ -26,15 +26,18 @@ import utils from '/modules/utils.mjs';
     loggedUserData = loggedUserData.userName;
 
     // Get user information
-    if (userId != null) {
+    if (userId != null && userId != loggedUserData) {
         userData = await (await apiClient.getUserData(null,userId)).json();
-    } else {
-        userData = await (await apiClient.getUserData()).json();
         onlyUserContent = Array.from(onlyUserContent);
 
+        onlyUserContent[0].parentElement.parentElement.parentElement.parentElement.classList.add('dont-collapse-sm');
+
         [].forEach.call(onlyUserContent, function(elem) {
-            elem.style.display = 'initial';
+            elem.remove();
         }); 
+    } else {
+        userData = await (await apiClient.getUserData()).json();
+
     }
     
     const achievements = await (await apiClient.getAchievements()).json();
