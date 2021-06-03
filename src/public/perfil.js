@@ -6,7 +6,6 @@ import utils from '/modules/utils.mjs';
 
     let params = new URLSearchParams(document.location.search.substring(1));
     let userId = params.get("userid");
-    console.log(userId);
 
     let nameProfile = document.getElementById('user-name-profile');
     let email = document.getElementById('user-email');
@@ -23,23 +22,27 @@ import utils from '/modules/utils.mjs';
     let userData;
     let addFriendButton = document.getElementById('btnFriend');
     let onlyUserContent = document.getElementsByClassName('only-user');
+    let loggedUserData = await (await utils.loggedUser).json();
+    loggedUserData = loggedUserData.userName;
 
     // Get user information
-    if (userId != null) {
-        userData = await (await apiClient.getUserData([userId])).json();
-        userData = userData[0];
-    } else {
-        userData = await (await apiClient.getUserData()).json();
+    if (userId != null && userId != loggedUserData) {
+        userData = await (await apiClient.getUserData(null,userId)).json();
         onlyUserContent = Array.from(onlyUserContent);
 
+        onlyUserContent[0].parentElement.parentElement.parentElement.parentElement.classList.add('dont-collapse-sm');
+
         [].forEach.call(onlyUserContent, function(elem) {
-            elem.style.display = 'initial';
+            elem.remove();
         }); 
+    } else {
+        userData = await (await apiClient.getUserData()).json();
+
     }
     
     const achievements = await (await apiClient.getAchievements()).json();
     const gameData = await (await apiClient.getPetData()).json();
-    const userFriends = await (await apiClient.getFriends()).json();
+    const userFriends = await (await apiClient.getFriends(userData.userId)).json();
 
     // Images
     profileImage[0].src = userData.picture;
@@ -101,16 +104,22 @@ import utils from '/modules/utils.mjs';
             let friendContainerLi = document.createElement('li');
             let friendPhoto = document.createElement('img');
             let friendName = document.createElement('span');
-            // Friend elements (photo, ame and li container)
+            let friendLink = new URL(`${window.location.protocol}//${window.location.host}/perfil.html?userid=${friend.userName}`);
+            let friendATag = document.createElement('a');
+
+            // Friend elements (photo, name and li container)
             friendPhoto.classList.add('perfil-amigo');
             friend.picture === null ? friendPhoto.src = "imagenes\\profile-default.png" : friendPhoto.src = friend.picture;
             friendName.classList.add('mx-2', 'texto-normal');
             friendName.innerText = friend.firstName + ' ' + friend.lastName;
             friendContainerLi.classList.add('my-2');
             friendContainerLi.classList.add('not-list-style');
+            friendATag.href = friendLink;
 
-            friendContainerLi.appendChild(friendPhoto);
-            friendContainerLi.appendChild(friendName);
+            friendATag.appendChild(friendPhoto);
+            friendATag.appendChild(friendName);
+            friendContainerLi.appendChild(friendATag);
+
             friendsContainer.appendChild(friendContainerLi);
         });
 
@@ -124,10 +133,48 @@ import utils from '/modules/utils.mjs';
     utils.logOutButtons();
 
     // Add friend button
-    if (userId != null) {
-        addFriendButton.style.visibility = 'visible';
+    if (userId != null && userId != loggedUserData) {
+        let isUserFriend = await (await apiClient.isUserFriend(userData.userId)).json();
+        // Check if they are friends
+        if (isUserFriend.friends) {
+            // Friends
+            changeFriendButton();
+            addFriendButton.style.visibility = 'visible';
+            setRemoveFriendEvent();
+        } else {
+            // Not friends
+            initialFriendButton();
+            addFriendButton.style.visibility = 'visible';
+            setAddFriendEvent();
+        }
+    }
+    // 'Agregar amigo' button style
+    function initialFriendButton() {
+        if (addFriendButton.firstElementChild != null) {addFriendButton.firstElementChild.remove();}
+        addFriendButton.innerHTML = 'Agregar amigo';
+    }
+    // 'Amigos' button style
+    function changeFriendButton () {
+        let friendsCheckmark = document.createElement('i');
+        
+        friendsCheckmark.classList.add('fa', 'fa-check');
+        addFriendButton.innerHTML = 'Amigo' + '&nbsp';
+        addFriendButton.appendChild(friendsCheckmark);      
+    }
+    // Change event and style
+    function setRemoveFriendEvent () {
         addFriendButton.addEventListener('click', async (e) => {
-            await apiClient.addFriend(userId);    
+            await apiClient.removeFriend(userData.userId);  
+            initialFriendButton();
+            setAddFriendEvent(); 
+        });  
+    }
+
+    function setAddFriendEvent () {
+        addFriendButton.addEventListener('click', async (e) => {
+            await apiClient.addFriend(userData.userId);  
+            changeFriendButton();
+            setRemoveFriendEvent(); 
         });
     }
     

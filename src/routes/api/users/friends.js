@@ -17,6 +17,16 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+// specifies if a given userId is your friend
+router.get('/:userId', selectUserId('params'), async (req, res, next) => {
+    try {
+        const result = await db.areUsersFriends(req.user.id, req.userId);
+        return res.send({ friends: Boolean(result) });
+    } catch (err) {
+        return next(err);
+    }
+});
+
 // method to add a friend (single way relationship)
 router.post('/', verifyParams('userId'), async (req, res, next) => {
     try {

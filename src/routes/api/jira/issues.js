@@ -33,7 +33,7 @@ router.post(
     async (req, res, next) => {
         try {
             await db.insertIssue(req.body);
-            res.status(201).send();
+            return res.status(201).send();
         } catch (err) {
             return next(err);
         }
