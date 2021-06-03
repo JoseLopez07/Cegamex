@@ -16,10 +16,6 @@ button.addEventListener('click', async (event) => {
 });
 
 async function register() {
-    if (!validate()) {
-        return;
-    }
-
     try {
         await apiClient.register({
             firstName: firstName.value,
@@ -33,9 +29,4 @@ async function register() {
         console.error(err);
         alert('Error inesperado');
     }
-}
-
-// TODO: input validation
-function validate() {
-    return true;
 }
