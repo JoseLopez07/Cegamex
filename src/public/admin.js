@@ -61,6 +61,7 @@ let chKpi2 = document.getElementById('ChartKpi2').getContext('2d');
                 ],
             },
             options: {
+                cutout: 90,
                 plugins: {
                     legend: {
                         position: 'bottom',
@@ -70,6 +71,7 @@ let chKpi2 = document.getElementById('ChartKpi2').getContext('2d');
         });
 
         utils.searchUser();
+        utils.focusSearchInput();
         utils.showAdminNavbar();
         utils.showPageElements();
         utils.showNotifications();

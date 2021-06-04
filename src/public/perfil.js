@@ -37,7 +37,6 @@ import utils from '/modules/utils.mjs';
         }); 
     } else {
         userData = await (await apiClient.getUserData()).json();
-
     }
     
     const achievements = await (await apiClient.getAchievements()).json();
@@ -107,6 +106,8 @@ import utils from '/modules/utils.mjs';
             let friendLink = new URL(`${window.location.protocol}//${window.location.host}/perfil.html?userid=${friend.userName}`);
             let friendATag = document.createElement('a');
 
+            console.log(friend.userName);
+
             // Friend elements (photo, name and li container)
             friendPhoto.classList.add('perfil-amigo');
             friend.picture === null ? friendPhoto.src = "imagenes\\profile-default.png" : friendPhoto.src = friend.picture;
@@ -127,6 +128,7 @@ import utils from '/modules/utils.mjs';
 
     // Show admin access, notifications alert, user name, etc
     utils.searchUser();
+    utils.focusSearchInput();
     utils.showAdminNavbar();
     utils.showNotifications();
     utils.navbarUserName();
@@ -135,6 +137,7 @@ import utils from '/modules/utils.mjs';
     // Add friend button
     if (userId != null && userId != loggedUserData) {
         let isUserFriend = await (await apiClient.isUserFriend(userData.userId)).json();
+        checkNameWidth(addFriendButton);
         // Check if they are friends
         if (isUserFriend.friends) {
             // Friends
@@ -177,8 +180,24 @@ import utils from '/modules/utils.mjs';
             setRemoveFriendEvent(); 
         });
     }
+    // Change add friend button
+    function checkNameWidth(addFriendButton) {
+        if (userData.companyRole == null) {
+            addFriendButton.nextElementSibling.classList.remove('mt-3'); 
+            addFriendButton.nextElementSibling.classList.add('mt-2');
+        }
+
+        if (addFriendButton.previousElementSibling.offsetWidth > 
+            (addFriendButton.previousElementSibling.parentElement.parentElement.offsetWidth/2)) {
+            addFriendButton.previousElementSibling.style.display = null;
+            addFriendButton.previousElementSibling.classList.remove('py-3');
+            addFriendButton.classList.add('mt-2');
+        }
+    }
     
     // Show page content
-    utils.showPageElements();
-
+    $(document).ready(function() {
+        utils.showPageElements();
+    });
+    
 })();
