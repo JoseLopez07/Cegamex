@@ -137,6 +137,9 @@ a:link, a:visited, a:active {
         #campana {
             padding: 0%;
         }
+        #btnFriend {
+            font-size: 0.75em !important;
+        }
    }
    
 .sidebar-divider{

@@ -85,44 +85,55 @@ async function showAdminNavbar() {
 function searchUser() {
    let searchButtons = document.getElementsByClassName('button-search');
    searchButtons = Array.from(searchButtons);
+   let inputElements = [searchButtons[0].previousElementSibling, searchButtons[1].previousElementSibling];
 
    searchButtons[0].addEventListener('click', async (e) => {
-      const inputValue = searchButtons[0].previousElementSibling.value;
+      const inputValue = inputElements[0].value;
       let search = await (await apiClient.getUserData(null,inputValue)).json();
 
-      validateSearch(search,inputValue);
+      validateSearch(search,inputValue,inputElements)
    });
 
    searchButtons[1].addEventListener('click', async (e) => {
-      const inputValue = searchButtons[1].previousElementSibling.value;
+      const inputValue = inputElements[1].value;
       let search = await (await apiClient.getUserData(null,inputValue)).json();
 
-      validateSearch(search,inputValue);
+      validateSearch(search,inputValue, inputElements)
    });
 
    searchButtons[0].previousElementSibling.addEventListener('keyup', async ({ key }) => {
       if (key === 'Enter') {
-         const inputValue = searchButtons[0].previousElementSibling.value;
+         const inputValue = inputElements[0].value;
          let search = await (await apiClient.getUserData(null,inputValue)).json();
    
-         validateSearch(search,inputValue);
+         validateSearch(search,inputValue, inputElements)
       }
    });
 
    searchButtons[1].previousElementSibling.addEventListener('keyup', async ({ key }) => {
       if (key === 'Enter') {
-         const inputValue = searchButtons[1].previousElementSibling.value;
+         const inputValue = inputElements[1].value;
          let search = await (await apiClient.getUserData(null,inputValue)).json();
    
-         validateSearch(search,inputValue);
+         validateSearch(search,inputValue, inputElements)
       }
    });
 }
 
-function validateSearch(search,inputValue) {
-   
+function validateSearch(search,inputValue,inputElements) {
+
    if (Object.keys(search).length === 0) {
       $("#invalidSearch").modal('show');
+
+      $("#invalidSearch").on("hidden.bs.modal", function () {
+         inputElements[0].value = "";
+         inputElements[1].value = "";
+         inputElements[0].focus();
+         inputElements[1].focus();
+         inputElements[0].select();
+         inputElements[1].select();
+     });
+
    }
    else {
       const url = new URL(`${window.location.protocol}//${window.location.host}/perfil.html?userid=${inputValue}`);
@@ -130,8 +141,29 @@ function validateSearch(search,inputValue) {
    }
 }
 
+function focusSearchInput() {
+   let navbarSearch = document.getElementById('search-navbar');
+   let navbarMobileButton = document.getElementById('navbutton');
+
+   navbarSearch.addEventListener('click', focusInput);
+   navbarMobileButton.addEventListener('click', focusInput);
+}
+
+function focusInput() {
+   let searchButtons = document.getElementsByClassName('button-search');
+   searchButtons = Array.from(searchButtons);
+   let inputElements = [searchButtons[0].previousElementSibling, searchButtons[1].previousElementSibling];
+
+   $(document).ready(function() {
+      inputElements[0].focus();
+      inputElements[1].focus();
+      inputElements[0].select();
+      inputElements[1].select();
+   });
+}
+
 // Logged user data
 let loggedUser = apiClient.getUserData();
 
 export default { showPageElements , showNotifications ,
-               navbarUserName , logOutButtons , showAdminNavbar , searchUser , loggedUser };
+               navbarUserName , logOutButtons , showAdminNavbar , searchUser , loggedUser , focusSearchInput};

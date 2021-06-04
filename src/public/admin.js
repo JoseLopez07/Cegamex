@@ -63,6 +63,7 @@ if (isAdmin.adm !== 1) {
     location.href = '/pagina-inicio.html';
 } else {
     utils.searchUser()
+    utils.focusSearchInput();
     utils.showAdminNavbar();
     utils.showPageElements();
     utils.showNotifications();
