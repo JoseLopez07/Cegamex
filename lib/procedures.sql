@@ -104,12 +104,6 @@ CREATE OR ALTER PROCEDURE removeUser
 AS
 	SET NOCOUNT ON;
 	BEGIN
-		DELETE m
-        FROM [dbo].[mascotas] m
-		JOIN [dbo].[usuarios] u
-		ON m.idMascota = u.idMascota
-		WHERE idUser = @id;
-
 		DELETE FROM [dbo].[amistades]
 		WHERE idUser1 = @id OR idUser2 = @id;
 
@@ -117,6 +111,12 @@ AS
 		WHERE idUser = @id;
 
 		DELETE FROM [dbo].[usuarios]
+		WHERE idUser = @id;
+
+		DELETE m
+        FROM [dbo].[mascotas] m
+		JOIN [dbo].[usuarios] u
+		ON m.idMascota = u.idMascota
 		WHERE idUser = @id;
 	END
 GO

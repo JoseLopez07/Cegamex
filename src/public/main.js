@@ -15,7 +15,7 @@ button.addEventListener('click', async (event) => {
     inputColor(false);
     logIn();
 });
-form.forEach((input) => {
+[rememberMe, ...form].forEach((input) => {
     input.addEventListener('keyup', async ({ key }) => {
         inputColor(false);
         if (key === 'Enter') {
@@ -34,12 +34,12 @@ async function logIn() {
         await apiClient.logIn(email.value, pass.value, rememberMe.checked);
         location.href = '/pagina-inicio.html';
     } catch (err) {
-        console.error(err);
         if (err instanceof api.ApiRequestError && err.status == 403) {
-            inputColor(true)
+            inputColor(true);
         } else {
-            alert ('Error inesperado')
-        } 
+            console.error(err);
+            alert('Error inesperado');
+        }
     }
 }
 
@@ -47,13 +47,12 @@ function validate() {
     return form.every((input) => !!input.value);
 }
 
-function inputColor (invalido){
+function inputColor(invalido) {
     if (invalido === true) {
         email.classList.add('input-invalido');
         pass.classList.add('input-invalido');
-    }
-    else {
+    } else {
         email.classList.remove('input-invalido');
-        pass.classList.remove('input-invalido');        
+        pass.classList.remove('input-invalido');
     }
 }
