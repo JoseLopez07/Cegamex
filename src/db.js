@@ -101,6 +101,9 @@ async function modifyUser(
         userName = null,
         email = null,
         passHash = null,
+        twitter = null,
+        picture = null,
+        companyRole = null,
     } = {}
 ) {
     const query = (await connect())

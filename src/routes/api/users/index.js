@@ -58,6 +58,12 @@ router.post(
 // EVERY OTHER ROUTE UNDER /users USES TOKENS
 router.use(verifyToken);
 
+// use every other users routes:
+router.use('/achievements', achievsRoutes);
+router.use('/admins', adminsRoutes);
+router.use('/friends', friendsRoutes);
+router.use('/pets', petsRoutes);
+
 async function modifyUserInfo(req, res, next) {
     try {
         let passHash;
@@ -124,11 +130,5 @@ router.get('/', async (req, res, next) => {
         return next(err);
     }
 });
-
-// use every other users routes:
-router.use('/achievements', achievsRoutes);
-router.use('/admins', adminsRoutes);
-router.use('/friends', friendsRoutes);
-router.use('/pets', petsRoutes);
 
 module.exports = router;
