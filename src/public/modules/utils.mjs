@@ -82,66 +82,51 @@ async function showAdminNavbar() {
    } 
 }
 
+// Get input content
 function searchUser() {
    let searchButtons = document.getElementsByClassName('button-search');
    searchButtons = Array.from(searchButtons);
-   let inputElements = [searchButtons[0].previousElementSibling, searchButtons[1].previousElementSibling];
 
-   searchButtons[0].addEventListener('click', async (e) => {
-      const inputValue = inputElements[0].value;
-      let search = await (await apiClient.getUserData(null,inputValue)).json();
-
-      validateSearch(search,inputValue,inputElements)
-   });
-
-   searchButtons[1].addEventListener('click', async (e) => {
-      const inputValue = inputElements[1].value;
-      let search = await (await apiClient.getUserData(null,inputValue)).json();
-
-      validateSearch(search,inputValue, inputElements)
-   });
-
-   searchButtons[0].previousElementSibling.addEventListener('keyup', async ({ key }) => {
-      if (key === 'Enter') {
-         const inputValue = inputElements[0].value;
-         let search = await (await apiClient.getUserData(null,inputValue)).json();
+   for (const btn of searchButtons) {
+      btn.addEventListener('click', async (e) => {
+         const inputValue = btn.previousElementSibling.value;
+         let search = await (await apiClient.getUserData(null,inputValue)).json(); // Search result
    
-         validateSearch(search,inputValue, inputElements)
-      }
-   });
+         validateSearch(search,inputValue,btn.previousElementSibling)
+      });
 
-   searchButtons[1].previousElementSibling.addEventListener('keyup', async ({ key }) => {
-      if (key === 'Enter') {
-         const inputValue = inputElements[1].value;
-         let search = await (await apiClient.getUserData(null,inputValue)).json();
-   
-         validateSearch(search,inputValue, inputElements)
-      }
-   });
+      btn.previousElementSibling.addEventListener('keyup', async ({ key }) => {
+         if (key === 'Enter') {
+            const inputValue = btn.previousElementSibling.value;
+            let search = await (await apiClient.getUserData(null,inputValue)).json(); // Search result
+      
+            validateSearch(search,inputValue, btn.previousElementSibling)
+         }
+      });
+    }
 }
 
-function validateSearch(search,inputValue,inputElements) {
-
-   if (Object.keys(search).length === 0) {
+// Validate input
+function validateSearch(search,inputValue,inputElement) {
+   if (Object.keys(search).length === 0) { // Show invalidSearch modal if search result is null
       $("#invalidSearch").modal('show');
 
-      $("#invalidSearch").on("hidden.bs.modal", function () {
-         inputElements[0].value = "";
-         inputElements[1].value = "";
-         inputElements[0].focus();
-         inputElements[1].focus();
-         inputElements[0].select();
-         inputElements[1].select();
+      $("#invalidSearch").on("hidden.bs.modal", function () { // Clean and focus input when modal is closed
+         inputElement.value = "";
+         inputElement.focus();
+         inputElement.select();
      });
 
    }
    else {
-      const url = new URL(`${window.location.protocol}//${window.location.host}/perfil.html?userid=${inputValue}`);
+      // Change location to profile page
+      const url = new URL(`${window.location.protocol}//${window.location.host}/perfil.html?userid=${inputValue}`); 
       location.href = url;
    }
 }
 
-function focusSearchInput() {
+// Focus input after click
+function focusSearchInput() { 
    let navbarSearch = document.getElementById('search-navbar');
    let navbarMobileButton = document.getElementById('navbutton');
 
@@ -149,6 +134,7 @@ function focusSearchInput() {
    navbarMobileButton.addEventListener('click', focusInput);
 }
 
+// Event
 function focusInput() {
    let searchButtons = document.getElementsByClassName('button-search');
    searchButtons = Array.from(searchButtons);

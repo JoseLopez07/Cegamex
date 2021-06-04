@@ -37,7 +37,6 @@ import utils from '/modules/utils.mjs';
         }); 
     } else {
         userData = await (await apiClient.getUserData()).json();
-
     }
     
     const achievements = await (await apiClient.getAchievements()).json();
@@ -181,14 +180,15 @@ import utils from '/modules/utils.mjs';
             setRemoveFriendEvent(); 
         });
     }
-
+    // Change add friend button
     function checkNameWidth(addFriendButton) {
         if (userData.companyRole == null) {
             addFriendButton.nextElementSibling.classList.remove('mt-3'); 
             addFriendButton.nextElementSibling.classList.add('mt-2');
         }
 
-        if (addFriendButton.previousElementSibling.offsetWidth > (addFriendButton.previousElementSibling.parentElement.parentElement.offsetWidth/2)) {
+        if (addFriendButton.previousElementSibling.offsetWidth > 
+            (addFriendButton.previousElementSibling.parentElement.parentElement.offsetWidth/2)) {
             addFriendButton.previousElementSibling.style.display = null;
             addFriendButton.previousElementSibling.classList.remove('py-3');
             addFriendButton.classList.add('mt-2');
@@ -196,6 +196,8 @@ import utils from '/modules/utils.mjs';
     }
     
     // Show page content
-    utils.showPageElements();
-
+    $(document).ready(function() {
+        utils.showPageElements();
+    });
+    
 })();

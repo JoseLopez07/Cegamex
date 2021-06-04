@@ -50,6 +50,7 @@ const chart2 = new Chart(chKpi2, {
         ],
     },
     options: {
+        cutout: 90,
         plugins: {
             legend: {
                 position: 'bottom',
