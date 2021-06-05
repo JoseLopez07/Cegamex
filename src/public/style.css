@@ -464,3 +464,12 @@ a:link, a:visited, a:active {
 .user-profile-image {
     margin-bottom: 0.8em;
 }
+
+#level-text {
+    position: absolute; 
+    top: 45%; left: 50%; 
+    transform: translate(-50%, -50%);
+    font-family: 'Open Sans', sans-serif;
+    color: #545454;
+    font-size: 5.1em;
+}

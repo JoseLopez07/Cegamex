@@ -7,7 +7,7 @@ const router = express.Router();
 // be used a specific users id
 router.get('/', async (req, res, next) => {
     try {
-        const queryUserId = parseInt(req.query.id);
+        const queryUserId = parseInt(req.query.userId);
         const result = await db.getUserPet(queryUserId || req.user.id);
         res.send(result);
     } catch (err) {

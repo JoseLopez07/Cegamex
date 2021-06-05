@@ -14,11 +14,10 @@ import utils from '/modules/utils.mjs';
     let position = document.getElementById('user-position');
     let trophies = document.getElementById('trophies');
     let trophiesSummary = document.getElementById('trophies-summary');
-    let levelImage = document.getElementById('level-img-profile');
+    let levelText = document.getElementById('level-text');
     let levelMessage = document.getElementById('level-message');
     let levelMessageNavbar = document.getElementById('level-message-navbar');
     let progressBarColor = document.getElementById('progress-color');
-    let profileImageContainer = document.getElementById('profile-image-container');
     let userData;
     let addFriendButton = document.getElementById('btnFriend');
     let onlyUserContent = document.getElementsByClassName('only-user');
@@ -39,13 +38,12 @@ import utils from '/modules/utils.mjs';
         userData = await (await apiClient.getUserData()).json();
     }
     
-    const achievements = await (await apiClient.getAchievements()).json();
-    const gameData = await (await apiClient.getPetData()).json();
+    const achievements = await (await apiClient.getAchievements(userData.userId)).json();
+    const gameData = await (await apiClient.getPetData(userData.userId)).json();
     const userFriends = await (await apiClient.getFriends(userData.userId)).json();
 
     // Images
     profileImage[0].src = userData.picture;
-    levelImage.src = `imagenes\\nivel-${gameData.level}.png`;
 
     [].forEach.call(achievements,function(a){
         let newAchievementContainer = document.createElement('div');
@@ -79,6 +77,14 @@ import utils from '/modules/utils.mjs';
     levelMessage.innerText = `¡${100 - gameData.experience} puntos más para nivel ${gameData.level + 1}!`;
     levelMessageNavbar.childNodes[2].nodeValue = `¡Felicidades! Has alcanzado el nivel ${gameData.level}`;
     progressBarColor.style.width = `${gameData.experience}%`;
+
+    // Level
+    if (gameData.level > 99) {
+        levelText.style.fontSize = '3em';
+    } else if (gameData.level > 9) {
+        levelText.style.fontSize = '4.2em';
+    }
+    levelText.innerHTML = `${gameData.level}`;
 
     // Possible null values
     if (userData.twitter === null) {
