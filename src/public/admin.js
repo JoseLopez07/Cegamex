@@ -21,7 +21,7 @@ let chKpi2 = document.getElementById('ChartKpi2').getContext('2d');
         const dataMarzo = countsfechas[0].marzo;
         const data = [dataEnero, dataFebrero, dataMarzo];
         const dataResolve = dataEnero + dataFebrero + dataMarzo;
-        const dataNotResolve = countsfechas[0].NULLS;
+        const dataNotResolve = countsfechas[0].nulls;
         const data2 = [dataResolve, dataNotResolve];
 
         const chart1 = new Chart(chKpi1, {
