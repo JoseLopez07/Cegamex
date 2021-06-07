@@ -8,6 +8,8 @@ let chKpi2 = document.getElementById('ChartKpi2').getContext('2d');
 let firstPlace = document.getElementById("firstPlace");
 let secondPlace = document.getElementById("secondPlace");
 let thirdPlace = document.getElementById("thirdPlace");
+let fotoPlace = document.getElementsByClassName("perfil-amigo");
+console.log(fotoPlace);
 
 (async function () {
     const isAdmin = await (await apiClient.getUserAdmin()).json();
@@ -79,9 +81,17 @@ let thirdPlace = document.getElementById("thirdPlace");
 
         console.log(top3Users);
 
-        firstPlace.innerText = top3Users[0].nombre + " " + top3Users[0].apellido;
-        secondPlace.innerText = top3Users[1].nombre + " " + top3Users[1].apellido;
-        thirdPlace.innerText = top3Users[2].nombre + " " + top3Users[2].apellido;
+        firstPlace.innerText = top3Users[0].nombre + " " + top3Users[0].apellido + " - Nivel: " + top3Users[0].nivel;
+        secondPlace.innerText = top3Users[1].nombre + " " + top3Users[1].apellido + " - Nivel: " + top3Users[1].nivel;
+        thirdPlace.innerText = top3Users[2].nombre + " " + top3Users[2].apellido + " - Nivel: " + top3Users[2].nivel;
+        for(var i = 0; i < 3; i++){
+            if (top3Users[i].foto === null) {
+                fotoPlace[i].src = "imagenes\\profile-default.png";
+            }
+            else{
+                fotoPlace[i].src = top3Users[i].foto;
+            }
+        }
 
         utils.searchUser();
         utils.focusSearchInput();
