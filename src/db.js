@@ -120,6 +120,12 @@ async function modifyUser(
     await query;
 }
 
+async function getTop3UserData() {
+    const query = (await connect()).execute('getTop3Users');
+    const result = await query;
+    return result.recordset;
+}
+
 async function removeUser(id) {
     const query = (await connect())
         .input('id', sql.Int, id)
