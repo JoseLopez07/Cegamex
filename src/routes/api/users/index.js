@@ -131,4 +131,13 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+router.get('/top3', async (_, res, next) => {
+    try {
+        const top3 = await db.getTop3UserData();
+        return res.send(top3);
+    } catch (err) {
+        return next(err);
+    }
+});
+
 module.exports = router;
