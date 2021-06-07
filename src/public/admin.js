@@ -5,6 +5,9 @@ const apiClient = new api.ApiClient();
 
 let chKpi1 = document.getElementById('ChartKpi1').getContext('2d');
 let chKpi2 = document.getElementById('ChartKpi2').getContext('2d');
+let firstPlace = document.getElementById("firstPlace");
+let secondPlace = document.getElementById("secondPlace");
+let thirdPlace = document.getElementById("thirdPlace");
 
 (async function () {
     const isAdmin = await (await apiClient.getUserAdmin()).json();
@@ -69,6 +72,16 @@ let chKpi2 = document.getElementById('ChartKpi2').getContext('2d');
                 },
             },
         });
+
+        const top3Users = await (
+            await apiClient.getTop3UserData()
+        ).json();
+
+        console.log(top3Users);
+
+        firstPlace.innerText = top3Users[0].nombre + " " + top3Users[0].apellido;
+        secondPlace.innerText = top3Users[1].nombre + " " + top3Users[1].apellido;
+        thirdPlace.innerText = top3Users[2].nombre + " " + top3Users[2].apellido;
 
         utils.searchUser();
         utils.focusSearchInput();
