@@ -218,9 +218,10 @@ CREATE OR ALTER PROCEDURE getCountFechasIssues
 AS
 	SET NOCOUNT ON;
 	SELECT
-    (SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 1) AS enero,
-    (SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 2) AS febrero,
-    (SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 3) AS marzo
+	(SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 1) AS enero,
+	(SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 2) AS febrero,
+	(SELECT Count(fecha_fin) FROM issues WHERE month(fecha_fin) = 3) AS marzo,
+	(SELECT Count(*) FROM issues WHERE month(fecha_fin) is null) AS nulls
 GO
 
 CREATE OR ALTER PROCEDURE getUserFriendsInfo
