@@ -103,6 +103,10 @@ class ApiClient {
     async register(userData) {
         return this._apiRequest('/api/v1/users', 'POST', userData);
     }
+    
+    async getTop3UserData() {
+        return this._apiRequest('/api/v1/users/top3','GET');
+    }
 
     // must be an admin to specify user id
     async modifyUserData(userId = null, userData) {
