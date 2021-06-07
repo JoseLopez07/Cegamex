@@ -424,4 +424,5 @@ module.exports = {
     querySubtasks,
     insertIssue,
     insertSubtask,
+    getTop3UserData,
 };
