@@ -104,8 +104,8 @@ class ApiClient {
         return this._apiRequest('/api/v1/users', 'POST', userData);
     }
     
-    async getTop3UserData() {
-        return this._apiRequest('/api/v1/users/top3','GET');
+    async getTopUserData() {
+        return this._apiRequest('/api/v1/users/top','GET');
     }
 
     // must be an admin to specify user id
