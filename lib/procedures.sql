@@ -61,9 +61,10 @@ AS
 
 		-- user creation
 		INSERT [dbo].[usuarios] ([nombre], [apellido], [userName], [correo], [pass],
-			[adm], [idMascota])
+			[adm], [idMascota], victorias, derrotas, puntos)
         OUTPUT INSERTED.idUser INTO @newUser
-        VALUES (@firstName, @lastName, @userName, @email, @passHash, 0, @petId);
+        VALUES (@firstName, @lastName, @userName, @email, @passHash, 0, @petId,
+            0, 0, 0);
 
 		SELECT @userId = idUser FROM @newUser;
 
@@ -112,6 +113,7 @@ AS
     victorias = ISNULL(@victories, victorias),
     derrotas = ISNULL(@defeats, derrotas),
     puntos = ISNULL(@score, puntos)
+    WHERE idUser = @id;
 GO
 
 CREATE OR ALTER PROCEDURE removeUser
