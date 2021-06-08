@@ -14,16 +14,9 @@ GO
 CREATE OR ALTER PROCEDURE getTop3Users
 AS
 	SET NOCOUNT ON;
-	SELECT u.nombre, u.apellido, u.foto, m.nivel
+	SELECT top(3) u.nombre, u.apellido, u.foto, m.nivel
 	FROM usuarios u
 	JOIN mascotas m on u.idMascota = m.idMascota
-	WHERE u.idMascota in (
-	    SELECT idMascota 
-	    FROM mascotas
-	    WHERE nivel in (
-		SELECT top(3) nivel 
-		FROM mascotas 
-		ORDER BY nivel DESC))
 	ORDER BY nivel DESC
 GO
 
