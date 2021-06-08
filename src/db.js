@@ -104,6 +104,9 @@ async function modifyUser(
         twitter = null,
         picture = null,
         companyRole = null,
+        victories = null,
+        defeats = null,
+        score = null,
     } = {}
 ) {
     const query = (await connect())
@@ -116,6 +119,9 @@ async function modifyUser(
         .input('twitter', sql.NVarChar(255), twitter)
         .input('picture', sql.NVarChar(255), picture)
         .input('companyRole', sql.NVarChar(255), companyRole)
+        .input('victories', sql.Int, victories)
+        .input('defeats', sql.Int, defeats)
+        .input('score', sql.Int, score)
         .execute('modifyUser');
     await query;
 }

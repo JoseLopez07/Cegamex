@@ -5,10 +5,10 @@ const apiClient = new api.ApiClient();
 
 let chKpi1 = document.getElementById('ChartKpi1').getContext('2d');
 let chKpi2 = document.getElementById('ChartKpi2').getContext('2d');
-let firstPlace = document.getElementById("firstPlace");
-let secondPlace = document.getElementById("secondPlace");
-let thirdPlace = document.getElementById("thirdPlace");
-let fotoPlace = document.getElementsByClassName("perfil-amigo");
+let firstPlace = document.getElementById('firstPlace');
+let secondPlace = document.getElementById('secondPlace');
+let thirdPlace = document.getElementById('thirdPlace');
+let fotoPlace = document.getElementsByClassName('perfil-amigo');
 console.log(fotoPlace);
 
 (async function () {
@@ -75,21 +75,33 @@ console.log(fotoPlace);
             },
         });
 
-        const topUsers = await (
-            await apiClient.getTopUserData()
-        ).json();
+        const topUsers = await (await apiClient.getTopUserData()).json();
 
         console.log(topUsers);
 
-        firstPlace.innerText = topUsers[0].nombre + " " + topUsers[0].apellido + " - Nivel: " + topUsers[0].nivel;
-        secondPlace.innerText = topUsers[1].nombre + " " + topUsers[1].apellido + " - Nivel: " + topUsers[1].nivel;
-        thirdPlace.innerText = topUsers[2].nombre + " " + topUsers[2].apellido + " - Nivel: " + topUsers[2].nivel;
-        for(var i = 0; i < 3; i++){
+        firstPlace.innerText =
+            topUsers[0].firstName +
+            ' ' +
+            topUsers[0].lastName +
+            ' - Nivel: ' +
+            topUsers[0].level;
+        secondPlace.innerText =
+            topUsers[1].firstName +
+            ' ' +
+            topUsers[1].lastName +
+            ' - Nivel: ' +
+            topUsers[1].level;
+        thirdPlace.innerText =
+            topUsers[2].firstName +
+            ' ' +
+            topUsers[2].lastName +
+            ' - Nivel: ' +
+            topUsers[2].level;
+        for (let i = 0; i < 3; i++) {
             if (topUsers[i].foto === null) {
-                fotoPlace[i].src = "imagenes\\profile-default.png";
-            }
-            else{
-                fotoPlace[i].src = topUsers[i].foto;
+                fotoPlace[i].src = 'imagenes\\profile-default.png';
+            } else {
+                fotoPlace[i].src = topUsers[i].picture;
             }
         }
 

@@ -14,10 +14,11 @@ GO
 CREATE OR ALTER PROCEDURE getTopUsers
 AS
 	SET NOCOUNT ON;
-	SELECT top(5) u.nombre, u.apellido, u.foto, m.nivel, u.puntos
+	SELECT top(5) u.nombre AS firstName, u.apellido AS lastName,
+                  u.foto AS picture, m.nivel AS [level], u.puntos AS score
 	FROM usuarios u
 	JOIN mascotas m on u.idMascota = m.idMascota
-	ORDER BY nivel DESC
+	ORDER BY [level] DESC, score DESC;
 GO
 
 CREATE OR ALTER PROCEDURE getIdFromEmail
@@ -52,9 +53,9 @@ AS
 
 		INSERT [dbo].[mascotas] ([nivel], [upgradeP], [experiencia],
 			[ptsAtaque], [ptsDefensa], [ptsVelocidad], [ptsMaxVida], [skill],
-			[type])
+			[type], idMovimiento1, idMovimiento2, idMovimiento3)
 		OUTPUT INSERTED.idMascota INTO @newPet
-		VALUES (1, 0, 0, 5, 5, 5, 50, 0, 3); -- default values
+		VALUES (1, 0, 0, 5, 5, 5, 50, 0, 3, 0, 1, 2); -- default values
 
         SELECT @petId = idMascota FROM @newPet;
 
@@ -93,7 +94,10 @@ CREATE OR ALTER PROCEDURE modifyUser
 	@passHash nvarchar(255) = NULL,
 	@twitter nvarchar(255) = '',
 	@picture nvarchar(255) = '',
-	@companyRole nvarchar(255) = ''
+	@companyRole nvarchar(255) = '',
+    @victories int = NULL,
+    @defeats int = NULL,
+    @score int = NULL
 AS
 	SET NOCOUNT ON;
 	UPDATE [dbo].[usuarios]
@@ -104,8 +108,10 @@ AS
 	pass = ISNULL(@passHash, pass),
 	twitter = IIF(@twitter IS NULL OR @twitter > '', @twitter, twitter),
 	foto = IIF(@picture IS NULL OR @picture > '', @picture, foto),
-	rol = IIF(@companyRole IS NULL OR @companyRole > '', @companyRole, rol)
-	WHERE idUser = @id;
+	rol = IIF(@companyRole IS NULL OR @companyRole > '', @companyRole, rol),
+    victorias = ISNULL(@victories, victorias),
+    derrotas = ISNULL(@defeats, derrotas),
+    puntos = ISNULL(@score, puntos)
 GO
 
 CREATE OR ALTER PROCEDURE removeUser
@@ -143,7 +149,8 @@ CREATE OR ALTER PROCEDURE getSingleUserInfo
 AS
 	SET NOCOUNT ON;
 	SELECT idUser AS userId, nombre AS firstName, apellido AS lastName,
-    userName, correo AS email, twitter, foto AS picture, rol AS companyRole
+        userName, correo AS email, twitter, foto AS picture, rol AS companyRole,
+        victorias AS victories, derrotas AS defeats, puntos AS score
 	FROM [dbo].[usuarios]
 	WHERE idUser = @id
 GO
@@ -160,7 +167,8 @@ AS
 
 		SELECT TOP 100 idUser AS userId, nombre AS firstName, apellido AS
             lastName, userName, correo AS email, twitter, foto AS picture,
-			rol AS companyRole
+			rol AS companyRole, victorias AS victories, derrotas AS defeats,
+            puntos AS score
 		FROM [dbo].[usuarios]
 		WHERE idUser IN
 		(
@@ -195,9 +203,9 @@ CREATE OR ALTER PROCEDURE modifyUserPet
 	@defense int = NULL,
 	@speed int = NULL,
 	@maxHealth int = NULL,
-	@move1 int = 0,
-	@move2 int = 0,
-	@move3 int = 0,
+	@move1 int = -1,
+	@move2 int = -1,
+	@move3 int = -1,
 	@skill int = NULL,
 	@type int = NULL
 AS
@@ -212,9 +220,9 @@ AS
 	ptsDefensa = ISNULL(@defense, ptsDefensa),
 	ptsVelocidad = ISNULL(@speed, ptsVelocidad),
 	ptsMaxVida = ISNULL(@maxHealth, ptsMaxVida),
-	idMovimiento1 = IIF(@move1 IS NULL OR @move1 > 0, @move1, idMovimiento1),
-	idMovimiento2 = IIF(@move2 IS NULL OR @move2 > 0, @move2, idMovimiento2),
-	idMovimiento3 = IIF(@move3 IS NULL OR @move3 > 0, @move3, idMovimiento3),
+	idMovimiento1 = IIF(@move1 IS NULL OR @move1 >= 0, @move1, idMovimiento1),
+	idMovimiento2 = IIF(@move2 IS NULL OR @move2 >= 0, @move2, idMovimiento2),
+	idMovimiento3 = IIF(@move3 IS NULL OR @move3 >= 0, @move3, idMovimiento3),
 	skill = ISNULL(@skill, skill),
 	[type] = ISNULL(@type, [type])
     FROM [dbo].[mascotas] m
@@ -238,7 +246,8 @@ CREATE OR ALTER PROCEDURE getUserFriendsInfo
 AS
 	SET NOCOUNT ON;
     SELECT idUser AS userId, nombre AS firstName, apellido AS lastName,
-        userName, correo AS email, twitter, foto AS picture, rol AS companyRole
+        userName, correo AS email, twitter, foto AS picture, rol AS companyRole,
+        victorias AS victories, derrotas AS defeats, puntos AS score
 	FROM [dbo].[usuarios] u
     JOIN (
     	SELECT idUser2
@@ -574,36 +583,34 @@ AS
 		@startDate, @endDate);
 GO
 
-
-
 -- ==== WARNING! RUNNING BELOW WILL DELETE USERS, PETS, FRIENDS AND ACHIEVS ====
 
-DELETE FROM amistades
-DELETE FROM registroLogros
-DELETE FROM usuarios
-DELETE FROM mascotas
-DELETE FROM logros
+-- DELETE FROM amistades
+-- DELETE FROM registroLogros
+-- DELETE FROM usuarios
+-- DELETE FROM mascotas
+-- DELETE FROM logros
 
-DBCC CHECKIDENT (usuarios, RESEED, 0)
-DBCC CHECKIDENT (mascotas, RESEED, 0)
-DBCC CHECKIDENT (logros, RESEED, 0)
+-- DBCC CHECKIDENT (usuarios, RESEED, 0)
+-- DBCC CHECKIDENT (mascotas, RESEED, 0)
+-- DBCC CHECKIDENT (logros, RESEED, 0)
 
-INSERT INTO [dbo].[logros] (nombre, descripcion) VALUES ('Hello, world!', 'Crea una cuenta en Cegamex');
+-- INSERT INTO [dbo].[logros] (nombre, descripcion) VALUES ('Hello, world!', 'Crea una cuenta en Cegamex');
 
-EXEC createUser 'John', 'Doe', 'john.doe', 'john.doe@cemex.mx', '$2a$10$VQkTCGn3c1BDGBQGgCxeGucQ/DTZqUQpen.tdu2tbZP1JHi4wKVsG' -- password
-EXEC modifyUser 1, @picture = 'https://i.imgur.com/BwVJBLs.png', @companyRole = 'Arquitecto de Inteligencia de Negocio'
-EXEC setUserAdmin 1, 1
+-- EXEC createUser 'John', 'Doe', 'john.doe', 'john.doe@cemex.mx', '$2a$10$VQkTCGn3c1BDGBQGgCxeGucQ/DTZqUQpen.tdu2tbZP1JHi4wKVsG' -- password
+-- EXEC modifyUser 1, @picture = 'https://i.imgur.com/BwVJBLs.png', @companyRole = 'Arquitecto de Inteligencia de Negocio'
+-- EXEC setUserAdmin 1, 1
 
-EXEC createUser 'Mary', 'Sue', 'mary.sue', 'mary.sue@cemex.mx', '$2a$10$fPM5jtJnBijMPRBKO0e3U.BU0mFg3K2ng1yWbF386HoA3ir9eP2N6' -- 12345
-EXEC modifyUser 2, @picture = 'https://i.imgur.com/tnFuqvt.jpg', @companyRole = 'Ingeniera DevOps', @twitter = '@MerrySioux'
+-- EXEC createUser 'Mary', 'Sue', 'mary.sue', 'mary.sue@cemex.mx', '$2a$10$fPM5jtJnBijMPRBKO0e3U.BU0mFg3K2ng1yWbF386HoA3ir9eP2N6' -- 12345
+-- EXEC modifyUser 2, @picture = 'https://i.imgur.com/tnFuqvt.jpg', @companyRole = 'Ingeniera DevOps', @twitter = '@MerrySioux'
 
-EXEC createUser 'Test', 'Foo', 'test.foo', 'test.foo@cemex.mx', '$2a$10$KkhBaY3oIlxmdqPo8FL5le7zTEAAVI5Gdfd1YzXjOD9i1gsG10jO2' -- qwerty
+-- EXEC createUser 'Test', 'Foo', 'test.foo', 'test.foo@cemex.mx', '$2a$10$KkhBaY3oIlxmdqPo8FL5le7zTEAAVI5Gdfd1YzXjOD9i1gsG10jO2' -- qwerty
 
-EXEC createFriendship 1, 2
-EXEC createFriendship 2, 1
-EXEC createFriendship 1, 3
-EXEC createFriendship 3, 1
-EXEC createFriendship 3, 2
+-- EXEC createFriendship 1, 2
+-- EXEC createFriendship 2, 1
+-- EXEC createFriendship 1, 3
+-- EXEC createFriendship 3, 1
+-- EXEC createFriendship 3, 2
 
 -- SELECT * FROM usuarios
 
