@@ -75,21 +75,21 @@ console.log(fotoPlace);
             },
         });
 
-        const top3Users = await (
-            await apiClient.getTop3UserData()
+        const topUsers = await (
+            await apiClient.getTopUserData()
         ).json();
 
-        console.log(top3Users);
+        console.log(topUsers);
 
-        firstPlace.innerText = top3Users[0].nombre + " " + top3Users[0].apellido + " - Nivel: " + top3Users[0].nivel;
-        secondPlace.innerText = top3Users[1].nombre + " " + top3Users[1].apellido + " - Nivel: " + top3Users[1].nivel;
-        thirdPlace.innerText = top3Users[2].nombre + " " + top3Users[2].apellido + " - Nivel: " + top3Users[2].nivel;
+        firstPlace.innerText = topUsers[0].nombre + " " + topUsers[0].apellido + " - Nivel: " + topUsers[0].nivel;
+        secondPlace.innerText = topUsers[1].nombre + " " + topUsers[1].apellido + " - Nivel: " + topUsers[1].nivel;
+        thirdPlace.innerText = topUsers[2].nombre + " " + topUsers[2].apellido + " - Nivel: " + topUsers[2].nivel;
         for(var i = 0; i < 3; i++){
-            if (top3Users[i].foto === null) {
+            if (topUsers[i].foto === null) {
                 fotoPlace[i].src = "imagenes\\profile-default.png";
             }
             else{
-                fotoPlace[i].src = top3Users[i].foto;
+                fotoPlace[i].src = topUsers[i].foto;
             }
         }
 
