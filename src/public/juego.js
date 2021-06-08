@@ -10,12 +10,15 @@ const parseJwt = (token) => {
     }
   };
 
-let expTime = parseJwt(apiClient.token).exp;
+function timeout() {
+  window.localStorage.setItem('token_exp', parseJwt(apiClient.token).exp);
+  setTimeout(function () {
+      apiClient.refreshTokens();
+      timeout();
+  }, (parseJwt(apiClient.token).exp * 1000 - Date.now()) * 2/3);
+};
 
-setTimeout(function() {
-    location.reload();
-}, (expTime-60000));
-
+timeout();
 utils.searchUser();
 utils.focusSearchInput();
 utils.showAdminNavbar();
