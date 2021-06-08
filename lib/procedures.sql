@@ -14,11 +14,11 @@ GO
 CREATE OR ALTER PROCEDURE getTopUsers
 AS
 	SET NOCOUNT ON;
-	SELECT top(5) u.nombre AS firstName, u.apellido AS lastName,
+	SELECT top(5) u.nombre AS firstName, u.apellido AS lastName, u.userName,
                   u.foto AS picture, m.nivel AS [level], u.puntos AS score
 	FROM usuarios u
 	JOIN mascotas m on u.idMascota = m.idMascota
-	ORDER BY [level] DESC, score DESC;
+	ORDER BY score DESC;
 GO
 
 CREATE OR ALTER PROCEDURE getIdFromEmail

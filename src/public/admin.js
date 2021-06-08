@@ -83,22 +83,22 @@ console.log(fotoPlace);
             topUsers[0].firstName +
             ' ' +
             topUsers[0].lastName +
-            ' - Nivel: ' +
-            topUsers[0].level;
+            ' - Puntaje: ' +
+            topUsers[0].score;
         secondPlace.innerText =
             topUsers[1].firstName +
             ' ' +
             topUsers[1].lastName +
-            ' - Nivel: ' +
-            topUsers[1].level;
+            ' - Puntaje: ' +
+            topUsers[1].score;
         thirdPlace.innerText =
             topUsers[2].firstName +
             ' ' +
             topUsers[2].lastName +
-            ' - Nivel: ' +
-            topUsers[2].level;
+            ' - Puntaje: ' +
+            topUsers[2].score;
         for (let i = 0; i < 3; i++) {
-            if (topUsers[i].foto === null) {
+            if (topUsers[i].picture === null) {
                 fotoPlace[i].src = 'imagenes\\profile-default.png';
             } else {
                 fotoPlace[i].src = topUsers[i].picture;
