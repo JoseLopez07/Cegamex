@@ -131,9 +131,9 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-router.get('/top3', async (_, res, next) => {
+router.get('/top', async (_, res, next) => {
     try {
-        const top3 = await db.getTop3UserData();
+        const top = await db.getTopUserData();
         return res.send(top3);
     } catch (err) {
         return next(err);
