@@ -134,7 +134,7 @@ router.get('/', async (req, res, next) => {
 router.get('/top', async (_, res, next) => {
     try {
         const top = await db.getTopUserData();
-        return res.send(top3);
+        return res.send(top);
     } catch (err) {
         return next(err);
     }

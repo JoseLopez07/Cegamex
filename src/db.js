@@ -120,8 +120,8 @@ async function modifyUser(
     await query;
 }
 
-async function getTop3UserData() {
-    const query = (await connect()).execute('getTop3Users');
+async function getTopUserData() {
+    const query = (await connect()).execute('getTopUsers');
     const result = await query;
     return result.recordset;
 }
@@ -424,5 +424,5 @@ module.exports = {
     querySubtasks,
     insertIssue,
     insertSubtask,
-    getTop3UserData,
+    getTopUserData,
 };
