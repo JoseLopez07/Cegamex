@@ -98,7 +98,7 @@ console.log(fotoPlace);
             ' - Nivel: ' +
             topUsers[2].level;
         for (let i = 0; i < 3; i++) {
-            if (topUsers[i].foto === null) {
+            if (topUsers[i].picture === null) {
                 fotoPlace[i].src = 'imagenes\\profile-default.png';
             } else {
                 fotoPlace[i].src = topUsers[i].picture;
