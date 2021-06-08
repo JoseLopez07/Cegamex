@@ -11,10 +11,10 @@ AS
 	SELECT pass FROM [dbo].[usuarios] WHERE correo = @email;
 GO
 
-CREATE OR ALTER PROCEDURE getTop3Users
+CREATE OR ALTER PROCEDURE getTopUsers
 AS
 	SET NOCOUNT ON;
-	SELECT top(3) u.nombre, u.apellido, u.foto, m.nivel
+	SELECT top(5) u.nombre, u.apellido, u.foto, m.nivel, u.puntos
 	FROM usuarios u
 	JOIN mascotas m on u.idMascota = m.idMascota
 	ORDER BY nivel DESC
