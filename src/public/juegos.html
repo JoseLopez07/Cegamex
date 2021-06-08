@@ -152,7 +152,7 @@
         <!------------------------------------------CARAOUSEL--------------------------------------------->
         <div id="myCarousel" class="carousel slide loading"
         data-bs-ride="carousel">
-            <div class="carousel-inner loading-child">
+            <div class="carousel-inner loading-child" style="background-color: #65c5c1;">
                 <div class="carousel-item active">
                     <img src="imagenes/juego1@4x.png" style="height: 100%; width: 100%;">
                 </div>
@@ -170,18 +170,17 @@
             </a>
         </div>
         <!-------------------------------------PLAY COLUMN------------------------------------------------>
-
         <div id="play" class="row justify-content-center text-center mt-5 g-0">
             <div class="col-xl-8 col-sm-auto p-2 loading">
-                <h1 id="t_play" class="loading-child">¡Comienza una partida!</h1>
-                <div class="mt-4">
-                    <button id="btn_play" type="button" class="btn btn-warning loading-child">PLAY</button>
-                </div>
-                <img src="imagenes/empty.jpg" class="img-fluid loading-child" style="width: 850px;height: 600px; margin-top: 40px;">
+                <h1 id="t_play" class="loading-child mb-2">¡Comienza una partida!</h1>
+                <iframe id="inlineFrameGame"
+                    title="game"
+                    width="960"
+                    height="600"
+                    src="/game/index.html">
+                </iframe>
             </div>
         </div>
-
-
 
         <!------------------------------------------FOOTER------------------------------------------------>
         <footer class="footer-basic p-3 m-0 mt-xl-5 mt-lg-5">

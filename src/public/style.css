@@ -1,3 +1,5 @@
+
+
 a:link, a:visited, a:active {
     text-decoration:none;
     color:black;
@@ -19,7 +21,7 @@ a:link, a:visited, a:active {
     margin: 0;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    padding-right: 0 !important
+    padding-right: 0 !important;
 }
 
 .container-gen {

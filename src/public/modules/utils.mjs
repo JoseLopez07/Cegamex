@@ -65,9 +65,12 @@ async function onClickLogout(e) {
 //Set user name to dropdown menu
 async function navbarUserName() {
    let nameNavbar = document.getElementsByClassName('user-name-navbar');
+   let levelMessageNavbar = document.getElementById('level-message-navbar');
    const userData = await (await apiClient.getUserData()).json();
+   const gameData = await (await apiClient.getPetData()).json();
    
    nameNavbar[0].innerText = userData.firstName + " " + userData.lastName;
+   levelMessageNavbar.childNodes[2].nodeValue = `¡Felicidades! Has alcanzado el nivel ${gameData.level}`;
 }
 
 //Admin access on navbar
