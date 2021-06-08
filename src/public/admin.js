@@ -64,7 +64,7 @@ let thirdPlace = document.getElementById("thirdPlace");
                 ],
             },
             options: {
-                cutout: 90,
+                cutout: 145,
                 plugins: {
                     legend: {
                         position: 'bottom',
