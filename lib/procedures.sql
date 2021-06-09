@@ -265,7 +265,7 @@ CREATE OR ALTER PROCEDURE areUsersFriends
 AS
     SET NOCOUNT ON;
     SELECT COUNT(*) AS [status]
-    FROM [dbo].amistadesConfirmadas
+    FROM [dbo].amistades
     WHERE idUser1 = @userId1 AND idUser2 = @userId2;
 GO
 

@@ -66,7 +66,7 @@ console.log(fotoPlace);
                 ],
             },
             options: {
-                cutout: 90,
+                cutout: 140,
                 plugins: {
                     legend: {
                         position: 'bottom',

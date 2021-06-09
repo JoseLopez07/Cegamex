@@ -69,22 +69,24 @@ import utils from '/modules/utils.mjs';
         trophiesSummary.appendChild(newAchievementContainerSummary);
     });
 
+    let realLevel = gameData.level + Math.floor(gameData.experience / 100);
+
     // Text
     nameProfile.innerText = userData.firstName + ' ' + userData.lastName;
     email.innerText = userData.email;
     twitterAccount.innerText = userData.twitter;
     position.innerText = userData.companyRole;
-    levelMessage.innerText = `¡${100 - gameData.experience} puntos más para nivel ${gameData.level + 1}!`;
-    levelMessageNavbar.childNodes[2].nodeValue = `¡Felicidades! Has alcanzado el nivel ${gameData.level}`;
-    progressBarColor.style.width = `${gameData.experience}%`;
+    levelMessage.innerText = `¡${100 - gameData.experience % 100} puntos más para nivel ${realLevel + 1}!`;
+    levelMessageNavbar.childNodes[2].nodeValue = `¡Felicidades! Has alcanzado el nivel ${realLevel}`;
+    progressBarColor.style.width = `${gameData.experience % 100}%`;
 
     // Level
-    if (gameData.level > 99) {
+    if (realLevel > 99) {
         levelText.style.fontSize = '3em';
-    } else if (gameData.level > 9) {
+    } else if (realLevel > 9) {
         levelText.style.fontSize = '4.2em';
     }
-    levelText.innerHTML = `${gameData.level}`;
+    levelText.innerHTML = `${realLevel}`;
 
     // Possible null values
     if (userData.twitter === null) {
