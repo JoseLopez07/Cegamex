@@ -1,12 +1,14 @@
 const express = require('express');
 const db = require('../../../db');
 const verifyParams = require('../../../middleware/verifyParams');
+const selectUserId = require('../../../middleware/selectUserId');
 
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
     try {
-        const result = await db.getUserAchievs(req.user.id);
+        const queryId = parseInt(req.query.userId);
+        const result = await db.getUserAchievs(queryId || req.user.id);
         return res.send(result);
     } catch (err) {
         return next(err);
