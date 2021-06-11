@@ -560,12 +560,14 @@ CREATE OR ALTER PROCEDURE insertIssue
     @asigneeId int = NULL,
     @state nvarchar(255),
     @startDate datetime,
-    @endDate datetime = NULL
+    @endDate datetime = NULL,
+    @priority nvarchar(255)
 AS
     INSERT [dbo].[issues] (idIssue, tipo, nombre, idCreador, idLider,
-		idReporter, idEncargado, estado, fecha_inicio, fecha_fin)
+		idReporter, idEncargado, estado, fecha_inicio, fecha_fin, prioridad,
+        procesado)
     VALUES (@id, @type, @name, @creatorEId, @leadEId, @reporterEId, @asigneeId,
-		@state, @startDate, @endDate);
+		@state, @startDate, @endDate, @priority, 0);
 GO
 
 CREATE OR ALTER PROCEDURE insertSubtask
@@ -584,6 +586,56 @@ AS
     VALUES (@id, @issueId, @name, @creatorEId, @leadEId, @reporterEId, @state,
 		@startDate, @endDate);
 GO
+
+CREATE OR ALTER PROCEDURE recalcPetExperience
+    @userId int,
+    @highPrtyMult int,
+    @mediumPrtyMult int,
+    @issuesQtty int,
+    @subtsksQtty int
+AS
+    BEGIN
+        SET NOCOUNT ON;
+
+        BEGIN TRANSACTION;
+            CREATE TABLE #prtyMults (prtyName nvarchar(255), prtyValue int);
+            INSERT INTO #prtyMults 
+            VALUES ('High', @highPrtyMult), ('Medium', @mediumPrtyMult);
+
+            DECLARE @generatedXP int;
+
+            SELECT @generatedXP = ISNULL(SUM(priority * (@issuesQtty + subtasks * @subtsksQtty)), 0)
+            FROM (
+                SELECT ISNULL(prtyValue, 1) AS priority, COUNT(s.idSubtarea) AS subtasks
+                FROM [dbo].[usuarios] u
+                JOIN [dbo].[issues] i
+                ON u.idUser = i.idEncargado
+                LEFT OUTER JOIN [dbo].[subtareas] s
+                ON i.idIssue = s.idIssue
+                LEFT OUTER JOIN #prtyMults p
+                ON i.prioridad = p.prtyName
+                WHERE u.idUser = @userId
+                AND i.procesado = 0
+                GROUP BY i.idIssue, p.prtyValue, i.prioridad
+            ) s;
+
+            UPDATE i
+            SET i.procesado = 1
+            FROM [dbo].[issues] i
+            JOIN [dbo].[usuarios] u
+            ON i.idEncargado = u.idUser;
+
+            UPDATE m
+            SET m.experiencia = m.experiencia + @generatedXP
+            FROM [dbo].[mascotas] m
+            JOIN [dbo].[usuarios] u
+            ON m.idMascota = u.idMascota;
+
+            SELECT @generatedXP;
+        COMMIT;
+    END
+GO
+
 
 -- ==== WARNING! RUNNING BELOW WILL DELETE USERS, PETS, FRIENDS AND ACHIEVS ====
 

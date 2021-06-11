@@ -22,13 +22,11 @@ router.post(
         'id',
         'type',
         'name',
-        'creatorEId',
-        'leadEId',
-        'reporterEId',
         'asigneeId',
         'state',
         'startDate',
-        'endDate'
+        'endDate',
+        'priority'
     ),
     async (req, res, next) => {
         try {

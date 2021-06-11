@@ -8,13 +8,13 @@ from datetime import datetime
 import random
 
 # post delay in seconds
-POST_DELAY = 10
+POST_DELAY = 120
 
 # maximum delta value for end date, in seconds
 MAX_END = 172800  # == 2 days
 
 # range of registered users
-USER_RANGE = 3
+USER_RANGE = 1
 
 
 class ApiClient:
@@ -124,6 +124,7 @@ while True:
         for col in ('type', 'name', 'creatorEId', 'leadEId', 'reporterEId')
     }
     new_issue['state'] = random.choice(('Closed', 'Done'))
+    new_issue['priority'] = random.choice(('Normal', 'Medium', 'High'))
     new_issue.update({
         'id': current_issue['id'] + 1,
         'startDate': now,
@@ -145,7 +146,7 @@ while True:
         'endDate': subtask_then
     })
 
-    print('SUBTASK:', client.insert_subtask(new_subtask))
+    # print('SUBTASK:', client.insert_subtask(new_subtask))
     current_subtask = new_subtask
 
     time.sleep(POST_DELAY)

@@ -364,6 +364,7 @@ async function insertIssue({
     state,
     startDate,
     endDate = null,
+    priority,
 }) {
     const query = (await connect())
         .input('id', sql.Int, id)
@@ -376,6 +377,7 @@ async function insertIssue({
         .input('state', sql.NVarChar(255), state)
         .input('startDate', sql.DateTime, new Date(startDate))
         .input('endDate', sql.DateTime, endDate && new Date(endDate))
+        .input('priority', sql.NVarChar(255), priority)
         .execute('insertIssue');
     await query;
 }
@@ -405,6 +407,23 @@ async function insertSubtask({
     await query;
 }
 
+async function recalcPetExperience(
+    userId,
+    highPrtyMult,
+    mediumPrtyMult,
+    issuesQtty,
+    subtsksQtty
+) {
+    const query = (await connect())
+        .input('userId', sql.Int, userId)
+        .input('highPrtyMult', sql.Int, highPrtyMult)
+        .input('mediumPrtyMult', sql.Int, mediumPrtyMult)
+        .input('issuesQtty', sql.Int, issuesQtty)
+        .input('subtsksQtty', sql.Int, subtsksQtty)
+        .execute('recalcPetExperience');
+    await query;
+}
+
 module.exports = {
     getPasswordFromEmail,
     getIdFromEmail,
@@ -431,4 +450,5 @@ module.exports = {
     insertIssue,
     insertSubtask,
     getTopUserData,
+    recalcPetExperience,
 };
